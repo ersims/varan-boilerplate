@@ -21,8 +21,7 @@ x-run-tests: &run-tests
 x-coverage: &coverage
   run:
     name: Upload Coverage
-    command: |
-      bash <(curl -s https://codecov.io/bash)
+    command: npm install --no-save codecov && ./node_modules/.bin/codecov
 
 version: 2
 jobs:
