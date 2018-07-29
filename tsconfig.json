@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
+    "diagnostics": false,
+    "declaration": false,
+    "traceResolution": false,
     "allowJs": true,
+    "checkJs": true,
     "noEmit": true,
     "jsx": "react",
     "target": "es2017",
@@ -8,7 +12,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "diagnostics": false,
     "newLine": "lf",
     "listEmittedFiles": true,
     "alwaysStrict": true,

@@ -9,7 +9,7 @@ interface NavBarLinkProps {
 }
 
 class NavBarLink extends React.Component<NavBarLinkProps> {
-  public static defaultProps: Partial<NavBarLinkProps> = {
+  public static defaultProps = {
     exact: true,
   };
   public render() {

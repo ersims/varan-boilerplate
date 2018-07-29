@@ -13,7 +13,7 @@ import './sass/index.scss';
 import { withRouter } from 'react-router';
 
 // Init
-const EnhancedApp = withRouter<typeof App>(
+const EnhancedApp = withRouter<any>(
   compose(
     withOffline(),
     withApplicationState(),

@@ -20,7 +20,7 @@ interface HtmlProps {
   preload: string[];
 }
 
-class Html extends React.PureComponent<HtmlProps, never> {
+class Html extends React.PureComponent<HtmlProps> {
   public static defaultProps = {
     htmlAttributes: {},
     bodyAttributes: {},
@@ -55,7 +55,9 @@ class Html extends React.PureComponent<HtmlProps, never> {
           {script}
           {noscript}
           {base}
-          {bundleCss.map((css, i) => <link key={i} href={css} rel="stylesheet" />)}
+          {bundleCss.map((css, i) => (
+            <link key={i} href={css} rel="stylesheet" />
+          ))}
           {manifest && <link rel="manifest" href={manifest} />}
           {preload.map((file, i) => {
             if (/\.js$/.test(file)) return <link key={i} href={file} rel="preload" as="script" />;
@@ -78,7 +80,9 @@ class Html extends React.PureComponent<HtmlProps, never> {
               }}
             />
           )}
-          {bundleJs.map((js, i) => <script key={i} type="text/javascript" src={js} defer />)}
+          {bundleJs.map((js, i) => (
+            <script key={i} type="text/javascript" src={js} defer />
+          ))}
         </body>
       </html>
     );

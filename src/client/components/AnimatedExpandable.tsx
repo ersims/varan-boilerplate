@@ -10,11 +10,11 @@ interface AnimatedExpandableProps {
   children?: React.ReactNode;
 }
 interface AnimatedExpandableState {
-  toHeight: number;
+  toHeight: number | 'auto';
 }
 
-class AnimatedExpandable extends React.PureComponent<AnimatedExpandableProps> {
-  public static defaultProps: Partial<AnimatedExpandableProps> = {
+class AnimatedExpandable extends React.PureComponent<AnimatedExpandableProps, AnimatedExpandableState> {
+  public static defaultProps = {
     isOpen: false,
     duration: 250,
     type: 'ease-in-out',
@@ -32,8 +32,8 @@ class AnimatedExpandable extends React.PureComponent<AnimatedExpandableProps> {
       if (this.ref) {
         const expectedHeight = this.ref.getBoundingClientRect().height;
         this.setState({ toHeight: expectedHeight });
-        if (this.timer) clearTimeout(this.timer);
-        this.timer = setTimeout(() => this.setState({ toHeight: 'auto' }), nextProps.duration);
+        if (this.timer) window.clearTimeout(this.timer);
+        this.timer = window.setTimeout(() => this.setState({ toHeight: 'auto' }), nextProps.duration);
       } else this.setState({ toHeight: 'auto' });
     }
 
@@ -41,9 +41,9 @@ class AnimatedExpandable extends React.PureComponent<AnimatedExpandableProps> {
     else if (!nextProps.isOpen) {
       if (this.ref) {
         const currentHeight = this.ref.getBoundingClientRect().height;
-        if (this.timer) clearTimeout(this.timer);
+        if (this.timer) window.clearTimeout(this.timer);
         this.setState({ toHeight: currentHeight }, () => {
-          this.timer = setTimeout(() => {
+          this.timer = window.setTimeout(() => {
             this.setState({ toHeight: 0 });
           }, (1000 / 60) * 2.1) as any;
         });
@@ -53,7 +53,7 @@ class AnimatedExpandable extends React.PureComponent<AnimatedExpandableProps> {
 
   // Cleanup
   public componentWillUnmount() {
-    if (this.timer) clearTimeout(this.timer);
+    if (this.timer) window.clearTimeout(this.timer);
   }
   public render() {
     const { children, duration, type, className } = this.props;
