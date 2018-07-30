@@ -91,7 +91,7 @@
     "tslint-config-airbnb": "^5.8.0",
     "tslint-config-prettier": "^1.10.0",
     "tslint-eslint-rules": "^5.1.0",
-    "typescript": "^3.0.0-rc"
+    "typescript": "^3.1.0-dev"
   },
   "jest": {
     "globals": {
