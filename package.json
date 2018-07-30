@@ -5,7 +5,7 @@
   "readmeFilename": "README.md",
   "engines": {
     "node": "^8.11.3",
-    "npm": "^5.6.0"
+    "npm": "^6.0.0"
   },
   "husky": {
     "hooks": {
