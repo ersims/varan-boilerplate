@@ -3,6 +3,7 @@
 
 # Exceptions
 !.babelrc*
+!.browserslistrc
 !.env.example
 !.eslintrc
 !.eslintignore

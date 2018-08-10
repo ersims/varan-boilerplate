@@ -37,6 +37,12 @@ npm start
 
 ## Customize build
 
+### Browser support
+
+This project uses [browserslist](https://github.com/browserslist/browserslist). By default the browser support list is defined in the `package.json` file, but you can use a `.browserlistrc` file if you prefer.
+
+### Webpack
+
 You can create or bring your own webpack configuration files, though it is recommended to extend the default `varan` webpack configurations to take advantage of useful defaults and optimizations. See [varan documentation](https://github.com/ersims/varan) for more information.
 
 ### License
