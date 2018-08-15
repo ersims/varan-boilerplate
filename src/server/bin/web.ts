@@ -1,5 +1,9 @@
-// Dependencies
+// Init environment
 import 'source-map-support/register';
+import dotenv from 'dotenv';
+dotenv.config();
+
+// Dependencies
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -21,7 +25,7 @@ const app = express();
 app.set('env', process.env.NODE_ENV || 'production');
 app.set('host', process.env.HOST);
 app.set('port', (process.env.PORT && parseInt(process.env.PORT, 10)) || 3000);
-const CLIENT_FILES = path.resolve(__dirname, '../../client');
+const CLIENT_FILES = path.resolve(__dirname, process.env.VARAN_CLIENT_ROOT || '../../client');
 const CLIENT_FILES_CACHE_AGE = app.get('env') === 'production' ? 86400000 : undefined;
 const stats =
   process.env.VARAN_STATS_MANIFEST &&
@@ -43,7 +47,7 @@ app.get('*', renderReact(stats, assets, PRELOAD_FILES));
 
 // Export server
 export default app.listen(app.get('port'), app.get('host'), () => {
-  // if (process.send) process.send('ready'); // TODO: Re-enable https://github.com/facebook/jest/issues/5891
+  if (process.send) process.send('ready');
   /* tslint:disable-next-line no-console */
   console.log(`Server listening on ${app.get('port')} in ${app.get('env')} mode`);
 });
