@@ -19,6 +19,7 @@
   "scripts": {
     "apply:format": "prettier --config .prettierrc --write \"{src,test,types}/**/*.{ts,js}?(x)\"",
     "build": "varan build",
+    "build:analyze": "varan build --analyze",
     "check:format": "prettier --config .prettierrc --list-different \"{src,test,types}/**/*.{ts,js}?(x)\"",
     "check:linting": "tslint --project tsconfig.json \"{src,test,types}/**/*.{ts,js}?(x)\"",
     "check:types": "tsc --noEmit",
@@ -57,7 +58,7 @@
     "serialize-javascript": "^1.4.0",
     "source-map-support": "^0.5.6",
     "typesafe-actions": "^2.0.4",
-    "varan": "^0.6.0"
+    "varan": "^0.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
