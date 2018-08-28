@@ -27,7 +27,7 @@ app.set('env', process.env.NODE_ENV || 'production');
 app.set('host', process.env.HOST);
 app.set('port', (process.env.PORT && parseInt(process.env.PORT, 10)) || 3000);
 const CLIENT_FILES = path.resolve(__dirname, process.env.VARAN_CLIENT_ROOT || '../../client');
-const CLIENT_FILES_CACHE_AGE = app.get('env') === 'production' ? 86400000 : undefined;
+const CLIENT_FILES_CACHE_AGE = app.get('env') === 'production' ? 86400000 * 365 : undefined;
 const stats =
   process.env.VARAN_STATS_MANIFEST &&
   JSON.parse(fs.readFileSync(path.resolve(__dirname, process.env.VARAN_STATS_MANIFEST)).toString());
