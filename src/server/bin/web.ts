@@ -5,6 +5,7 @@ dotenv.config();
 
 // Dependencies
 import express from 'express';
+import compression from 'compression';
 import fs from 'fs';
 import path from 'path';
 import gzipStatic from 'connect-gzip-static';
@@ -35,14 +36,14 @@ const assets =
   JSON.parse(fs.readFileSync(path.resolve(__dirname, process.env.VARAN_ASSETS_MANIFEST)).toString());
 
 // Serve static files and attempt to serve .gz files if found
-app.use((req, res, next) => {
-  if (req.url === '/service-worker.js')
-    res.setHeader('Cache-Control', 'max-age=0, no-cache, no-store, must-revalidate');
+app.use('/service-worker.js', compression(), (req, res, next) => {
+  res.setHeader('Cache-Control', 'max-age=0, no-cache, no-store, must-revalidate');
   return next();
 });
 app.use(gzipStatic(CLIENT_FILES, { maxAge: CLIENT_FILES_CACHE_AGE }));
 
 // Render react server side
+app.use(compression());
 app.get('*', renderReact(stats, assets, PRELOAD_FILES));
 
 // Export server
