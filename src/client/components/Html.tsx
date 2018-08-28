@@ -50,24 +50,24 @@ class Html extends React.PureComponent<HtmlProps> {
         <head>
           {title}
           {meta}
-          {link}
-          {style}
-          {script}
           {noscript}
           {base}
-          {bundleCss.map((css, i) => (
-            <link key={i} href={css} rel="stylesheet" />
-          ))}
           {manifest && <link rel="manifest" href={manifest} />}
+          {link}
           {preload.map((file, i) => {
             if (/\.js$/.test(file)) return <link key={i} href={file} rel="preload" as="script" />;
-            if (/\.css$/.test(file)) return <link key={i} href={file} rel="preload" as="stylesheet" />;
+            if (/\.css$/.test(file)) return <link key={i} href={file} rel="preload" as="style" />;
             if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(file))
               return <link key={i} href={file} rel="preload" as="font" crossOrigin="anonymous" />;
             if (/(\.png|\.jpe?g|\.gif)$/.test(file))
               return <link key={i} href={file} rel="preload" as="image" crossOrigin="anonymous" />;
             return null;
           })}
+          {bundleCss.map((css, i) => (
+            <link key={i} href={css} rel="stylesheet" />
+          ))}
+          {style}
+          {script}
         </head>
         <body {...bodyAttributes}>
           <div id="root" dangerouslySetInnerHTML={{ __html: body }} />
