@@ -3,9 +3,13 @@
   "private": true,
   "license": "MIT",
   "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/ersims/varan-boilerplate/issues"
+  },
+  "homepage": "https://github.com/ersims/varan-boilerplate#README.md",
   "engines": {
-    "node": "^8.11.3",
-    "npm": "^5.6.0"
+    "node": ">= 8.11.3",
+    "npm": ">= 5.6.0"
   },
   "browserslist": [
     ">0.25%",
