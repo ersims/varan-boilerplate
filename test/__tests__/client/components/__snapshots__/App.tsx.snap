@@ -21,9 +21,6 @@ exports[`renders correctly 1`] = `
       charSet="utf-8"
     />
     <meta
-      charSet="utf-8"
-    />
-    <meta
       content="ie=edge"
       httpEquiv="x-ua-compatible"
     />
