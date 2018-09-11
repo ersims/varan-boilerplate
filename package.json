@@ -63,7 +63,7 @@
     "serialize-javascript": "^1.4.0",
     "source-map-support": "^0.5.6",
     "typesafe-actions": "^2.0.4",
-    "varan": "^0.7.1"
+    "varan": "^0.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
