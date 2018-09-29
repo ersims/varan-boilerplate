@@ -9,7 +9,7 @@ import withApplicationState from './components/enhancers/withApplicationState';
 import withOffline from './components/enhancers/withOffline';
 
 // Styles
-import './sass/index.scss';
+import './styles/index.scss';
 import { withRouter } from 'react-router';
 
 // Init
