@@ -69,7 +69,7 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
       </Provider>,
     );
     const helmet = Helmet.renderStatic();
-    const html = renderToStaticMarkup(
+    const html = `<!DOCTYPE html>${renderToStaticMarkup(
       <Html
         htmlAttributes={helmet.htmlAttributes.toComponent()}
         bodyAttributes={helmet.bodyAttributes.toComponent()}
@@ -87,7 +87,7 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
         preload={preloadedAssets}
         initialState={initialState}
       />,
-    );
+    )}`;
 
     if (context.url) {
       if (context.statusCode !== undefined) res.status(context.statusCode);
