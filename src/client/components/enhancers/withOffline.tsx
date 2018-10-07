@@ -7,7 +7,7 @@ import VaranServiceWorker, { VaranServiceWorkerEvents } from '../../services/Var
 export default (autoEnable = true, updateCheckInterval = 60 * 60 * 1000) => <P extends object>(
   WrappedComponent: React.ComponentType<P>,
 ) => {
-  class WithOffline extends React.Component<P & Pick<typeof actionCreators, 'offlineActions'>> {
+  class WithOffline extends React.Component<Pick<typeof actionCreators, 'offlineActions'>> {
     protected serviceWorker: VaranServiceWorker = new VaranServiceWorker();
     protected timer: ReturnType<typeof setTimeout> | null = null;
 
