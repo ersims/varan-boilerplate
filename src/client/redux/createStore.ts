@@ -23,15 +23,15 @@ const composeEnhancers = composeWithDevTools({ serialize: true });
  * Create redux store with initial state
  *
  * @param {{}} initialState
+ * @param {History=} history
  * @returns {{store: *; history: History}}
  */
-export default (initialState = {}) => {
-  const history = createRouterHistory();
+export default (initialState = {}, history = createRouterHistory()) => {
   const epicMiddleware = createEpicMiddleware();
   const enhancer = composeEnhancers(
     applyMiddleware(...([routerMiddleware(history), epicMiddleware, loggerMiddleware].filter(Boolean) as Middleware[])),
   );
-  const store = createStore(connectRouter(history)(rootReducer), initialState, enhancer);
+  const store = createStore(rootReducer(history), initialState, enhancer);
   epicMiddleware.run(rootEpic);
   return { store, history };
 };

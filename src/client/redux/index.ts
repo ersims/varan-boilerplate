@@ -6,6 +6,7 @@ import { StateType } from 'typesafe-actions';
 import application, { actions as applicationActions, epics as applicationEpics } from './modules/application';
 import offline, { actions as offlineActions, epics as offlineEpics } from './modules/offline';
 import router, { actions as routerActions } from './modules/router';
+import { History } from 'history';
 
 // Exports
 export const actionCreators = Object.assign(
@@ -16,15 +17,16 @@ export const actionCreators = Object.assign(
     routerActions,
   },
 );
-export const reducers = Object.assign(
-  {},
-  {
-    application,
-    offline,
-    router,
-  },
-);
-export const rootReducer = combineReducers(reducers);
+export const reducers = (history: History) =>
+  Object.assign(
+    {},
+    {
+      application,
+      offline,
+      router: router(history),
+    },
+  );
+export const rootReducer = (history: History) => combineReducers(reducers(history));
 export const epics = Object.assign(
   {},
   {
@@ -34,4 +36,4 @@ export const epics = Object.assign(
 );
 
 // Types
-export type RootState = StateType<typeof rootReducer>;
+export type RootState = StateType<ReturnType<typeof rootReducer>>;
