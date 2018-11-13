@@ -1,5 +1,6 @@
 // Imports
-import { createReducer } from 'reduxsauce';
+import { connectRouter } from 'connected-react-router';
+import { History } from 'history';
 
 // Types
 interface IState {
@@ -13,19 +14,8 @@ interface IState {
   };
 }
 
-// Initial state
-export const initialState: IState = {
-  action: '',
-  location: {
-    hash: '',
-    key: '',
-    pathname: '',
-    search: '',
-  },
-};
-
 // Actions
 export const actions = {};
 
 // Reducers
-export default createReducer(initialState, {});
+export default (history: History) => connectRouter(history);
