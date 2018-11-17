@@ -5,7 +5,7 @@ import { StateType } from 'typesafe-actions';
 // Modules
 import application, { actions as applicationActions, epics as applicationEpics } from './modules/application';
 import offline, { actions as offlineActions, epics as offlineEpics } from './modules/offline';
-import router, { actions as routerActions } from './modules/router';
+import router, { actions as routerActions, epics as routerEpics } from './modules/router';
 import { History } from 'history';
 
 // Exports
@@ -32,6 +32,7 @@ export const epics = Object.assign(
   {
     applicationEpics,
     offlineEpics,
+    routerEpics,
   },
 );
 
