@@ -92,7 +92,6 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
     if (context.url) {
       if (context.statusCode !== undefined) res.status(context.statusCode);
       res.redirect(context.url);
-      res.send('Redirecting.. Please wait..');
       return;
     }
     if (context.statusCode) res.status(context.statusCode);
