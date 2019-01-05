@@ -61,7 +61,7 @@ export default (autoEnable = true, updateCheckInterval = 60 * 60 * 1000) => <P e
       this.serviceWorker.removeListener(VaranServiceWorkerEvents.UNREGISTERED, this.handleUnregister);
     }
     public render() {
-      return <WrappedComponent {...this.props} />;
+      return <WrappedComponent {...this.props as P} />;
     }
   }
   return connect(

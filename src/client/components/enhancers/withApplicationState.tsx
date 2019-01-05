@@ -9,7 +9,7 @@ export default () => <P extends object>(WrappedComponent: React.ComponentType<P>
       this.props.applicationActions.init();
     }
     public render() {
-      return <WrappedComponent {...this.props} />;
+      return <WrappedComponent {...this.props as P} />;
     }
   }
   return connect(
