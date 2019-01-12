@@ -4,12 +4,13 @@ A fully fledged offline-first PWA boilerplate for React and TypeScript with serv
 
 Note that these badges are set up for the [source boilerplate master branch](https://github.com/ersims/varan-boilerplate/tree/master) and will not be correct in your own fork of the boilerplate.
 
-[![CircleCI](https://img.shields.io/circleci/project/github/ersims/varan-boilerplate/master.svg)](https://circleci.com/gh/ersims/varan-boilerplate/tree/master)
-[![Codecov branch](https://img.shields.io/codecov/c/github/ersims/varan-boilerplate/master.svg)](https://codecov.io/gh/ersims/varan-boilerplate/tree/master)
-[![David](https://img.shields.io/david/ersims/varan-boilerplate/master.svg)](https://david-dm.org/ersims/varan-boilerplate/master)
-[![Known Vulnerabilities](https://snyk.io/test/github/ersims/varan-boilerplate/master/badge.svg)](https://snyk.io/test/github/ersims/varan-boilerplate/master)
-[![renovate-app badge](https://img.shields.io/badge/renovate-app-blue.svg)](https://renovateapp.com/)
-[![license](https://img.shields.io/github/license/ersims/varan-boilerplate.svg)](https://github.com/ersims/varan-boilerplate/blob/master/LICENSE.md)
+[![CircleCI][circleci-image]][circleci-url]
+[![Codecov branch][codecov-image]][codecov-url]
+[![David][david-image]][david-url]
+[![Known Vulnerabilities][snyk-image]][snyk-url]
+[![renovate-app badge][renovate-image]][renovate-url]
+[![Conventional Commits][conventional-commits-image]][conventional-commits-url]
+[![license][license-image]][license-url]
 
 ## Usage
 
@@ -18,7 +19,7 @@ Note that these badges are set up for the [source boilerplate master branch](htt
 Start a development server with hot reloading
 
 ```bash
-npm run watch
+npm run start:watch
 ```
 
 ### Production
@@ -48,3 +49,19 @@ You can create or bring your own webpack configuration files, though it is recom
 ### License
 
   [MIT](LICENSE.md)
+
+
+[circleci-url]: https://circleci.com/gh/ersims/varan-boilerplate/tree/master
+[circleci-image]: https://img.shields.io/circleci/project/github/ersims/varan-boilerplate/master.svg
+[codecov-url]: https://codecov.io/gh/ersims/varan-boilerplate/tree/master
+[codecov-image]: https://img.shields.io/codecov/c/github/ersims/varan-boilerplate/master.svg
+[david-url]: https://david-dm.org/ersims/varan-boilerplate/master
+[david-image]: https://img.shields.io/david/ersims/varan-boilerplate/master.svg
+[snyk-url]: https://snyk.io/test/github/ersims/varan-boilerplate/master
+[snyk-image]: https://snyk.io/test/github/ersims/varan-boilerplate/master/badge.svg
+[renovate-url]: https://renovateapp.com/
+[renovate-image]: https://img.shields.io/badge/renovate-app-blue.svg
+[conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
+[conventional-commits-url]: https://conventionalcommits.org/
+[license-url]: https://github.com/ersims/varan-boilerplate/blob/master/LICENSE.md
+[license-image]: https://img.shields.io/github/license/ersims/varan-boilerplate.svg
