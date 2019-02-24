@@ -1,24 +1,50 @@
 // ----------
 // Typography
 // ----------
-$font__size: 16px;
+$font__size: 14px;
 
 // ------
 // Colors
 // ------
-$color__white: #ffffff;
-$color__white--off: #eeeeee;
-$color__black: #000000;
+
+// Palette - not used directly
+$color__sea-serpent: #59C3C3;
+$color__dark-cerulean: #124E78;
+$color__pale-turquoise: #ADEEE3;
+$color__light-cobalt-blue: #94B0DA;
+$color__azureish-white: #DCEDFF;
+
+// Generic colors
+$color__white: #EFEFEF;
+$color__grey--light: #E2E2E2;
+$color__grey: #8D8D8D;
 $color__grey--dark: #333333;
+$color__black: #0F0F0F;
 $color__blue: #3b5995;
 $color__pink: #aa347c;
 $color__red: #aa323e;
 $color__green: #49aa6a;
 
+// Color scheme - used directly
+$color__scheme__primary: $color__sea-serpent;
+$color__scheme__primary--contrast: $color__grey--dark;
+$color__scheme__primary--light: lighten(desaturate($color__scheme__primary, 10%), 10%);
+$color__scheme__primary--dark: darken(saturate($color__scheme__primary, 10%), 10%);
+$color__scheme__secondary: $color__dark-cerulean;
+$color__scheme__secondary--contrast: $color__azureish-white;
+$color__scheme__secondary--light: lighten(desaturate($color__scheme__secondary, 10%), 10%);
+$color__scheme__secondary--dark: darken(saturate($color__scheme__secondary, 10%), 10%);
+$color__scheme__accent: $color__pale-turquoise;
+$color__scheme__error: $color__red;
+$color__scheme__warning: $color__pink;
+$color__scheme__success: $color__green;
+
 // -------------
 // Site settings
 // -------------
 $padding__step: 0.3rem;
+$global__max-width: 80rem;
+$global__navbar-height: 4rem;
 
 // ---------------
 // Responsive Grid

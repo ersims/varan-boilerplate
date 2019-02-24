@@ -1,146 +1,263 @@
+@import '../variables';
+@import '../animations';
+@import '../mixins';
+
 .navbar {
-  $local__background-color: $color__grey--dark;
-  $local__background-color--hover: $color__blue;
-  $local__color: $color__white--off;
+
+  /**
+   * Local variables
+   */
+  $local__color: $color__scheme__primary;
+  $local__background-color: $color__scheme__primary--contrast;
+  $local__shadow-color: $color__black;
   $local__height: 4rem;
-  $local__padding: $local__height / 4;
-  $local__animation-duration: 0.25s;
+  $local__padding: $local__height / 8;
+  $local__navlink__spacing: 2rem;
+  $local__animation-duration: 0.2s;
+  $local__statusbar__color--offline: $color__scheme__error;
+  $local__statusbar__color--pending-updates: $color__scheme__success;
+  $local__hamburger__background-color: lighten($local__background-color, 20%);
+
   @mixin local__large-screen {
     @include tablet-landscape-up {
       @content;
     }
   }
   z-index: 10;
-  background-color: $local__background-color;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 0 1rem 0.2rem rgba($color__black, 0.75);
+  width: 100%;
+  position: fixed;
+
+  // Background
+  & {
+    background-color: $local__background-color;
+    transition: linear background-color $local__animation-duration;
+
+    // Large screen version
+    @include local__large-screen {
+      background-color: transparent;
+      &--sticky {
+        background-color: $local__background-color;
+        box-shadow: 0 0 0.2em $local__shadow-color;
+      }
+    }
+  }
+
+  // Application states
   &--offline {
-    background-color: $color__red;
+    border-top: 0.4rem solid $local__statusbar__color--offline;
   }
-  &--updated {
-    background-color: $color__green;
-  }
-
-  // Title
-  &__title {
-    height: $local__height - $local__padding;
-    background: $color__black;
-    display: block;
-    float: left;
-    margin: $local__padding/2;
-    padding: 0;
+  &--pending-updates {
+    border-top: 0.4rem solid $local__statusbar__color--pending-updates;
   }
 
-  // Hamburger
-  &__hamburger {
-    float: right;
-    padding: $local__padding;
-    height: $local__height;
-    width: $local__height;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: stretch;
-    background: none;
-    border: none;
-    cursor: pointer;
-    &:hover:not(:active) {
-      background-color: $local__background-color--hover;
-    }
-
-    // Large screen version
-    @include local__large-screen {
-      display: none;
-    }
-  }
-  &__hamburger-line {
-    $local__hamburger-offset: ($local__height - (2 * $local__padding)) / 3;
-    $local__hamburger-height: 3px;
-    height: $local__hamburger-height;
-    border-radius: $local__hamburger-height;
-    background-color: $local__color;
-    transition: background-color $local__animation-duration ease-in-out;
-    display: block;
-
-    // Animate opening and closing
-    &:first-child, &:last-child {
-      transform: rotate(0deg) translateY(0) translateX(0);
-      transition: transform $local__animation-duration ease-in-out;
-    }
-    &:not(:first-child):not(:last-child) {
-      transform: rotateY(0deg);
-      transition: transform $local__animation-duration ease-in-out;
-    }
-    &--open {
-      &:first-child {
-        transform: rotate(45deg) translateY(calc(#{$local__hamburger-offset} - #{$local__hamburger-height})) translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
-      }
-      &:not(:first-child):not(:last-child) {
-        transform: rotateY(90deg);
-      }
-      &:last-child {
-        transform: rotate(-45deg) translateY(calc(-#{$local__hamburger-offset} + #{$local__hamburger-height})) translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
-      }
-    }
-  }
-
-  // Menu
-  &__list-container {
-    width: 100%;
-    // Large screen version
-    @include local__large-screen {
-      height: auto !important;
-      width: auto;
-    }
-  }
-  &__list {
-    padding: 0;
-    margin: 0;
-    background-color: lighten($local__background-color, 10%);
-    &--open {
-      float: left;
-      width: 100%;
-    }
-
-    // Large screen version
-    @include local__large-screen {
-      float: left;
+  // Logo
+  & {
+    &__title {
+      height: $local__height - $local__padding;
       display: block;
-      width: auto;
-      line-height: $local__height;
-      background-color: inherit;
+      float: left;
+      margin: $local__padding / 2;
+      padding: 0;
+      background: url('../../../assets/vector/Logo.svg') no-repeat center center;
+      background-size: contain;
+      &:not(.is-active):hover:not(:active) {
+        animation-name: animation-shake;
+        animation-duration: $local__animation-duration * 4;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        transform: perspective(1px) translateZ(0);
+      }
+
     }
   }
-  &__item {
-    @include local__large-screen {
+
+  /**
+   * Hamburger
+   */
+  & {
+    &__hamburger {
+      float: right;
+      padding: 1rem;
+      height: $local__height;
+      width: $local__height;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      align-items: stretch;
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      &:not(.is-expanded):hover:not(:active) {
+        animation-name: animation-shake;
+        animation-duration: $local__animation-duration * 4;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        transform: perspective(1px) translateZ(0);
+      }
+
+      // Large screen version
+      @include local__large-screen {
+        display: none;
+      }
+    }
+
+    &__hamburger-line {
+      $local__hamburger-offset: ($local__height - (2 * $local__padding)) / 4;
+      $local__hamburger-height: 4px;
+      height: $local__hamburger-height;
+      border-radius: $local__hamburger-height;
+      background-color: $local__color;
+      transition: background-color $local__animation-duration ease-in-out;
+      display: block;
+
+      // Animate opening and closing
+      &:first-child, &:last-child {
+        transform: rotate(0deg) translateY(0) translateX(0);
+        transition: transform $local__animation-duration ease-in-out;
+      }
+
+      &:not(:first-child):not(:last-child) {
+        transform: rotateY(0deg);
+        transition: transform $local__animation-duration ease-in-out;
+      }
+
+      &.is-expanded {
+        &:first-child {
+          transform: rotate(45deg) translateY(calc(#{$local__hamburger-offset} - #{$local__hamburger-height})) translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
+        }
+
+        &:not(:first-child):not(:last-child) {
+          transform: rotateY(90deg);
+        }
+
+        &:last-child {
+          transform: rotate(-45deg) translateY(calc(-#{$local__hamburger-offset} + #{$local__hamburger-height})) translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
+        }
+      }
+    }
+  }
+
+  /**
+   * Menu
+   */
+  & {
+    &__list-container {
+      width: 100%;
+      // Large screen version
+      @include local__large-screen {
+        height: auto !important;
+        width: auto;
+      }
+    }
+    &__list {
+      padding: 0;
+      margin: 0;
+      background-color: $local__hamburger__background-color;
+      &.is-expanded {
+        float: left;
+        width: 100%;
+      }
+
+      // Large screen version
+      @include local__large-screen {
+        float: left;
+        display: block;
+        width: auto;
+        line-height: $local__height;
+        background-color: inherit;
+      }
+    }
+    &__item {
+      @include local__large-screen {
+        display: inline-block;
+      }
+    }
+
+    // Links
+    &__title-text {
+      @include open-sans(600);
+      visibility: hidden;
+      color: $local__color;
       display: inline-block;
+      padding: 0;
+      margin: 0;
     }
-  }
+    &__link {
+      @include open-sans(600);
+      color: $local__color;
+      display: inline-block;
+      padding: $local__padding * 2 $local__padding * 4;
+      position: relative;
+      width: 100%;
+      text-transform: uppercase;
+      text-decoration: none;
+      letter-spacing: 5px;
+      transition: linear color $local__animation-duration;
 
-  // Links
-  &__title-text {
-    @include open-sans(600);
-    visibility: hidden;
-    color: $local__color;
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-  }
-  &__link {
-    @include open-sans(600);
-    color: $local__color;
-    display: inline-block;
-    padding: $local__padding;
-    width: 100%;
-    &.is-active, &:hover:not(:active) {
-      background-color: $local__background-color--hover;
-    }
+      // External links
+      &--external::after {
+        content: '';
+        vertical-align: middle;
+        height: 1.25em;
+        width: 1.1em;
+        margin-left: 0.2em;
+        display: inline-block;
+        background-color: $local__color;
+        mask-image: url('../../../assets/vector/icons/Icon-Link-External.svg');
+        mask-size: 100%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+      }
 
-    // Desktop version
-    @include local__large-screen {
-      width: auto;
-      padding: 0 $local__padding;
+      // Active/hover states
+      &::before {
+        content: '';
+        vertical-align: middle;
+        height: $local__padding * 3;
+        width: $local__padding * 4;
+        margin-left: -$local__padding * 4;
+        display: inline-block;
+        background-size: contain;
+      }
+      &.is-active::before, &:hover:not(:active)::before {
+        background: linear-gradient(90deg, $local__color, darken($local__color, 25%));
+        background-size: 400%;
+        mask-image: url('../../../assets/vector/icons/Icon-Arrow-Right.svg');
+        mask-size: 100%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        animation: animation-background-size $local__animation-duration * 10 ease infinite;
+      }
+
+      // Desktop version
+      @include local__large-screen {
+        width: auto;
+        padding: 0 $local__padding;
+        margin-left: $local__navlink__spacing;
+
+        // Active/hover states
+        &::before {
+          mask-image: none !important;
+          content: '';
+          position: absolute;
+          z-index: -1;
+          left: 51%;
+          right: 51%;
+          bottom: 1em;
+          height: 0.2em;
+          width: initial;
+          margin-left: initial;
+          transition-property: left, right;
+          transition-duration: 0.3s;
+          transition-timing-function: cubic-bezier(.4,0,.6,1) ;
+        }
+        &.is-active::before, &:hover:not(:active)::before {
+          background: $local__color;
+          left: 0;
+          right: 0;
+        }
+      }
     }
   }
 }

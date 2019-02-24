@@ -1,83 +1,62 @@
-// Dependencies
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // Types
-interface AnimatedExpandableProps {
+interface Props {
   isOpen?: boolean;
   duration?: number;
   type?: 'ease-in-out' | 'linear';
   className?: string;
   children?: React.ReactNode;
 }
-interface AnimatedExpandableState {
-  toHeight: number | 'auto';
-}
 
-class AnimatedExpandable extends React.PureComponent<AnimatedExpandableProps, AnimatedExpandableState> {
-  public static defaultProps = {
-    isOpen: false,
-    duration: 250,
-    type: 'ease-in-out',
-  };
-  public state = {
-    toHeight: 0,
-  };
-  protected ref: HTMLDivElement | null = null;
-  protected timer: number | null = null;
+export const AnimatedExpandable = ({
+  isOpen = false,
+  duration = 250,
+  type = 'ease-in-out',
+  className,
+  children,
+}: Props) => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [toHeight, setToHeight] = useState<number | 'auto'>(0);
 
-  // Trigger animation
-  public componentWillReceiveProps(nextProps: AnimatedExpandableProps) {
+  useEffect(() => {
+    let timer: number | null = null;
     // Opening
-    if (nextProps.isOpen && !this.props.isOpen) {
-      if (this.ref) {
-        const expectedHeight = this.ref.getBoundingClientRect().height;
-        this.setState({ toHeight: expectedHeight });
-        if (this.timer) window.clearTimeout(this.timer);
-        this.timer = window.setTimeout(() => this.setState({ toHeight: 'auto' }), nextProps.duration);
-      } else this.setState({ toHeight: 'auto' });
+    if (isOpen && toHeight === 0) {
+      if (divRef.current) {
+        const expectedHeight = divRef.current.getBoundingClientRect().height;
+        setToHeight(expectedHeight);
+        timer = window.setTimeout(() => setToHeight('auto'), duration);
+      } else setToHeight('auto');
     }
 
     // Closing
-    else if (!nextProps.isOpen) {
-      if (this.ref) {
-        const currentHeight = this.ref.getBoundingClientRect().height;
-        if (this.timer) window.clearTimeout(this.timer);
-        this.setState({ toHeight: currentHeight }, () => {
-          this.timer = window.setTimeout(() => {
-            this.setState({ toHeight: 0 });
-          }, (1000 / 60) * 2.1) as any;
-        });
-      } else this.setState({ toHeight: 0 });
+    else if (!isOpen && toHeight !== 0) {
+      if (divRef.current) {
+        const currentHeight = divRef.current.getBoundingClientRect().height;
+        setToHeight(currentHeight);
+        timer = window.setTimeout(() => setToHeight(0), (1000 / 60) * 2.1);
+      } else setToHeight(0);
     }
-  }
 
-  // Cleanup
-  public componentWillUnmount() {
-    if (this.timer) window.clearTimeout(this.timer);
-  }
-  public render() {
-    const { children, duration, type, className } = this.props;
-    const { toHeight } = this.state;
-    return (
-      <div
-        style={{
-          height: toHeight,
-          transition: `height ${duration}ms ${type}`,
-          overflow: 'hidden',
-        }}
-        className={className}
-      >
-        <div
-          ref={ref => {
-            this.ref = ref;
-          }}
-          style={{ overflow: 'hidden' }}
-        >
-          {children}
-        </div>
+    // this will clear Timeout when component unmont like in willComponentUnmount
+    return () => {
+      if (timer) window.clearTimeout(timer);
+    };
+  }, [isOpen, duration]);
+
+  return (
+    <div
+      style={{
+        height: toHeight,
+        transition: `height ${duration}ms ${type}`,
+        overflow: 'hidden',
+      }}
+      className={className}
+    >
+      <div ref={divRef} style={{ overflow: 'hidden' }}>
+        {children}
       </div>
-    );
-  }
-}
-
-export default AnimatedExpandable;
+    </div>
+  );
+};
