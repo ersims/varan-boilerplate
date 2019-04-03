@@ -65,7 +65,7 @@
     "rxjs": "^6.2.1",
     "serialize-javascript": "^1.4.0",
     "source-map-support": "^0.5.10",
-    "typesafe-actions": "^3.0.0"
+    "typesafe-actions": "^4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.3.1",
