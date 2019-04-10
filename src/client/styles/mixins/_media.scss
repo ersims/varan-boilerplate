@@ -1,0 +1,30 @@
+@mixin phone-only {
+  @media (max-width: 599px) { @content; }
+}
+@mixin tablet-portrait-up {
+  @media (min-width: 600px) { @content; }
+}
+@mixin tablet-landscape-up {
+  @media (min-width: 900px) { @content; }
+}
+@mixin desktop-up {
+  @media (min-width: 1200px) { @content; }
+}
+@mixin big-desktop-up {
+  @media (min-width: 1800px) { @content; }
+}
+
+@mixin device-ppi-2x {
+  @media
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) { @content; }
+}
+
+@mixin responsive-background($url, $prepend: '', $append: '') {
+  @include phone-only { background: #{$prepend} url('#{$url}?size=600') #{$append}; }
+  @include tablet-portrait-up { background: #{$prepend} url('#{$url}?size=900') #{$append}; }
+  @include tablet-landscape-up { background: #{$prepend} url('#{$url}?size=1200') #{$append}; }
+  @include desktop-up { background: #{$prepend} url('#{$url}?size=1800') #{$append}; }
+  @include big-desktop-up { background: #{$prepend} url('#{$url}?size=3840') #{$append}; }
+}

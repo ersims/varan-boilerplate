@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="30px" viewBox="0 0 34 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Icon/Material/Heart/Filled</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M17,29.9394737 L14.535,27.7857895 C5.78,20.1663158 0,15.1247368 0,8.97368421 C0,3.93210526 4.114,0 9.35,0 C12.308,0 15.147,1.32157895 17,3.39368421 C18.853,1.32157895 21.692,0 24.65,0 C29.886,0 34,3.93210526 34,8.97368421 C34,15.1247368 28.22,20.1663158 19.465,27.7857895 L17,29.9394737 Z" id="path-1"></path>
+    </defs>
+    <g id="Web-pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home" transform="translate(-994.000000, -4767.000000)">
+            <g id="Footer" transform="translate(-0.000000, 4732.000000)">
+                <g id="Group" transform="translate(893.000000, 35.000000)">
+                    <g id="Icon/Material/Heart/Filled" transform="translate(101.000000, 0.000000)">
+                        <g id="heart">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Path" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                            <g id="Color/Black" mask="url(#mask-2)" fill-rule="nonzero">
+                                <rect id="Base" fill="#E2E2E2" x="0" y="0" width="34" height="31"></rect>
+                                <rect id="Base-Copy" fill="#0F0F0F" x="0" y="0" width="34" height="31"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

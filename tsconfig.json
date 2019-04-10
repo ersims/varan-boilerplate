@@ -27,8 +27,7 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": false,
     "resolveJsonModule": true,
-    "outDir": "dist",
-    "rootDir": "src"
+    "outDir": "dist"
   },
   "include": [
     "types",

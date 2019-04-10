@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { history, store } from './redux/store';
 import { compose } from 'recompose';
-import App from './components/App';
+import { App } from './components/App';
 import withApplicationState from './components/enhancers/withApplicationState';
 import withOffline from './components/enhancers/withOffline';
 

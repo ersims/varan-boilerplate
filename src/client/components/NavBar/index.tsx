@@ -1,64 +1,77 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
+import { Waypoint } from 'react-waypoint';
 import { RootState } from '../../redux';
-import NavBarLink from './Link';
-import AnimatedExpandable from '../AnimatedExpandable';
+import { NavBarLink } from './Link';
+import { AnimatedExpandable } from '../AnimatedExpandable';
 
 // Types
-interface NavProps {
+interface Props {
   location: string;
   isOffline: boolean;
   isUpdated: boolean;
 }
-interface NavState {
-  isOpen: boolean;
-}
-class Nav extends React.PureComponent<NavProps, NavState> {
-  public state = {
-    isOpen: false,
+
+export const Nav = ({ location, isOffline, isUpdated }: Props) => {
+  const [isSticky, setIsSticky] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const setSticky = () => setIsSticky(true);
+  const unsetSticky = () => setIsSticky(false);
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleInitialPosition = ({ currentPosition, previousPosition }: Waypoint.CallbackArgs) => {
+    if (!previousPosition && currentPosition === Waypoint.above) setSticky();
   };
-  public toggleMenu = () => this.setState(state => ({ isOpen: !state.isOpen }));
-  public closeMenu = () => this.setState({ isOpen: false });
-  public componentWillReceiveProps(nextProps: NavProps) {
-    if (nextProps.location !== this.props.location) this.closeMenu();
-  }
-  public render() {
-    const { isOpen } = this.state;
-    const { isOffline, isUpdated } = this.props;
-    return (
-      <nav className={classNames('navbar', { 'navbar--offline': isOffline, 'navbar--updated': isUpdated })}>
-        <NavLink className="navbar__title" to="/" aria-label="Home">
+
+  // Close menu on navigation
+  useEffect(() => setIsOpen(false), [location]);
+
+  return (
+    <>
+      <Waypoint onEnter={unsetSticky} onLeave={setSticky} onPositionChange={handleInitialPosition} />
+      <nav
+        className={classNames('navbar', {
+          'navbar--offline': isOffline,
+          'navbar--pending-updates': isUpdated,
+          'navbar--sticky': isSticky,
+        })}
+      >
+        <NavLink className="navbar__title" to="/" aria-label="Home" exact activeClassName="is-active">
           <h1 className="navbar__title-text">Varan</h1>
         </NavLink>
         <button
-          className={classNames('navbar__hamburger', { 'navbar__hamburger--open': isOpen })}
+          className={classNames('navbar__hamburger', { 'is-expanded': isOpen })}
           aria-label="Menu"
           aria-expanded={isOpen}
           aria-controls="navbar-menu"
           type="button"
-          onClick={this.toggleMenu}
-          onKeyPress={e => e.key === 'Enter' && this.toggleMenu()}
+          onClick={toggleMenu}
+          onKeyPress={e => e.key === 'Enter' && toggleMenu()}
         >
-          <span className={classNames('navbar__hamburger-line', { 'navbar__hamburger-line--open': isOpen })} />
-          <span className={classNames('navbar__hamburger-line', { 'navbar__hamburger-line--open': isOpen })} />
-          <span className={classNames('navbar__hamburger-line', { 'navbar__hamburger-line--open': isOpen })} />
+          <span className={classNames('navbar__hamburger-line', { 'is-expanded': isOpen })} />
+          <span className={classNames('navbar__hamburger-line', { 'is-expanded': isOpen })} />
+          <span className={classNames('navbar__hamburger-line', { 'is-expanded': isOpen })} />
         </button>
         <AnimatedExpandable isOpen={isOpen} className="navbar__list-container">
-          <ul id="navbar-menu" className={classNames('navbar__list', { 'navbar__list--open': isOpen })}>
-            <li className="navbar__item" role="presentation">
-              <NavBarLink to="/examples">Examples</NavBarLink>
+          <ul id="navbar-menu" className={classNames('navbar__list', { 'is-expanded': isOpen })} role="menubar">
+            <li className="navbar__item" role="none">
+              <NavBarLink role="menuitem" to="/examples">
+                Examples
+              </NavBarLink>
             </li>
-            <li className="navbar__item" role="presentation">
-              <NavBarLink to="/about">About</NavBarLink>
+            <li className="navbar__item" role="none">
+              <NavBarLink role="menuitem" to="https://github.com/ersims/varan-boilerplate">
+                GitHub
+              </NavBarLink>
             </li>
           </ul>
         </AnimatedExpandable>
       </nav>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default connect((state: RootState) => ({
   location: state.router.location.pathname,

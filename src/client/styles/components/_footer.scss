@@ -1,0 +1,45 @@
+@import '../variables';
+@import '../mixins';
+@import '../animations';
+
+.footer {
+
+  /**
+   * Local variables
+   */
+  $local__bg-color: $color__scheme__primary;
+  $local__color: $color__scheme__primary--contrast;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $local__bg-color;
+  padding: 1.4em;
+
+  // Description
+  &__description {
+    margin: 0;
+    &:after {
+      content: '';
+      margin: 0.25em 0 0 -25%;
+      bottom: 0;
+      height: 1px;
+      width: 150%;
+      display: block;
+      background-size: contain;
+      background: rgba($local__color, 0.5);
+    }
+  }
+
+  // Description
+  &__icon {
+    height: 1em;
+    width: 1em;
+  }
+
+  // Copyright
+  &__copyright {
+    font-size: 0.7em;
+    margin: 0.5em 0 0 0;
+  }
+}

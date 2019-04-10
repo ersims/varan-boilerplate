@@ -1,25 +1,34 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 
 // Types
-interface NavBarLinkProps {
+interface Props {
   to: string;
   exact?: boolean;
+  className?: string;
+  role?: string;
   children: React.ReactNode;
 }
 
-class NavBarLink extends React.Component<NavBarLinkProps> {
-  public static defaultProps = {
-    exact: true,
-  };
-  public render() {
-    const { children, to, exact } = this.props;
+export const NavBarLink = ({ children, to, exact = true, className, role }: Props) => {
+  // Is this external?
+  if (to.startsWith('https://') || to.startsWith('http://')) {
     return (
-      <NavLink className="navbar__link" exact={exact} to={to} activeClassName="is-active">
+      <a role={role} className={classNames(className, 'navbar__link navbar__link--external')} href={to}>
         {children}
-      </NavLink>
+      </a>
     );
   }
-}
-
-export default NavBarLink;
+  return (
+    <NavLink
+      role={role}
+      className={classNames(className, 'navbar__link')}
+      exact={exact}
+      to={to}
+      activeClassName="is-active"
+    >
+      {children}
+    </NavLink>
+  );
+};

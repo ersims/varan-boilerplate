@@ -7,7 +7,7 @@ import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';
 import createStore from '../../client/redux/createStore';
-import App from '../../client/components/App';
+import { App } from '../../client/components/App';
 import Html from '../components/Html';
 
 // Types
