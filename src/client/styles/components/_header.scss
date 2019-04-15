@@ -2,7 +2,6 @@
 @import '../mixins';
 
 .header {
-
   /**
    * Local variables
    */
@@ -25,7 +24,11 @@
   padding: $local__navbar-height $local__padding $local__padding $local__padding;
   font-size: 1.1em;
   &--main {
-    @include responsive-background('../../../assets/images/florian-olivo-1169465-unsplash.png', 'linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.3) 100%),', 'no-repeat center center / cover');
+    @include responsive-background(
+      '../../../assets/images/florian-olivo-1169465-unsplash.png',
+      'linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.3) 100%),',
+      'no-repeat center center / cover'
+    );
     //background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.3) 100%), url('../../../assets/images/florian-olivo-1169465-unsplash.png');
     display: flex;
     flex-direction: column;
@@ -56,30 +59,30 @@
      * Animation
      */
     @keyframes header-letter-spacing-animation {
-      0%{
+      0% {
         letter-spacing: -0.2em;
         opacity: 0;
       }
-      40%{
+      40% {
         letter-spacing: 0.2em;
         opacity: 1;
       }
-      100%{
+      100% {
         letter-spacing: 0.2em;
         opacity: 1;
       }
     }
     @include local__large-screen {
       @keyframes header-letter-spacing-animation {
-        0%{
+        0% {
           letter-spacing: -0.3em;
           opacity: 0;
         }
-        40%{
+        40% {
           letter-spacing: 0.3em;
           opacity: 1;
         }
-        100%{
+        100% {
           letter-spacing: 0.3em;
           opacity: 1;
         }

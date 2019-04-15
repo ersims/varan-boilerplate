@@ -3,7 +3,6 @@
 @import '../mixins';
 
 .navbar {
-
   /**
    * Local variables
    */
@@ -67,7 +66,6 @@
         animation-iteration-count: infinite;
         transform: perspective(1px) translateZ(0);
       }
-
     }
   }
 
@@ -112,7 +110,8 @@
       display: block;
 
       // Animate opening and closing
-      &:first-child, &:last-child {
+      &:first-child,
+      &:last-child {
         transform: rotate(0deg) translateY(0) translateX(0);
         transition: transform $local__animation-duration ease-in-out;
       }
@@ -124,7 +123,8 @@
 
       &.is-expanded {
         &:first-child {
-          transform: rotate(45deg) translateY(calc(#{$local__hamburger-offset} - #{$local__hamburger-height})) translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
+          transform: rotate(45deg) translateY(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}))
+            translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
         }
 
         &:not(:first-child):not(:last-child) {
@@ -132,7 +132,8 @@
         }
 
         &:last-child {
-          transform: rotate(-45deg) translateY(calc(-#{$local__hamburger-offset} + #{$local__hamburger-height})) translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
+          transform: rotate(-45deg) translateY(calc(-#{$local__hamburger-offset} + #{$local__hamburger-height}))
+            translateX(calc(#{$local__hamburger-offset} - #{$local__hamburger-height}));
         }
       }
     }
@@ -220,7 +221,8 @@
         display: inline-block;
         background-size: contain;
       }
-      &.is-active::before, &:hover:not(:active)::before {
+      &.is-active::before,
+      &:hover:not(:active)::before {
         background: linear-gradient(90deg, $local__color, darken($local__color, 25%));
         background-size: 400%;
         mask-image: url('../../../assets/vector/icons/Icon-Arrow-Right.svg');
@@ -250,9 +252,10 @@
           margin-left: initial;
           transition-property: left, right;
           transition-duration: 0.3s;
-          transition-timing-function: cubic-bezier(.4,0,.6,1) ;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
         }
-        &.is-active::before, &:hover:not(:active)::before {
+        &.is-active::before,
+        &:hover:not(:active)::before {
           background: $local__color;
           left: 0;
           right: 0;
