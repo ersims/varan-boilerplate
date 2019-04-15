@@ -2,7 +2,6 @@
 @import '../mixins';
 
 .feature {
-
   /**
    * Local variables
    */
@@ -48,5 +47,6 @@
   }
 
   // Description
-  .feature__description {}
+  .feature__description {
+  }
 }

@@ -23,11 +23,11 @@
     }
   },
   "scripts": {
-    "apply:format": "prettier --config .prettierrc --write \"{src,test,types}/**/*.{ts,js}?(x)\" \"*.js\"",
+    "apply:format": "prettier --write \"**/*.{css,less,sass,scss,html,md,graphql,gql,json,ts,tsx,js,jsx,yml,yaml}\"",
     "build": "varan build ./webpack/client varan/webpack/server",
     "build:analyze": "varan build ./webpack/client varan/webpack/server --analyze",
-    "check:format": "prettier --config .prettierrc --list-different \"{src,test,types}/**/*.{ts,js}?(x)\" \"*.js\"",
-    "check:linting": "tslint --project tsconfig.json \"{src,test,types}/**/*.{ts,js}?(x)\"",
+    "check:format": "prettier --list-different \"**/*.{css,less,sass,scss,html,md,graphql,gql,json,ts,tsx,js,jsx,yml,yaml}\"",
+    "check:linting": "tslint --project tsconfig.json \"**/*.{ts,js}?(x)\"",
     "check:types": "tsc --noEmit",
     "check": "npm-run-all check:*",
     "clean": "del-cli ./dist",

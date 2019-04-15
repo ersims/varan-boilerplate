@@ -11,7 +11,8 @@ html {
     font-size: 1.1em;
   }
   line-height: 1.5;
-  ul, li {
+  ul,
+  li {
     list-style-type: none;
   }
   @include link-on-light;

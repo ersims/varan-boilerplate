@@ -4,11 +4,15 @@
   a {
     @include open-sans(600);
     @content;
-    &, &:active, &:hover, &:visited {
+    &,
+    &:active,
+    &:hover,
+    &:visited {
       text-decoration: none;
     }
 
-    &:active, &:hover {
+    &:active,
+    &:hover {
       text-decoration: underline;
     }
   }

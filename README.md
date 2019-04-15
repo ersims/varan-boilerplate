@@ -1,6 +1,6 @@
 # Varan boilerplate
 
-A fully fledged offline-first PWA boilerplate for React and TypeScript with server side rendering using [varan](https://github.com/ersims/varan). 
+A fully fledged offline-first PWA boilerplate for React and TypeScript with server side rendering using [varan](https://github.com/ersims/varan).
 
 Note that these badges are set up for the [source boilerplate master branch](https://github.com/ersims/varan-boilerplate/tree/master) and will not be correct in your own fork of the boilerplate.
 
@@ -48,15 +48,14 @@ You can create or bring your own webpack configuration files, though it is recom
 
 ### License
 
-  [MIT](LICENSE.md)
-
+[MIT](LICENSE.md)
 
 [circleci-url]: https://circleci.com/gh/ersims/varan-boilerplate/tree/master
 [circleci-image]: https://img.shields.io/circleci/project/github/ersims/varan-boilerplate/master.svg
 [codecov-url]: https://codecov.io/gh/ersims/varan-boilerplate/tree/master
 [codecov-image]: https://img.shields.io/codecov/c/github/ersims/varan-boilerplate/master.svg
 [david-url]: https://david-dm.org/ersims/varan-boilerplate/master
-[david-image]: https://img.shields.io/david/ersims/varan-boilerplate/master.svg
+[david-image]: https://img.shields.io/david/ersims/varan-boilerplate.svg
 [snyk-url]: https://snyk.io/test/github/ersims/varan-boilerplate/master
 [snyk-image]: https://snyk.io/test/github/ersims/varan-boilerplate/master/badge.svg
 [renovate-url]: https://renovateapp.com/
