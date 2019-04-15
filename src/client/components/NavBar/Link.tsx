@@ -15,7 +15,7 @@ export const NavBarLink = ({ children, to, exact = true, className, role }: Prop
   // Is this external?
   if (to.startsWith('https://') || to.startsWith('http://')) {
     return (
-      <a role={role} className={classNames(className, 'navbar__link navbar__link--external')} href={to}>
+      <a role={role} rel="noopener" className={classNames(className, 'navbar__link navbar__link--external')} href={to}>
         {children}
       </a>
     );
