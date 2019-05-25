@@ -9,7 +9,7 @@ action "Filter for dependabot" {
 }
 
 action "Approve PR" {
-  uses = "hmarr/auto-approve-action"
+  uses = "hmarr/auto-approve-action@v1.0.0"
   needs = ["Filter for dependabot"]
   secrets = ["GITHUB_TOKEN"]
 }
