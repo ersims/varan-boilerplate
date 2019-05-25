@@ -8,7 +8,7 @@ Note that these badges are set up for the [source boilerplate master branch](htt
 [![Codecov branch][codecov-image]][codecov-url]
 [![David][david-image]][david-url]
 [![Known Vulnerabilities][snyk-image]][snyk-url]
-[![dependabot-app badge][dependabot-image]][dependabot-url]
+[![renovate-app badge][renovate-image]][renovate-url]
 [![Conventional Commits][conventional-commits-image]][conventional-commits-url]
 [![license][license-image]][license-url]
 
@@ -58,8 +58,8 @@ You can create or bring your own webpack configuration files, though it is recom
 [david-image]: https://img.shields.io/david/ersims/varan-boilerplate.svg
 [snyk-url]: https://snyk.io/test/github/ersims/varan-boilerplate/master
 [snyk-image]: https://snyk.io/test/github/ersims/varan-boilerplate/master/badge.svg
-[dependabot-url]: https://dependabot.com/
-[dependabot-image]: https://api.dependabot.com/badges/status?host=github&repo=ersims/varan-boilerplate
+[renovate-url]: https://renovateapp.com/
+[renovate-image]: https://img.shields.io/badge/renovate-app-blue.svg
 [conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
 [conventional-commits-url]: https://conventionalcommits.org/
 [license-url]: https://github.com/ersims/varan-boilerplate/blob/master/LICENSE.md
