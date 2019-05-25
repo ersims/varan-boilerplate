@@ -17,6 +17,7 @@
 !.travis.yml
 !.circleci
 !.dependabot
+!.github
 
 # Generated directories
 build
