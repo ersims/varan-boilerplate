@@ -16,6 +16,7 @@
 !.prettierrc
 !.travis.yml
 !.circleci
+!.dependabot
 
 # Generated directories
 build
