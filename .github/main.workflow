@@ -1,6 +1,6 @@
 workflow "Auto approve PR" {
-  resolves = ["hmarr/auto-approve-action"]
   on = "pull_request"
+  resolves = ["Approve PR"]
 }
 
 action "Filter for dependabot" {
@@ -8,7 +8,7 @@ action "Filter for dependabot" {
   args = "actor dependabot[bot]"
 }
 
-action "hmarr/auto-approve-action" {
+action "Approve PR" {
   uses = "hmarr/auto-approve-action"
   needs = ["Filter for dependabot"]
   secrets = ["GITHUB_TOKEN"]
