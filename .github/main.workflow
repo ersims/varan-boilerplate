@@ -5,7 +5,7 @@ workflow "Auto approve PR" {
 
 action "Filter for dependabot" {
   uses = "actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da"
-  args = "actor dependabot[bot]"
+  args = "actor dependabot-preview"
 }
 
 action "Approve PR" {
