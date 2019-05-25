@@ -4,3 +4,10 @@ update_configs:
     directory: /
     update_schedule: weekly
     version_requirement_updates: auto
+    automerged_updates:
+      - match:
+          dependency_type: production
+          update_type: in_range
+      - match:
+          dependency_type: development
+          update_type: in_range
