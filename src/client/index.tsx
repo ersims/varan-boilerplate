@@ -1,16 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import { history, store } from './redux/store';
 import { compose } from 'recompose';
+import { ConnectedRouter } from 'connected-react-router';
+import { withRouter } from 'react-router';
+import { history, store } from './redux/store';
 import { App } from './components/App';
 import withApplicationState from './components/enhancers/withApplicationState';
 import withOffline from './components/enhancers/withOffline';
 
 // Styles
 import './styles/index.scss';
-import { withRouter } from 'react-router';
 
 // Init
 const EnhancedApp = withRouter<any>(
@@ -33,5 +33,5 @@ const render = () => {
 };
 render();
 
-// // Enable hot reloading
+// Enable hot reloading
 if (module.hot) module.hot.accept('./components/App', render);

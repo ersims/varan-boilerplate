@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { App } from '../../../../src/client/components/App';
 import { shallow } from 'enzyme';
+import { App } from '../../../../src/client/components/App';
 
 // Tests
 test('should render correctly', () => {

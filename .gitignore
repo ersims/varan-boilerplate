@@ -5,7 +5,7 @@
 !.babelrc*
 !.browserslistrc
 !.env.example
-!.eslintrc
+!.eslintrc*
 !.eslintignore
 !.editorconfig
 !.gitattributes
@@ -16,6 +16,7 @@
 !.prettierrc
 !.travis.yml
 !.circleci
+!.gitlab-ci.yml
 !.dependabot
 !.github
 

@@ -1,6 +1,8 @@
+/* eslint-disable spaced-comment */
 /// <reference types="node" />
 /// <reference types="react" />
 /// <reference types="react-dom" />
+/* eslint-enable spaced-comment */
 
 declare namespace NodeJS {
   interface ProcessEnv {

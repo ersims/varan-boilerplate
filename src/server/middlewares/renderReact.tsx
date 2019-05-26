@@ -26,7 +26,10 @@ if (module.hot) module.hot.accept('../../client/components/App', () => {});
 // Exports
 export default (stats: ApplicationStats, assets: ApplicationAssets, preload: string[] = []): RequestHandler => {
   // Load bundles list
-  const { bundleJs, bundleCss } = Object.entries(stats.assetsByChunkName).reduce(
+  const { bundleJs, bundleCss } = Object.entries(stats.assetsByChunkName).reduce<{
+    bundleJs: string[];
+    bundleCss: string[];
+  }>(
     (acc, [k, v]) => {
       (Array.isArray(v) ? v : [v]).forEach(f => {
         if (f.endsWith('.js')) acc.bundleJs.push(assets[`${k}.js`]);
@@ -34,7 +37,7 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
       });
       return acc;
     },
-    { bundleJs: [], bundleCss: [] } as { bundleJs: string[]; bundleCss: string[] },
+    { bundleJs: [], bundleCss: [] },
   );
 
   // Fetch preloaded assets
@@ -51,6 +54,7 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
     const { store } = createStore({ ...initialState, router: { location: createLocation(req.originalUrl) } });
     // TODO: Improve hot reload integration
     if (process.env.NODE_ENV === 'development' && module.hot) {
+      // eslint-disable-next-line global-require
       const reloadStore = () => store.replaceReducer(require('../../client/redux/index').rootReducer);
       module.hot.accept('../../client/redux/createStore', reloadStore);
       module.hot.accept('../../client/redux/index', reloadStore);
@@ -95,6 +99,6 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
       return;
     }
     if (context.statusCode) res.status(context.statusCode);
-    return res.send(html);
+    res.send(html);
   };
 };

@@ -11,27 +11,11 @@ export default (autoEnable = true, updateCheckInterval = 60 * 60 * 1000) => <P e
     protected serviceWorker: VaranServiceWorker = new VaranServiceWorker();
     protected timer: ReturnType<typeof setTimeout> | null = null;
 
-    // State handlers
-    public handleRegister = () => this.props.offlineActions.cacheEnabled();
-    public handleUpdated = () => this.props.offlineActions.cacheUpdated();
-    public handleUnregister = () => this.props.offlineActions.cacheDisabled();
-    public handleOffline = () => this.props.offlineActions.setOffline();
-    public handleOnline = () => this.props.offlineActions.setOnline();
-
-    /**
-     * Create update check timer
-     *
-     * @param {number} waitInterval
-     */
-    public createCheckForUpdatesTimer = (waitInterval: number) => {
-      if (this.timer) clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
-        this.props.offlineActions.cacheCheck();
-        this.serviceWorker.update();
-        this.createCheckForUpdatesTimer(waitInterval);
-      }, waitInterval);
-    };
     public componentDidMount() {
+      const {
+        offlineActions: { cacheEnable },
+      } = this.props;
+
       // Add event listeners
       window.addEventListener('offline', this.handleOffline);
       window.addEventListener('online', this.handleOnline);
@@ -45,7 +29,7 @@ export default (autoEnable = true, updateCheckInterval = 60 * 60 * 1000) => <P e
 
       // Enable?
       if (autoEnable) {
-        this.props.offlineActions.cacheEnable();
+        cacheEnable();
         this.serviceWorker.register();
 
         // Add update timer?
@@ -60,6 +44,33 @@ export default (autoEnable = true, updateCheckInterval = 60 * 60 * 1000) => <P e
       this.serviceWorker.removeListener(VaranServiceWorkerEvents.UPDATE_AVAILABLE, this.handleUpdated);
       this.serviceWorker.removeListener(VaranServiceWorkerEvents.UNREGISTERED, this.handleUnregister);
     }
+
+    /**
+     * Create update check timer
+     *
+     * @param {number} waitInterval
+     */
+    public createCheckForUpdatesTimer = (waitInterval: number) => {
+      if (this.timer) clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        const {
+          offlineActions: { cacheCheck },
+        } = this.props;
+        cacheCheck();
+        this.serviceWorker.update();
+        this.createCheckForUpdatesTimer(waitInterval);
+      }, waitInterval);
+    };
+
+    // State handlers
+    /* eslint-disable react/destructuring-assignment */
+    public handleRegister = () => this.props.offlineActions.cacheEnabled();
+    public handleUpdated = () => this.props.offlineActions.cacheUpdated();
+    public handleUnregister = () => this.props.offlineActions.cacheDisabled();
+    public handleOffline = () => this.props.offlineActions.setOffline();
+    public handleOnline = () => this.props.offlineActions.setOnline();
+    /* eslint-enable react/destructuring-assignment */
+
     public render() {
       return <WrappedComponent {...this.props as P} />;
     }

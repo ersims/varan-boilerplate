@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { NavBarLink } from '../../../../../src/client/components/NavBar/Link';
 import { shallow } from 'enzyme';
+import { NavBarLink } from '../../../../../src/client/components/NavBar/Link';
 
 // Tests
 test('should render correctly for internal links', () => {

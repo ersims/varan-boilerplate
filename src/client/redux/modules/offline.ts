@@ -14,7 +14,7 @@ export enum Actions {
   OFFLINE_CACHE_DISABLE = 'varan/offline/CACHE_DISABLE',
   OFFLINE_CACHE_DISABLED = 'varan/offline/CACHE_DISABLED',
 }
-interface IState {
+interface State {
   isEnabled: boolean;
   isUpdated: boolean;
   isOffline: boolean;
@@ -22,7 +22,7 @@ interface IState {
 }
 
 // Initial state
-export const initialState: IState = {
+export const initialState: State = {
   isEnabled: false, // Is service worker enabled?
   isUpdated: false, // Has assets been updated in the background and reload is necessary?
   isOffline: true,

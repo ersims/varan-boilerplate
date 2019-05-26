@@ -1,6 +1,6 @@
 // Dependencies
 import { applyMiddleware, createStore, Middleware } from 'redux';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { routerMiddleware } from 'connected-react-router';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';

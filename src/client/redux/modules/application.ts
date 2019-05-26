@@ -11,14 +11,14 @@ const getIsStandalone = () => navigator !== undefined && 'standalone' in navigat
 export enum Actions {
   APPLICATION_INIT = 'varan/application/INIT',
 }
-interface IState {
+interface State {
   isInit: boolean;
   isIOS: boolean;
   isStandalone: boolean;
 }
 
 // Initial state
-export const initialState: IState = {
+export const initialState: State = {
   isInit: false,
   isIOS: false,
   isStandalone: false,

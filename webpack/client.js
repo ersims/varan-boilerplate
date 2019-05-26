@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/camelcase */
 const path = require('path');
 const client = require('varan/webpack/client');
+
 const pwaManifest = {
   name: 'Varan Progressive Web App',
   short_name: 'VaranPWA',
