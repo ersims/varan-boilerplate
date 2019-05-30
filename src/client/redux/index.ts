@@ -1,12 +1,12 @@
 // Dependencies
 import { combineReducers } from 'redux';
 import { StateType } from 'typesafe-actions';
+import { History } from 'history';
 
 // Modules
 import application, { actions as applicationActions, epics as applicationEpics } from './modules/application';
 import offline, { actions as offlineActions, epics as offlineEpics } from './modules/offline';
 import router, { actions as routerActions, epics as routerEpics } from './modules/router';
-import { History } from 'history';
 
 // Exports
 export const actionCreators = Object.assign(

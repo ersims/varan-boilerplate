@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { shallow } from 'enzyme';
 import { Feature } from '../../../../src/client/components/Feature';
 import { ReactComponent as IconSpeedometer } from '../../../../src/assets/vector/icons/Icon-Speedometer.svg';
-import { shallow } from 'enzyme';
 
 // Tests
 test('should render correctly', () => {
@@ -19,7 +19,7 @@ test('should render correctly', () => {
 });
 test('should have `is-focused` class when focused', () => {
   const component = shallow(
-    <Feature Icon={IconSpeedometer} title="My Feature" isFocused={true}>
+    <Feature Icon={IconSpeedometer} title="My Feature" isFocused>
       <p id="my-body">My feature body</p>
     </Feature>,
   );

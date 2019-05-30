@@ -18,12 +18,13 @@ export const GettingStarted = () => {
           <p>You have successfully set up the varan-boilerplate. Now the fun can begin.</p>
           <p>
             To get started, edit the file{' '}
-            <span className="highlight highlight--inline highlight--path">src/client/pages/Home.tsx</span> and save to
-            observe the magic of hot reloading. Cool huh? Now it’s all up to you to make great websites!
+            <span className="highlight highlight--inline highlight--path">src/client/pages/Home.tsx</span>
+            and save to observe the magic of hot reloading. Cool huh? Now it’s all up to you to make great websites!
           </p>
           <p>
-            Don’t forget to visit the documentation of <a href="https://github.com/ersims/varan">varan</a> to see what
-            other options are available.
+            Don’t forget to visit the documentation of
+            <a href="https://github.com/ersims/varan">varan</a>
+            to see what other options are available.
           </p>
         </section>
       </div>

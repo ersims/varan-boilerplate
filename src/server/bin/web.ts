@@ -1,15 +1,18 @@
 // Init environment
 import 'source-map-support/register';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 // Dependencies
+/* eslint-disable import/first */
 import express from 'express';
 import compression from 'compression';
 import fs from 'fs';
 import path from 'path';
 import gzipStatic from 'connect-gzip-static';
 import renderReact from '../middlewares/renderReact';
+/* eslint-enable import/first */
 
 // Hot reloading
 if (module.hot) module.hot.accept('../middlewares/renderReact', () => {});
@@ -49,6 +52,6 @@ app.get('*', renderReact(stats, assets, PRELOAD_FILES));
 // Export server
 export default app.listen(app.get('port'), app.get('host'), () => {
   if (process.send) process.send('ready');
-  /* tslint:disable-next-line no-console */
+  // eslint-disable-next-line no-console
   console.log(`Server listening on ${app.get('port')} in ${app.get('env')} mode`);
 });

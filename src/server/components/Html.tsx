@@ -46,7 +46,7 @@ class Html extends React.PureComponent<HtmlProps> {
       preload,
     } = this.props;
     return (
-      <html {...htmlAttributes}>
+      <html lang="en" {...htmlAttributes}>
         <head>
           {title}
           {meta}
@@ -54,34 +54,36 @@ class Html extends React.PureComponent<HtmlProps> {
           {base}
           {manifest && <link rel="manifest" href={manifest} />}
           {link}
-          {preload.map((file, i) => {
-            if (/\.js$/.test(file)) return <link key={i} href={file} rel="preload" as="script" />;
-            if (/\.css$/.test(file)) return <link key={i} href={file} rel="preload" as="style" />;
+          {preload.map(file => {
+            if (/\.js$/.test(file)) return <link key={file} href={file} rel="preload" as="script" />;
+            if (/\.css$/.test(file)) return <link key={file} href={file} rel="preload" as="style" />;
             if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(file))
-              return <link key={i} href={file} rel="preload" as="font" crossOrigin="anonymous" />;
+              return <link key={file} href={file} rel="preload" as="font" crossOrigin="anonymous" />;
             if (/(\.png|\.jpe?g|\.gif)$/.test(file))
-              return <link key={i} href={file} rel="preload" as="image" crossOrigin="anonymous" />;
+              return <link key={file} href={file} rel="preload" as="image" crossOrigin="anonymous" />;
             return null;
           })}
-          {bundleCss.map((css, i) => (
-            <link key={i} href={css} rel="stylesheet" />
+          {bundleCss.map(css => (
+            <link key={css} href={css} rel="stylesheet" />
           ))}
           {style}
           {script}
         </head>
         <body {...bodyAttributes}>
+          {/* eslint-disable-next-line react/no-danger */}
           <div id="root" dangerouslySetInnerHTML={{ __html: body }} />
           {initialState && (
             <script
               id="initial-state"
               type="text/javascript"
+              /* eslint-disable-next-line react/no-danger */
               dangerouslySetInnerHTML={{
                 __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, { isJSON: true })}`,
               }}
             />
           )}
-          {bundleJs.map((js, i) => (
-            <script key={i} type="text/javascript" src={js} defer />
+          {bundleJs.map(js => (
+            <script key={js} type="text/javascript" src={js} defer />
           ))}
         </body>
       </html>

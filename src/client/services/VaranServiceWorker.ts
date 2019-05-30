@@ -17,7 +17,7 @@ class VaranServiceWorker extends EventEmitter {
    *
    * @param {string=} swUrl
    */
-  constructor(swUrl = '/service-worker.js') {
+  public constructor(swUrl = '/service-worker.js') {
     super();
     this.swUrl = swUrl;
   }
@@ -33,7 +33,7 @@ class VaranServiceWorker extends EventEmitter {
       const isLocalhost = [/^localhost$/i, /^\[::1]$/, /^127./].some(v => v.test(window.location.hostname));
 
       // Make sure service worker is app-specific for localhost
-      if (false && isLocalhost) {
+      if (isLocalhost) {
         try {
           const response = await fetch(this.swUrl);
 
@@ -54,12 +54,14 @@ class VaranServiceWorker extends EventEmitter {
         const registration = await navigator.serviceWorker.register(this.swUrl);
         this.emit(VaranServiceWorkerEvents.REGISTERED, this);
         registration.onupdatefound = () => {
-          const installingWorker = registration.installing!;
-          installingWorker.onstatechange = () => {
-            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              this.emit(VaranServiceWorkerEvents.UPDATE_AVAILABLE, this);
-            }
-          };
+          const installingWorker = registration.installing;
+          if (installingWorker) {
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                this.emit(VaranServiceWorkerEvents.UPDATE_AVAILABLE, this);
+              }
+            };
+          }
         };
       }
     }

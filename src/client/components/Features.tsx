@@ -20,7 +20,10 @@ export const Features = () => {
         <section className="section section__grid section__grid--4">
           <Feature isFocused={isVisible} Icon={IconSpeedometer} title="Performance" subtitle="Lighthouse score = 100">
             <p className="feature__description">
-              Build hassle-free high performance web apps. You are still responsible for your own code though 😉
+              Build hassle-free high performance web apps. You are still responsible for your own code though
+              <span role="img" aria-label="Wink smiley">
+                😉
+              </span>
             </p>
           </Feature>
           <Feature isFocused={isVisible} Icon={IconWebpack} title="Flexible" subtitle="Bring your own code">

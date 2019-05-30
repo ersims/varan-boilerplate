@@ -7,7 +7,7 @@ import { actionCreators } from './index';
 
 // Helpers
 export default <TDispatchProps, TOwnProps>(
-  actions?: keyof typeof actionCreators | Array<keyof typeof actionCreators>,
+  actions?: keyof typeof actionCreators | (keyof typeof actionCreators)[],
 ): MapDispatchToPropsParam<TDispatchProps, TOwnProps> | undefined => {
   if (!actions) return undefined;
   return function mapDispatchToProps(dispatch: Dispatch) {
@@ -16,6 +16,7 @@ export default <TDispatchProps, TOwnProps>(
         (acc as any)[actionName] = bindActionCreators(actionCreator, dispatch);
         return acc;
       },
+      // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
       {} as TDispatchProps,
     );
   };
