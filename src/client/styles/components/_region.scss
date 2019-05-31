@@ -16,6 +16,7 @@
   @include link-on-light;
   display: flex;
   padding: $local__padding;
+  justify-content: center;
 
   // Backgrounds
   & {
