@@ -72,7 +72,8 @@ export default (autoEnable = true, updateCheckInterval = 60 * 60 * 1000) => <P e
     /* eslint-enable react/destructuring-assignment */
 
     public render() {
-      return <WrappedComponent {...this.props as P} />;
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      return <WrappedComponent {...(this.props as P)} />;
     }
   }
   return connect(
