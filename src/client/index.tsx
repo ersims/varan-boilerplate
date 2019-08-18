@@ -13,7 +13,8 @@ import withOffline from './components/enhancers/withOffline';
 import './styles/index.scss';
 
 // Init
-const EnhancedApp = withRouter<any>(
+// TODO: Fixme
+const EnhancedApp = withRouter<any, any>(
   compose(
     withOffline(),
     withApplicationState(),

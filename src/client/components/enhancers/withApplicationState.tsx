@@ -12,7 +12,8 @@ export default () => <P extends object>(WrappedComponent: React.ComponentType<P>
       init();
     }
     public render() {
-      return <WrappedComponent {...this.props as P} />;
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      return <WrappedComponent {...(this.props as P)} />;
     }
   }
   return connect(

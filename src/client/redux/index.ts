@@ -9,6 +9,8 @@ import offline, { actions as offlineActions, epics as offlineEpics } from './mod
 import router, { actions as routerActions, epics as routerEpics } from './modules/router';
 
 // Exports
+// TODO: Fixme
+// eslint-disable-next-line
 export const actionCreators = Object.assign(
   {},
   {
@@ -18,6 +20,8 @@ export const actionCreators = Object.assign(
   },
 );
 export const reducers = (history: History) =>
+  // TODO: Fixme
+  // eslint-disable-next-line
   Object.assign(
     {},
     {
@@ -27,6 +31,8 @@ export const reducers = (history: History) =>
     },
   );
 export const rootReducer = (history: History) => combineReducers(reducers(history));
+// TODO: Fixme
+// eslint-disable-next-line
 export const epics = Object.assign(
   {},
   {

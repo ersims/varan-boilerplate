@@ -16,7 +16,6 @@ export default <TDispatchProps, TOwnProps>(
         (acc as any)[actionName] = bindActionCreators(actionCreator, dispatch);
         return acc;
       },
-      // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
       {} as TDispatchProps,
     );
   };
