@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Route, Switch } from 'react-router';
 import favicon from '../../assets/favicon.ico';
 import NavBar from './NavBar';

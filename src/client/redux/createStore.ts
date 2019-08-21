@@ -1,11 +1,11 @@
-// Dependencies
-import { applyMiddleware, createStore, Middleware } from 'redux';
+import { Action, applyMiddleware, createStore as reduxCreateStore, Middleware, Store } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import createRouterHistory from '../lib/createRouterHistory';
-import { epics, rootReducer } from './index';
+import { History } from 'history';
+import { Actions, epics, rootReducer, RootState, routerHistory } from './index';
+import * as services from '../services';
 
 // Init
 const rootEpic = combineEpics(...Object.values(epics).reduce((acc, cur) => acc.concat(cur), []));
@@ -14,7 +14,7 @@ const loggerMiddleware =
   createLogger({
     collapsed: (getState, action, logEntry) =>
       (!logEntry || !logEntry.error) && !action.error && !action.isError && !(action.payload instanceof Error),
-    predicate: () => '__DEV__' in window || (process && process.env && process.env.NODE_ENV === 'development'),
+    predicate: () => process.env.NODE_ENV !== 'production',
   });
 const composeEnhancers = composeWithDevTools({ serialize: true });
 
@@ -23,15 +23,18 @@ const composeEnhancers = composeWithDevTools({ serialize: true });
  * Create redux store with initial state
  *
  * @param {{}} initialState
- * @param {History=} history
- * @returns {{store: *; history: History}}
+ * @returns {{ store: Store, history: History }}
  */
-export default (initialState = {}, history = createRouterHistory()) => {
-  const epicMiddleware = createEpicMiddleware();
+export default (initialState = {}): { store: Store; history: History } => {
+  const epicMiddleware = createEpicMiddleware<Action<Actions>, Action<Actions>, RootState, typeof services>({
+    dependencies: services,
+  });
   const enhancer = composeEnhancers(
-    applyMiddleware(...([routerMiddleware(history), epicMiddleware, loggerMiddleware].filter(Boolean) as Middleware[])),
+    applyMiddleware(
+      ...([routerMiddleware(routerHistory), epicMiddleware, loggerMiddleware].filter(Boolean) as Middleware[]),
+    ),
   );
-  const store = createStore(rootReducer(history), initialState, enhancer);
+  const store = reduxCreateStore(rootReducer, initialState, enhancer);
   epicMiddleware.run(rootEpic);
-  return { store, history };
+  return { store, history: routerHistory };
 };

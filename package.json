@@ -33,11 +33,11 @@
     "clean": "del-cli ./dist",
     "heroku-postbuild": "npm install --only=dev && npm run build && npm prune --production",
     "start": "node dist/server/bin/web.js",
+    "prestart:watch": "npm run clean",
+    "start:watch": "varan watch ./webpack/client varan/webpack/server -- --inspect",
     "pretest": "npm run check",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "prestart:watch": "npm run clean",
-    "start:watch": "varan watch ./webpack/client varan/webpack/server -- --inspect"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -49,10 +49,11 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "history": "^4.7.2",
+    "immer": "^3.2.0",
     "lodash": "^4.17.10",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-helmet": "^5.2.0",
+    "react-helmet-async": "^1.0.2",
     "react-hot-loader": "^4.8.0",
     "react-redux": "^7.0.3",
     "react-router": "^5.0.0",
@@ -63,11 +64,10 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-observable": "^1.0.0",
-    "reduxsauce": "^1.1.0",
     "rxjs": "^6.5.2",
     "serialize-javascript": "^1.7.0",
     "source-map-support": "^0.5.10",
-    "typesafe-actions": "^4.4.0"
+    "typesafe-actions": "^4.4.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
@@ -84,7 +84,7 @@
     "@types/node": "^12.0.3",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.0.6",
-    "@types/react-helmet": "^5.0.6",
+    "@types/react-helmet-async": "^1.0.0",
     "@types/react-redux": "^7.0.2",
     "@types/react-router": "^5.0.1",
     "@types/react-router-dom": "^4.2.7",

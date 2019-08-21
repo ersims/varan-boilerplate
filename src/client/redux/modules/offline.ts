@@ -1,7 +1,5 @@
-// Imports
-import { createReducer } from 'reduxsauce';
-import { createStandardAction, getType } from 'typesafe-actions';
-import { Epic } from 'redux-observable';
+import { ActionType, createReducer, createStandardAction, getType } from 'typesafe-actions';
+import { TypedEpic } from '../index';
 
 // Types
 export enum Actions {
@@ -42,28 +40,12 @@ export const actions = {
 };
 
 // Reducers
-export default createReducer(initialState, {
-  [getType(actions.setOffline)]: (state = initialState) => ({
-    ...state,
-    isOffline: true,
-  }),
-  [getType(actions.setOnline)]: (state = initialState) => ({
-    ...state,
-    isOffline: false,
-  }),
-  [getType(actions.cacheEnabled)]: (state = initialState) => ({
-    ...state,
-    isEnabled: true,
-  }),
-  [getType(actions.cacheUpdated)]: (state = initialState) => ({
-    ...state,
-    isUpdated: true,
-  }),
-  [getType(actions.cacheDisabled)]: (state = initialState) => ({
-    ...state,
-    isEnabled: false,
-  }),
-});
+export const reducers = createReducer<State, ActionType<typeof actions>>(initialState, {})
+  .handleAction(getType(actions.setOffline), state => ({ ...state, state: { isOffline: true } }))
+  .handleAction(getType(actions.setOnline), state => ({ ...state, state: { isOffline: false } }))
+  .handleAction(getType(actions.cacheEnabled), state => ({ ...state, state: { isEnabled: true } }))
+  .handleAction(getType(actions.cacheDisabled), state => ({ ...state, state: { isEnabled: false } }))
+  .handleAction(getType(actions.cacheUpdated), state => ({ ...state, state: { isUpdated: true } }));
 
 // Epics
-export const epics: Epic[] = [];
+export const epics: TypedEpic[] = [];

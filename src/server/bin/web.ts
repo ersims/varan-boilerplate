@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Dependencies
 /* eslint-disable import/first */
 import express from 'express';
 import compression from 'compression';
@@ -19,6 +18,7 @@ if (module.hot) module.hot.accept('../middlewares/renderReact', () => {});
 
 // Enable preloading of files that is highly likely to be used e.g fonts (will map to the webpack hashed file name)
 const PRELOAD_FILES = [
+  'static/media/open-sans-v15-latin-ext_latin-300.woff2',
   'static/media/open-sans-v15-latin-ext_latin-600.woff2',
   'static/media/open-sans-v15-latin-ext_latin-700.woff2',
   'static/media/open-sans-v15-latin-ext_latin-regular.woff2',

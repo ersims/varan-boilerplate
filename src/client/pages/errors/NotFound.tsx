@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { HttpStatus } from '../../components/HttpStatus';
 
 export const NotFound = () => {

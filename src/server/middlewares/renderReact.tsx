@@ -1,8 +1,7 @@
-// Dependencies
-import * as React from 'react';
+import React from 'react';
 import { RequestHandler } from 'express';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider, FilledContext } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';
@@ -61,18 +60,21 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
     }
 
     // Render
-    const context: {
+    const helmetContext = {};
+    const routerContext: {
       url?: string;
       statusCode?: number;
     } = {};
     const body = renderToString(
       <Provider store={store}>
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
+        <HelmetProvider context={helmetContext}>
+          <StaticRouter location={req.url} context={routerContext}>
+            <App />
+          </StaticRouter>
+        </HelmetProvider>
       </Provider>,
     );
-    const helmet = Helmet.renderStatic();
+    const { helmet } = helmetContext as FilledContext;
     const html = `<!DOCTYPE html>${renderToStaticMarkup(
       <Html
         htmlAttributes={helmet.htmlAttributes.toComponent()}
@@ -93,12 +95,12 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
       />,
     )}`;
 
-    if (context.url) {
-      if (context.statusCode !== undefined) res.status(context.statusCode);
-      res.redirect(context.url);
+    if (routerContext.url) {
+      if (routerContext.statusCode !== undefined) res.status(routerContext.statusCode);
+      res.redirect(routerContext.url);
       return;
     }
-    if (context.statusCode) res.status(context.statusCode);
+    if (routerContext.statusCode) res.status(routerContext.statusCode);
     res.send(html);
   };
 };

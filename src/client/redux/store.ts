@@ -1,4 +1,3 @@
-// Dependencies
 import createStore from './createStore';
 
 // Init

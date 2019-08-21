@@ -1,46 +1,50 @@
-// Dependencies
-import { combineReducers } from 'redux';
-import { StateType } from 'typesafe-actions';
-import { History } from 'history';
+import { Action, combineReducers } from 'redux';
+import { Epic } from 'redux-observable';
+import { mapValues } from 'lodash';
+import { Reducer } from 'typesafe-actions';
 
 // Modules
-import application, { actions as applicationActions, epics as applicationEpics } from './modules/application';
-import offline, { actions as offlineActions, epics as offlineEpics } from './modules/offline';
-import router, { actions as routerActions, epics as routerEpics } from './modules/router';
-
-// Exports
-// TODO: Fixme
-// eslint-disable-next-line
-export const actionCreators = Object.assign(
-  {},
-  {
-    applicationActions,
-    offlineActions,
-    routerActions,
-  },
-);
-export const reducers = (history: History) =>
-  // TODO: Fixme
-  // eslint-disable-next-line
-  Object.assign(
-    {},
-    {
-      application,
-      offline,
-      router: router(history),
-    },
-  );
-export const rootReducer = (history: History) => combineReducers(reducers(history));
-// TODO: Fixme
-// eslint-disable-next-line
-export const epics = Object.assign(
-  {},
-  {
-    applicationEpics,
-    offlineEpics,
-    routerEpics,
-  },
-);
+import * as offline from './modules/offline';
+import * as router from './modules/router';
+import * as services from '../services';
 
 // Types
-export type RootState = StateType<ReturnType<typeof rootReducer>>;
+interface DuckModule {
+  Actions: object;
+  actions: object;
+  reducers: Reducer<any, any>;
+  epics: Epic[];
+}
+export const STATE_RESET = 'varan/STATE_RESET';
+
+// Init
+const modules = {
+  offline,
+  router,
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const addedToGiveBetterTypeWarningsIfAReduxModuleIsMissingRequiredExports: { [key: string]: DuckModule } = modules;
+const extract = <K extends keyof DuckModule>(key: K): { [P in keyof typeof modules]: typeof modules[P][K] } =>
+  mapValues(modules, v => (v as any)[key]);
+
+// Exports
+export const { routerHistory } = router;
+export const actionCreators = { ...extract('actions') };
+export const reducers = { ...extract('reducers') };
+export const epics = { ...extract('epics') };
+const appReducer = combineReducers(reducers);
+export const rootReducer: Reducer<ReturnType<typeof appReducer>, Action<Actions>> = (state, action) => {
+  if (action.type === STATE_RESET) {
+    // eslint-disable-next-line no-param-reassign
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+// Types
+export type RootState = ReturnType<typeof rootReducer>;
+export type RootAction = typeof actionCreators;
+// export type Actions = { [P in keyof typeof modules]: typeof modules[P]['Actions'] };
+export type Actions = any;
+export type TypedEpic = Epic<Action<Actions>, Action<Actions>, RootState, typeof services>;

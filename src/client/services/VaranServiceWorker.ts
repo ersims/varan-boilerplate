@@ -1,4 +1,3 @@
-// Dependencies
 import { EventEmitter } from 'events';
 
 // Types
