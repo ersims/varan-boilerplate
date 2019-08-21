@@ -1,45 +1,54 @@
-// Imports
-import { createReducer } from 'reduxsauce';
-import { ActionType, createStandardAction, getType } from 'typesafe-actions';
-import { Epic } from 'redux-observable';
+import { ActionType, createAction, createReducer } from 'typesafe-actions';
+import { createSelector } from 'reselect';
 
-// Helpers
-const getIsIOS = () => navigator !== undefined && /i(phone|pad|pod)/.test(navigator.userAgent.toLowerCase());
-const getIsStandalone = () => navigator !== undefined && 'standalone' in navigator && (navigator as any).standalone;
-
-// Types
-export enum Actions {
-  APPLICATION_INIT = 'varan/application/INIT',
-}
-interface State {
-  isInit: boolean;
-  isIOS: boolean;
-  isStandalone: boolean;
+/**
+ * ActionTypes
+ */
+export enum ActionTypes {
+  APPLICATION_SET_OFFLINE = 'varan/application/SET_OFFLINE',
+  APPLICATION_SET_ONLINE = 'varan/application/SET_ONLINE',
 }
 
-// Initial state
-export const initialState: State = {
-  isInit: false,
-  isIOS: false,
-  isStandalone: false,
+/**
+ * State
+ */
+interface ApplicationState {
+  isOffline: boolean;
+}
+export const initialState: Readonly<ApplicationState> = {
+  isOffline: true,
 };
 
-// Actions
-export const actions = {
-  init: createStandardAction(Actions.APPLICATION_INIT).map(() => ({
-    payload: { isIOS: getIsIOS(), isStandalone: getIsStandalone() },
-  })),
+/**
+ * ActionCreators
+ */
+export const actionCreators = {
+  setOffline: createAction(ActionTypes.APPLICATION_SET_OFFLINE)(),
+  setOnline: createAction(ActionTypes.APPLICATION_SET_ONLINE)(),
 };
 
-// Reducers
-export default createReducer(initialState, {
-  [getType(actions.init)]: (state = initialState, action: ActionType<typeof actions.init>) => ({
-    ...state,
-    isInit: true,
-    isIOS: action.payload.isIOS,
-    isStandalone: action.payload.isStandalone,
-  }),
-});
+/**
+ * Reducers
+ */
+export const reducers = createReducer<ApplicationState, ActionType<typeof actionCreators>>(
+  initialState,
+)
+  .handleAction(actionCreators.setOffline, state => ({ ...state, isOffline: true }))
+  .handleAction(actionCreators.setOnline, state => ({ ...state, isOffline: false }));
 
-// Epics
-export const epics: Epic[] = [];
+/**
+ * Epics
+ */
+export const epics = {};
+
+/**
+ * Selectors
+ */
+export const isApplicationOfflineSelector = createSelector<
+  { application: ApplicationState },
+  boolean,
+  boolean
+>(
+  ({ application: { isOffline } }) => isOffline,
+  isOffline => isOffline,
+);

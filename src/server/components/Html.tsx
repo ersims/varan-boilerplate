@@ -2,7 +2,11 @@ import * as React from 'react';
 import serialize from 'serialize-javascript';
 
 // Interface
-interface Props {
+export interface Asset {
+  src: string;
+  integrity?: string;
+}
+export interface HtmlProps {
   title: React.ReactNode;
   meta: React.ReactNode;
   link: React.ReactNode;
@@ -12,17 +16,23 @@ interface Props {
   base: React.ReactNode;
   htmlAttributes: object;
   bodyAttributes: object;
-  bundleJs: string[];
-  bundleCss: string[];
+  bundleJs: (string | Asset)[];
+  bundleCss: (string | Asset)[];
   body: string;
   initialState?: object;
-  manifest?: string;
-  preload: string[];
+  manifest?: string | Asset;
+  preload: (string | Asset)[];
 }
 
-const Html = ({
-  htmlAttributes = {},
-  bodyAttributes = {},
+// Helpers
+function isAssetObject(asset: string | Asset): asset is Asset {
+  return typeof asset === 'object';
+}
+
+// Exports
+export const Html = ({
+  htmlAttributes,
+  bodyAttributes,
   title,
   meta,
   link,
@@ -30,58 +40,136 @@ const Html = ({
   script,
   noscript,
   base,
-  body = '',
+  body,
   bundleJs,
   bundleCss,
   initialState,
   manifest,
-  preload = [],
-}: Props) => {
-  return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <html lang="en" {...htmlAttributes}>
-      <head>
-        {title}
-        {meta}
-        {noscript}
-        {base}
-        {manifest && <link rel="manifest" href={manifest} />}
-        {link}
-        {preload.map(file => {
-          if (/\.js$/.test(file)) return <link key={file} href={file} rel="preload" as="script" />;
-          if (/\.css$/.test(file)) return <link key={file} href={file} rel="preload" as="style" />;
-          if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(file))
-            return <link key={file} href={file} rel="preload" as="font" crossOrigin="anonymous" />;
-          if (/(\.png|\.jpe?g|\.gif)$/.test(file))
-            return <link key={file} href={file} rel="preload" as="image" crossOrigin="anonymous" />;
-          return null;
-        })}
-        {bundleCss.map(css => (
-          <link key={css} href={css} rel="stylesheet" />
-        ))}
-        {style}
-        {script}
-      </head>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <body {...bodyAttributes}>
-        {/* eslint-disable-next-line react/no-danger */}
-        <div id="root" dangerouslySetInnerHTML={{ __html: body }} />
-        {initialState && (
-          <script
-            id="initial-state"
-            type="text/javascript"
-            /* eslint-disable-next-line react/no-danger */
-            dangerouslySetInnerHTML={{
-              __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, { isJSON: true })}`,
-            }}
+  preload,
+}: HtmlProps) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <html lang="en" {...htmlAttributes}>
+    <head>
+      {title}
+      {meta}
+      {noscript}
+      {base}
+      {manifest &&
+        (isAssetObject(manifest) ? (
+          <link
+            rel="manifest"
+            href={manifest.src}
+            integrity={manifest.integrity}
+            crossOrigin="anonymous"
           />
-        )}
-        {bundleJs.map(js => (
-          <script key={js} type="text/javascript" src={js} defer />
+        ) : (
+          <link rel="manifest" href={manifest} crossOrigin="anonymous" />
         ))}
-      </body>
-    </html>
-  );
+      {link}
+      {preload.map(asset => {
+        const { src, integrity = undefined } = isAssetObject(asset) ? asset : { src: asset };
+        if (/\.js$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="script"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        if (/\.css$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="style"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="font"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        if (/(\.png|\.jpe?g|\.gif)$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="image"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        return null;
+      })}
+      {bundleCss.map(css =>
+        isAssetObject(css) ? (
+          <link
+            key={css.src}
+            integrity={css.integrity}
+            href={css.src}
+            rel="stylesheet"
+            crossOrigin="anonymous"
+          />
+        ) : (
+          <link key={css} href={css} rel="stylesheet" crossOrigin="anonymous" />
+        ),
+      )}
+      {style}
+      {script}
+    </head>
+    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+    <body {...bodyAttributes}>
+      {/* eslint-disable-next-line react/no-danger */}
+      <div id="root" dangerouslySetInnerHTML={{ __html: body }} />
+      {initialState && (
+        <script
+          id="initial-state"
+          type="text/javascript"
+          /* eslint-disable-next-line react/no-danger */
+          dangerouslySetInnerHTML={{
+            __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, {
+              isJSON: true,
+            })}`,
+          }}
+        />
+      )}
+      {bundleJs.map(js =>
+        isAssetObject(js) ? (
+          <script
+            key={js.src}
+            type="text/javascript"
+            src={js.src}
+            integrity={js.integrity}
+            defer
+            crossOrigin="anonymous"
+          />
+        ) : (
+          <script key={js} type="text/javascript" src={js} defer crossOrigin="anonymous" />
+        ),
+      )}
+    </body>
+  </html>
+);
+Html.defaultProps = {
+  htmlAttributes: {},
+  bodyAttributes: {},
+  body: '',
+  preload: [],
 };
-
-export default Html;

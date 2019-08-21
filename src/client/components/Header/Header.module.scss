@@ -1,0 +1,56 @@
+@import '../../styles/mixins/fonts/open-sans';
+@import '../../styles/mixins/media/media';
+@import '../../styles/colors';
+
+.header {
+  // ----------
+  // Overrides
+  // ----------
+  --color-text: #{$color-white--100};
+
+  // ------
+  // Style
+  // ------
+  font-size: 1.1em;
+  overflow: hidden;
+  color: var(--color-text);
+  text-shadow: 0 0 0.2em $color-black--100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include responsive-background(
+    '../../../../assets/images/florian-olivo-1169465-unsplash.png',
+    'linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0.3) 100%),',
+    'no-repeat center center / cover'
+  );
+}
+.headerHero {
+  flex-basis: calc(var(--navbar-height) * 8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
+.headerTitle {
+  font-size: 4em;
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+.headerSubtitle {
+  // Overrides
+  --color-text: #{$color-turquoise};
+
+  // Style
+  @include open-sans(300);
+  color: var(--color-text);
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+.headerDescription {
+  margin-top: 2em;
+  max-width: 500px;
+}

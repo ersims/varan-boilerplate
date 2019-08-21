@@ -1,0 +1,48 @@
+// ----------------
+// Local variables
+// ----------------
+$local--top-bar-height: 30px;
+$local--background-color: #1d1d1d;
+
+.terminal {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+  justify-self: flex-end;
+  background-color: $local--background-color;
+  border-top-left-radius: $local--top-bar-height / 4;
+  border-top-right-radius: $local--top-bar-height / 4;
+}
+.terminalTopBar {
+  height: $local--top-bar-height;
+  display: flex;
+  align-items: center;
+  padding-left: $local--top-bar-height / 4;
+}
+.terminalTopBarButton {
+  $local--top-bar-button-size: $local--top-bar-height * 0.4;
+  height: $local--top-bar-button-size;
+  width: $local--top-bar-button-size;
+  border-radius: 100%;
+  display: block;
+  margin: $local--top-bar-button-size / 4;
+}
+.terminalTopBarButtonClose {
+  background-color: #ff605c;
+}
+.terminalTopBarButtonMinimize {
+  background-color: #ffbd44;
+}
+.terminalTopBarButtonMaximize {
+  background-color: #00ca4e;
+}
+.terminalImageContainer {
+  padding: 12px;
+}
+.terminalImage {
+  display: block;
+  width: 100%;
+  max-width: 580px;
+}

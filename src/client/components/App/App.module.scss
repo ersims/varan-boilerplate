@@ -1,0 +1,53 @@
+@import '../../styles/mixins/fonts/open-sans';
+@import '../../styles/mixins/media/media';
+@import '../../styles/colors';
+
+// -----------------
+// Global variables
+// -----------------
+:root {
+  // Navbar
+  --navbar-height: 4rem;
+
+  // Settings
+  --settings-max-width: 80rem;
+  --settings-gutter: 2rem;
+
+  // Colors
+  --color-text: #{$color-turquoise};
+  --color-link: #{$color-turquoise--dark};
+  --color-background: #{$color-black--80};
+}
+
+.app {
+  @include open-sans();
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--color-background);
+  ul,
+  li {
+    list-style-type: none;
+  }
+
+  // Responsiveness
+  @include tablet-landscape-up {
+    font-size: 1.1em;
+  }
+}
+.appPageContent {
+  width: 100%;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  position: initial;
+  transition: all 200ms ease-in-out;
+}
+.appPageContentEnterActive {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  position: absolute;
+}
+.appPageContentExitActive {
+  opacity: 0;
+  transform: translate3d(0, 0, -50%);
+  position: absolute;
+}

@@ -1,0 +1,30 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  padding: 1.4em;
+}
+.footerDescription {
+  // Overrides
+  --color-background: var(--color-text);
+
+  // Style
+  margin: 0;
+  &:after {
+    content: '';
+    margin: 0.25em 0 0 -25%;
+    bottom: 0;
+    height: 1px;
+    width: 150%;
+    display: block;
+    background-size: contain;
+    background: var(--color-background);
+    opacity: 0.5;
+  }
+}
+.footerCopyright {
+  font-size: 0.7em;
+  margin: 1em 0 0 0;
+}

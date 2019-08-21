@@ -1,0 +1,53 @@
+@import '../../settings';
+
+// ------------------
+// Screen size mixins
+// ------------------
+@mixin phone-only {
+  @media (max-width: unquote($breakpoint-phone-down + 'px')) {
+    @content;
+  }
+}
+@mixin tablet-portrait-up {
+  @media (min-width: unquote($breakpoint-tablet-portrait-up + 'px')) {
+    @content;
+  }
+}
+@mixin tablet-landscape-up {
+  @media (min-width: unquote($breakpoint-tablet-landscape-up + 'px')) {
+    @content;
+  }
+}
+@mixin desktop-up {
+  @media (min-width: unquote($breakpoint-desktop-up + 'px')) {
+    @content;
+  }
+}
+@mixin large-desktop-up {
+  @media (min-width: unquote($breakpoint-large-desktop-up + 'px')) {
+    @content;
+  }
+}
+
+// -------------------
+// Responsive helpers
+// -------------------
+
+// Use differently sized images depending on breakpoint
+@mixin responsive-background($url, $prepend: '', $append: '') {
+  @include phone-only {
+    background: #{$prepend} url('#{$url}?size='+($breakpoint-tablet-portrait-up)) #{$append};
+  }
+  @include tablet-portrait-up {
+    background: #{$prepend} url('#{$url}?size='+($breakpoint-tablet-landscape-up)) #{$append};
+  }
+  @include tablet-landscape-up {
+    background: #{$prepend} url('#{$url}?size='+($breakpoint-desktop-up)) #{$append};
+  }
+  @include desktop-up {
+    background: #{$prepend} url('#{$url}?size='+($breakpoint-large-desktop-up)) #{$append};
+  }
+  @include large-desktop-up {
+    background: #{$prepend} url('#{$url}?size='+(2*$breakpoint-large-desktop-up)) #{$append};
+  }
+}

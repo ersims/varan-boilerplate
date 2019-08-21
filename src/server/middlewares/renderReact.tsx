@@ -1,14 +1,13 @@
-// Dependencies
-import * as React from 'react';
+import React from 'react';
 import { RequestHandler } from 'express';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import Helmet from 'react-helmet';
+import { HelmetProvider, FilledContext } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';
-import createStore from '../../client/redux/createStore';
-import { App } from '../../client/components/App';
-import Html from '../components/Html';
+import { createStore } from '../../client/redux/createStore';
+import { App } from '../../client/components/App/App';
+import { Html } from '../components/Html';
 
 // Types
 interface ApplicationStats {
@@ -16,24 +15,39 @@ interface ApplicationStats {
     [bundle: string]: string | string[];
   };
 }
+interface ApplicationAsset {
+  src: string;
+  integrity?: string;
+}
 interface ApplicationAssets {
-  [file: string]: string;
+  [file: string]: ApplicationAsset;
 }
 
 // Add hot reloading
-if (module.hot) module.hot.accept('../../client/components/App', () => {});
+if (module.hot) module.hot.accept('../../client/components/App/App', () => {});
+
+// Init
+function getApplicationAsset(asset: string | ApplicationAsset) {
+  return typeof asset === 'string'
+    ? { src: asset }
+    : { src: asset.src, integrity: (!module.hot && asset.integrity) || undefined };
+}
 
 // Exports
-export default (stats: ApplicationStats, assets: ApplicationAssets, preload: string[] = []): RequestHandler => {
-  // Load bundles list
+export default (
+  stats: ApplicationStats,
+  assets: ApplicationAssets,
+  preload: string[] = [],
+): RequestHandler => {
+  // Load assets
   const { bundleJs, bundleCss } = Object.entries(stats.assetsByChunkName).reduce<{
-    bundleJs: string[];
-    bundleCss: string[];
+    bundleJs: ApplicationAsset[];
+    bundleCss: ApplicationAsset[];
   }>(
     (acc, [k, v]) => {
       (Array.isArray(v) ? v : [v]).forEach(f => {
-        if (f.endsWith('.js')) acc.bundleJs.push(assets[`${k}.js`]);
-        else if (f.endsWith('.css')) acc.bundleCss.push(assets[`${k}.css`]);
+        if (f.endsWith('.js')) acc.bundleJs.push(getApplicationAsset(assets[`${k}.js`]));
+        else if (f.endsWith('.css')) acc.bundleCss.push(getApplicationAsset(assets[`${k}.css`]));
       });
       return acc;
     },
@@ -43,36 +57,31 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
   // Fetch preloaded assets
   const preloadedAssets = preload.map(f => assets[f]);
 
-  // Find manifest
-  let manifest = Object.keys(assets).find(k => /^manifest\.[a-f0-9]+\.json/.test(k));
-  if (manifest) manifest = assets[manifest];
-
   // Return react rendering middleware
   return function renderReact(req, res) {
     // Prepare
-    const initialState = { offline: { isOffline: false } };
-    const { store } = createStore({ ...initialState, router: { location: createLocation(req.originalUrl) } });
-    // TODO: Improve hot reload integration
-    if (process.env.NODE_ENV === 'development' && module.hot) {
-      // eslint-disable-next-line global-require
-      const reloadStore = () => store.replaceReducer(require('../../client/redux/index').rootReducer);
-      module.hot.accept('../../client/redux/createStore', reloadStore);
-      module.hot.accept('../../client/redux/index', reloadStore);
-    }
+    const initialState = { application: { isOffline: false } };
+    const { store } = createStore({
+      ...initialState,
+      router: { location: createLocation(req.originalUrl) },
+    });
 
     // Render
-    const context: {
+    const helmetContext = {};
+    const routerContext: {
       url?: string;
       statusCode?: number;
     } = {};
     const body = renderToString(
       <Provider store={store}>
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
+        <HelmetProvider context={helmetContext}>
+          <StaticRouter location={req.url} context={routerContext}>
+            <App />
+          </StaticRouter>
+        </HelmetProvider>
       </Provider>,
     );
-    const helmet = Helmet.renderStatic();
+    const { helmet } = helmetContext as FilledContext;
     const html = `<!DOCTYPE html>${renderToStaticMarkup(
       <Html
         htmlAttributes={helmet.htmlAttributes.toComponent()}
@@ -87,18 +96,17 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
         body={body}
         bundleJs={bundleJs}
         bundleCss={bundleCss}
-        manifest={manifest}
         preload={preloadedAssets}
         initialState={initialState}
       />,
     )}`;
 
-    if (context.url) {
-      if (context.statusCode !== undefined) res.status(context.statusCode);
-      res.redirect(context.url);
+    if (routerContext.url) {
+      if (routerContext.statusCode !== undefined) res.status(routerContext.statusCode);
+      res.redirect(routerContext.url);
       return;
     }
-    if (context.statusCode) res.status(context.statusCode);
+    if (routerContext.statusCode) res.status(routerContext.statusCode);
     res.send(html);
   };
 };

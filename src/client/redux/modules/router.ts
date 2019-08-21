@@ -1,13 +1,15 @@
-// Imports
 import { connectRouter } from 'connected-react-router';
-import { History } from 'history';
-import { Epic } from 'redux-observable';
+import { routerHistory } from '../../lib/routerHistory';
 
-// Actions
-export const actions = {};
+/**
+ * State
+ */
+export const initialState = {
+  action: undefined,
+  location: { query: {} },
+};
 
-// Reducers
-export default (history: History) => connectRouter(history);
-
-// Epics
-export const epics: Epic[] = [];
+/**
+ * Reducers
+ */
+export const reducers = connectRouter(routerHistory);

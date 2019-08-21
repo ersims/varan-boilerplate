@@ -1,0 +1,46 @@
+@import '../../../styles/mixins/fonts/open-sans';
+@import '../../../styles/mixins/media/media';
+@import '../../../styles/colors';
+
+// -------------
+// Local mixins
+// -------------
+@mixin local--medium-screen {
+  @include tablet-portrait-up {
+    @content;
+  }
+}
+@mixin local--large-screen {
+  @include desktop-up {
+    @content;
+  }
+}
+
+.featuresSection {
+  // ----------
+  // Overrides
+  // ----------
+  --color-background: #{$color-azure-white};
+
+  // ------
+  // Style
+  // ------
+  background-color: var(--color-background);
+}
+.featuresSectionGrid {
+  flex: 1;
+  display: grid;
+  align-items: start;
+  gap: var(--settings-gutter);
+  grid-template-columns: repeat(1, 1fr);
+
+  // ---------------
+  // Responsiveness
+  // ---------------
+  @include local__medium-screen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include local__large-screen {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
