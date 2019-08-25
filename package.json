@@ -22,6 +22,12 @@
       "pre-commit": "npm test"
     }
   },
+  "lint-staged": {
+    "*.{css,less,sass,scss,html,md,graphql,gql,json,ts,tsx,js,jsx,yml,yaml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "scripts": {
     "apply:format": "prettier --write \"**/*.{css,less,sass,scss,html,md,graphql,gql,json,ts,tsx,js,jsx,yml,yaml}\"",
     "build": "varan build ./webpack/client varan/webpack/server",
@@ -100,7 +106,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "enzyme-to-json": "^3.3.4",
-    "eslint": "^6.1.0",
+    "eslint": "^6.2.2",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.17.3",
@@ -109,13 +115,14 @@
     "eslint-plugin-react": "^7.13.0",
     "husky": "^3.0.0",
     "jest": "^24.8.0",
+    "lint-staged": "^9.2.3",
     "normalize.css": "^8.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.1",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.1",
-    "varan": "^0.13.2"
+    "varan": "^0.13.3"
   },
   "jest": {
     "bail": true,

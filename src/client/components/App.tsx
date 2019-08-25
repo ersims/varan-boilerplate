@@ -3,11 +3,11 @@ import { hot } from 'react-hot-loader/root';
 import { Helmet } from 'react-helmet-async';
 import { Route, Switch } from 'react-router';
 import favicon from '../../assets/favicon.ico';
-import NavBar from './NavBar';
+import NavBar from './NavBar/NavBar';
 
 // Pages
-import { Home } from '../pages/Home';
-import { Examples, Examples as Example } from '../pages/Examples';
+import { Home } from '../pages/Home/Home';
+import { Examples } from '../pages/Examples/Examples';
 import { NotFound } from '../pages/errors/NotFound';
 import { Footer } from './Footer';
 
@@ -32,7 +32,6 @@ export const App = hot(() => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/examples" component={Examples} />
-          <Route path="/examples/:example" component={Example} />
           <Route component={NotFound} />
         </Switch>
         <Footer />

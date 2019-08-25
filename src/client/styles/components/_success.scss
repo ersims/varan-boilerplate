@@ -1,0 +1,75 @@
+@import '../variables';
+@import '../mixins';
+
+.success {
+  /**
+   * Local variables
+   */
+  $local__padding: 2em;
+  $local__bg-color: $color__black;
+  $local__color: $color__white;
+  $local__shadow-color: $color__black;
+  @mixin local__large-screen {
+    @include desktop-up {
+      @content;
+    }
+  }
+
+  @include link-on-dark();
+  align-self: stretch;
+  overflow: hidden;
+  display: grid;
+  align-items: start;
+  gap: 2em;
+  margin-top: 6em;
+  grid-template-columns: repeat(1, 1fr);
+  @include local__large-screen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Description
+  &__description {
+    $local__gap: 4em;
+    $local__border-width: 0.15em;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: left;
+    justify-self: center;
+    border-left: $local__border-width $local__color solid;
+    padding: $local__gap/2 $local__gap $local__gap/2 $local__gap;
+    max-width: 24em;
+    margin-left: 1em;
+
+    @include local__large-screen {
+      margin-left: 4em;
+    }
+
+    // Circles
+    &:before,
+    &:after {
+      $local__radius: 6 * $local__border-width;
+      display: block;
+      position: relative;
+      margin-top: -$local__gap/2;
+      margin-left: -$local__radius/2 - $local__gap - $local__border-width/2;
+      content: '';
+      height: $local__radius;
+      width: $local__radius;
+      border-radius: $local__radius;
+      background: $local__color;
+    }
+    // Bottom circle
+    &:after {
+      bottom: -$local__gap/2;
+    }
+  }
+
+  // Illustration
+  &__illustration {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    max-width: 40em;
+  }
+}

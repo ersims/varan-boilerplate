@@ -1,7 +1,7 @@
 import React from 'react';
 import { RequestHandler } from 'express';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { Helmet, HelmetProvider, FilledContext } from 'react-helmet-async';
+import { HelmetProvider, FilledContext } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';

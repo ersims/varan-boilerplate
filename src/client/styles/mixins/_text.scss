@@ -19,11 +19,11 @@
 }
 @mixin link-on-light {
   @include link {
-    color: $color__dark-cerulean;
+    color: $color__black;
   }
 }
 @mixin link-on-dark {
   @include link {
-    color: $color__azureish-white;
+    color: $color__white;
   }
 }

@@ -31,3 +31,4 @@ render();
 
 // Enable hot reloading
 if (module.hot) module.hot.accept('./components/App', render);
+if (module.hot) module.hot.accept('./styles/index.scss');

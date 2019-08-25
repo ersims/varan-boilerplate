@@ -29,7 +29,6 @@
       'linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.3) 100%),',
       'no-repeat center center / cover'
     );
-    //background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.3) 100%), url('../../../assets/images/florian-olivo-1169465-unsplash.png');
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,13 +45,13 @@
   // Title
   &__title {
     margin: 10vh 0 0 0;
-    font-size: 4em;
+    font-size: 5em;
     line-height: 1;
   }
   &__subtitle {
     @include open-sans(300);
     color: $local__color--secondary;
-    font-size: 0.7em;
+    font-size: 0.8em;
     text-transform: uppercase;
 
     /**

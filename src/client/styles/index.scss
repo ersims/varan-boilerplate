@@ -17,7 +17,6 @@ html {
   }
   @include link-on-light;
 }
-.App {
-  // Load components
-  @import 'components';
-}
+
+// Load components
+@import 'components';

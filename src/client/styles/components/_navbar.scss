@@ -58,7 +58,7 @@
       margin: $local__padding / 2;
       padding: 0;
       background: url('../../../assets/vector/Logo.svg') no-repeat center center;
-      background-size: contain;
+      background-size: 60%;
       &:not(.is-active):hover:not(:active) {
         animation-name: animation-shake;
         animation-duration: $local__animation-duration * 4;
@@ -69,9 +69,7 @@
     }
   }
 
-  /**
-   * Hamburger
-   */
+  // Hamburger
   & {
     &__hamburger {
       float: right;
@@ -139,9 +137,7 @@
     }
   }
 
-  /**
-   * Menu
-   */
+  // Menu
   & {
     &__list-container {
       width: 100%;
@@ -203,6 +199,7 @@
         height: 1.25em;
         width: 1.1em;
         margin-left: 0.2em;
+        margin-bottom: 0.2em;
         display: inline-block;
         background-color: $local__color;
         mask-image: url('../../../assets/vector/icons/Icon-Link-External.svg');
