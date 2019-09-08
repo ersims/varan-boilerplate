@@ -9,7 +9,7 @@ import express from 'express';
 import compression from 'compression';
 import fs from 'fs';
 import path from 'path';
-import gzipStatic from 'connect-gzip-static';
+import gzipStatic from 'express-static-gzip';
 import renderReact from '../middlewares/renderReact';
 /* eslint-enable import/first */
 
@@ -43,7 +43,14 @@ app.use('/service-worker.js', compression(), (req, res, next) => {
   res.setHeader('Cache-Control', 'max-age=0, no-cache, no-store, must-revalidate');
   return next();
 });
-app.use(gzipStatic(CLIENT_FILES, { maxAge: CLIENT_FILES_CACHE_AGE }));
+app.use(
+  gzipStatic(CLIENT_FILES, {
+    index: false,
+    enableBrotli: true,
+    orderPreference: ['br', 'gz'],
+    serveStatic: { maxAge: CLIENT_FILES_CACHE_AGE },
+  }),
+);
 
 // Render react server side
 app.use(compression());
