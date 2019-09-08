@@ -65,7 +65,7 @@
     "redux-observable": "^1.0.0",
     "reduxsauce": "^1.1.0",
     "rxjs": "^6.5.2",
-    "serialize-javascript": "^1.7.0",
+    "serialize-javascript": "^2.0.0",
     "source-map-support": "^0.5.10",
     "typesafe-actions": "^4.4.0"
   },
