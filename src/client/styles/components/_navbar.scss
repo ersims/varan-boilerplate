@@ -188,9 +188,17 @@
       position: relative;
       width: 100%;
       text-transform: uppercase;
-      text-decoration: none;
       letter-spacing: 5px;
       transition: linear color $local__animation-duration;
+
+      // Hover
+      &,
+      &:hover,
+      &:active,
+      &:visited {
+        text-decoration: none;
+        outline: none;
+      }
 
       // External links
       &--external::after {
@@ -237,6 +245,7 @@
 
         // Active/hover states
         &::before {
+          background: $local__color;
           mask-image: none !important;
           content: '';
           position: absolute;
@@ -253,7 +262,6 @@
         }
         &.is-active::before,
         &:hover:not(:active)::before {
-          background: $local__color;
           left: 0;
           right: 0;
         }

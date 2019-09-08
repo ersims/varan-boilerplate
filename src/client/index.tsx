@@ -18,13 +18,15 @@ const EnhancedApp = withRouter<any, any>(compose()(App));
 // Render app and perform necessary housekeeping
 const render = () =>
   hydrate(
-    <Provider store={store}>
-      <HelmetProvider>
-        <ConnectedRouter history={history}>
-          <EnhancedApp />
-        </ConnectedRouter>
-      </HelmetProvider>
-    </Provider>,
+    <React.StrictMode>
+      <Provider store={store}>
+        <HelmetProvider>
+          <ConnectedRouter history={history}>
+            <EnhancedApp />
+          </ConnectedRouter>
+        </HelmetProvider>
+      </Provider>
+    </React.StrictMode>,
     document.getElementById('root'),
   );
 render();
