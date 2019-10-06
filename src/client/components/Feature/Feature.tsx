@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
 
 // Types
-interface Props {
+interface FeatureProps {
   Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   subtitle?: string;
   children: ReactNode;
 }
 
-export const Feature = ({ Icon, title, subtitle, children }: Props) => {
+export const Feature = ({ Icon, title, subtitle, children }: FeatureProps) => {
   return (
     <div className="feature">
       {Icon && <Icon className="feature__icon" />}

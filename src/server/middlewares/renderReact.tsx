@@ -15,8 +15,12 @@ interface ApplicationStats {
     [bundle: string]: string | string[];
   };
 }
+interface ApplicationAsset {
+  src: string;
+  integrity?: string;
+}
 interface ApplicationAssets {
-  [file: string]: string;
+  [file: string]: ApplicationAsset;
 }
 
 // Add hot reloading
@@ -26,8 +30,8 @@ if (module.hot) module.hot.accept('../../client/components/App', () => {});
 export default (stats: ApplicationStats, assets: ApplicationAssets, preload: string[] = []): RequestHandler => {
   // Load bundles list
   const { bundleJs, bundleCss } = Object.entries(stats.assetsByChunkName).reduce<{
-    bundleJs: string[];
-    bundleCss: string[];
+    bundleJs: ApplicationAsset[];
+    bundleCss: ApplicationAsset[];
   }>(
     (acc, [k, v]) => {
       (Array.isArray(v) ? v : [v]).forEach(f => {
@@ -43,7 +47,9 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
   const preloadedAssets = preload.map(f => assets[f]);
 
   // Find manifest
-  let manifest = Object.keys(assets).find(k => /^manifest\.[a-f0-9]+\.json/.test(k));
+  let manifest: ApplicationAsset | string | undefined = Object.keys(assets).find(k =>
+    /^manifest\.[a-f0-9]+\.json/.test(k),
+  );
   if (manifest) manifest = assets[manifest];
 
   // Return react rendering middleware

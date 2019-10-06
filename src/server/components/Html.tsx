@@ -1,8 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import serialize from 'serialize-javascript';
 
 // Interface
-interface Props {
+export interface Asset {
+  src: string;
+  integrity?: string;
+}
+export interface HtmlProps {
   title: React.ReactNode;
   meta: React.ReactNode;
   link: React.ReactNode;
@@ -12,17 +16,22 @@ interface Props {
   base: React.ReactNode;
   htmlAttributes: object;
   bodyAttributes: object;
-  bundleJs: string[];
-  bundleCss: string[];
+  bundleJs: (string | Asset)[];
+  bundleCss: (string | Asset)[];
   body: string;
   initialState?: object;
-  manifest?: string;
-  preload: string[];
+  manifest?: string | Asset;
+  preload: (string | Asset)[];
+}
+
+// Helpers
+function isAssetObject(asset: string | Asset): asset is Asset {
+  return typeof asset === 'object';
 }
 
 const Html = ({
-  htmlAttributes = {},
-  bodyAttributes = {},
+  htmlAttributes,
+  bodyAttributes,
   title,
   meta,
   link,
@@ -30,13 +39,13 @@ const Html = ({
   script,
   noscript,
   base,
-  body = '',
+  body,
   bundleJs,
   bundleCss,
   initialState,
   manifest,
-  preload = [],
-}: Props) => {
+  preload,
+}: HtmlProps) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <html lang="en" {...htmlAttributes}>
@@ -45,20 +54,33 @@ const Html = ({
         {meta}
         {noscript}
         {base}
-        {manifest && <link rel="manifest" href={manifest} />}
+        {manifest && isAssetObject(manifest) ? (
+          <link rel="manifest" href={manifest.src} integrity={manifest.integrity} crossOrigin="anonymous" />
+        ) : (
+          <link rel="manifest" href={manifest} crossOrigin="anonymous" />
+        )}
         {link}
-        {preload.map(file => {
-          if (/\.js$/.test(file)) return <link key={file} href={file} rel="preload" as="script" />;
-          if (/\.css$/.test(file)) return <link key={file} href={file} rel="preload" as="style" />;
-          if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(file))
-            return <link key={file} href={file} rel="preload" as="font" crossOrigin="anonymous" />;
-          if (/(\.png|\.jpe?g|\.gif)$/.test(file))
-            return <link key={file} href={file} rel="preload" as="image" crossOrigin="anonymous" />;
+        {preload.map(asset => {
+          const { src, integrity = undefined } = isAssetObject(asset) ? asset : { src: asset };
+          if (/\.js$/.test(src))
+            return (
+              <link key={src} href={src} rel="preload" as="script" integrity={integrity} crossOrigin="anonymous" />
+            );
+          if (/\.css$/.test(src))
+            return <link key={src} href={src} rel="preload" as="style" integrity={integrity} crossOrigin="anonymous" />;
+          if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(src))
+            return <link key={src} href={src} rel="preload" as="font" integrity={integrity} crossOrigin="anonymous" />;
+          if (/(\.png|\.jpe?g|\.gif)$/.test(src))
+            return <link key={src} href={src} rel="preload" as="image" integrity={integrity} crossOrigin="anonymous" />;
           return null;
         })}
-        {bundleCss.map(css => (
-          <link key={css} href={css} rel="stylesheet" />
-        ))}
+        {bundleCss.map(css =>
+          isAssetObject(css) ? (
+            <link key={css.src} integrity={css.integrity} href={css.src} rel="stylesheet" crossOrigin="anonymous" />
+          ) : (
+            <link key={css} href={css} rel="stylesheet" crossOrigin="anonymous" />
+          ),
+        )}
         {style}
         {script}
       </head>
@@ -76,12 +98,29 @@ const Html = ({
             }}
           />
         )}
-        {bundleJs.map(js => (
-          <script key={js} type="text/javascript" src={js} defer />
-        ))}
+        {bundleJs.map(js =>
+          isAssetObject(js) ? (
+            <script
+              key={js.src}
+              type="text/javascript"
+              src={js.src}
+              integrity={js.integrity}
+              defer
+              crossOrigin="anonymous"
+            />
+          ) : (
+            <script key={js} type="text/javascript" src={js} defer crossOrigin="anonymous" />
+          ),
+        )}
       </body>
     </html>
   );
+};
+Html.defaultProps = {
+  htmlAttributes: {},
+  bodyAttributes: {},
+  body: '',
+  preload: [],
 };
 
 export default Html;
