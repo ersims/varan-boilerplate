@@ -1,4 +1,4 @@
-name: Test
+name: Build and Test
 on: [push]
 jobs:
   test:
@@ -15,7 +15,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v1
         with:
-          version: ${{ matrix.node_version }}
+          node-version: ${{ matrix.node_version }}
 
       - name: npm install
         run: npm install
@@ -23,8 +23,8 @@ jobs:
       - name: npm -v && node -v
         run: npm -v && node -v
 
-      - name: npm test
-        run: npm test
-
       - name: npm run build
         run: npm run build
+
+      - name: npm test
+        run: npm test
