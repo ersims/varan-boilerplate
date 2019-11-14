@@ -1,0 +1,8 @@
+// ----------------------------------
+// Screen size breakpoints in pixels
+// ----------------------------------
+$breakpoint-phone-down: 599;
+$breakpoint-tablet-portrait-up: $breakpoint-phone-down + 1;
+$breakpoint-tablet-landscape-up: 900;
+$breakpoint-desktop-up: 1200;
+$breakpoint-large-desktop-up: 1800;

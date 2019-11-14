@@ -6,10 +6,10 @@ import { ConnectedRouter } from 'connected-react-router';
 import { withRouter } from 'react-router';
 import { HelmetProvider } from 'react-helmet-async';
 import { history, store } from './redux/store';
-import { App } from './components/App';
+import { App } from './App';
 
-// Styles
-import './styles/index.scss';
+// Global Styles
+import 'normalize.css';
 
 // Init
 // TODO: Fixme
@@ -32,5 +32,4 @@ const render = () =>
 render();
 
 // Enable hot reloading
-if (module.hot) module.hot.accept('./components/App', render);
-if (module.hot) module.hot.accept('./styles/index.scss');
+if (module.hot) module.hot.accept('./App', render);

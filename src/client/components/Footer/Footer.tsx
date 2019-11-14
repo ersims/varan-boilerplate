@@ -9,7 +9,9 @@ export const Footer = () => {
           ❤
         </span>
       </p>
-      <p className="footer__copyright">Copyright (c) 2018 -{new Date().getFullYear()}, All rights reserved</p>
+      <p className="footer__copyright">
+        Copyright (c) 2018 -{new Date().getFullYear()}, All rights reserved
+      </p>
     </footer>
   );
 };

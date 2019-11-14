@@ -13,7 +13,10 @@ const loggerMiddleware =
   typeof window !== 'undefined' &&
   createLogger({
     collapsed: (getState, action, logEntry) =>
-      (!logEntry || !logEntry.error) && !action.error && !action.isError && !(action.payload instanceof Error),
+      (!logEntry || !logEntry.error) &&
+      !action.error &&
+      !action.isError &&
+      !(action.payload instanceof Error),
     predicate: () => process.env.NODE_ENV !== 'production',
   });
 const composeEnhancers = composeWithDevTools({ serialize: true });
@@ -26,12 +29,19 @@ const composeEnhancers = composeWithDevTools({ serialize: true });
  * @returns {{ store: Store, history: History }}
  */
 export default (initialState = {}): { store: Store; history: History } => {
-  const epicMiddleware = createEpicMiddleware<Action<Actions>, Action<Actions>, RootState, typeof services>({
+  const epicMiddleware = createEpicMiddleware<
+    Action<Actions>,
+    Action<Actions>,
+    RootState,
+    typeof services
+  >({
     dependencies: services,
   });
   const enhancer = composeEnhancers(
     applyMiddleware(
-      ...([routerMiddleware(routerHistory), epicMiddleware, loggerMiddleware].filter(Boolean) as Middleware[]),
+      ...([routerMiddleware(routerHistory), epicMiddleware, loggerMiddleware].filter(
+        Boolean,
+      ) as Middleware[]),
     ),
   );
   const store = reduxCreateStore(rootReducer, initialState, enhancer);

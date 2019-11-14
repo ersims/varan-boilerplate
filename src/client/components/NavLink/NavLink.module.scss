@@ -1,0 +1,30 @@
+@import '../../styles/mixins/fonts/open-sans';
+@import '../../styles/mixins/media/media';
+
+// Local variables
+$local--color-primary: var(--theme-color-primary);
+$local--color-primary--contrast: var(--theme-color-primary--contrast);
+
+.navLink {
+  @include open-sans(600);
+  color: $local--color-primary;
+  background-color: $local--color-primary--contrast;
+}
+
+.navLinkExternal {
+  &::after {
+    content: '';
+    vertical-align: middle;
+    height: 1.25em;
+    width: 1.1em;
+    margin-left: 0.2em;
+    display: inline-block;
+    background-color: $local--color-primary;
+    mask-image: url('../../../assets/vector/icons/Icon-Link-External.svg');
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+}
+.navLinkActive {
+}

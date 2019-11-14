@@ -6,7 +6,7 @@ import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';
 import createStore from '../../client/redux/createStore';
-import { App } from '../../client/components/App';
+import { App } from '../../client/App';
 import Html from '../components/Html';
 
 // Types
@@ -24,10 +24,14 @@ interface ApplicationAssets {
 }
 
 // Add hot reloading
-if (module.hot) module.hot.accept('../../client/components/App', () => {});
+if (module.hot) module.hot.accept('../../client/App', () => {});
 
 // Exports
-export default (stats: ApplicationStats, assets: ApplicationAssets, preload: string[] = []): RequestHandler => {
+export default (
+  stats: ApplicationStats,
+  assets: ApplicationAssets,
+  preload: string[] = [],
+): RequestHandler => {
   // Load bundles list
   const { bundleJs, bundleCss } = Object.entries(stats.assetsByChunkName).reduce<{
     bundleJs: ApplicationAsset[];
@@ -56,11 +60,15 @@ export default (stats: ApplicationStats, assets: ApplicationAssets, preload: str
   return function renderReact(req, res) {
     // Prepare
     const initialState = { offline: { isOffline: false } };
-    const { store } = createStore({ ...initialState, router: { location: createLocation(req.originalUrl) } });
+    const { store } = createStore({
+      ...initialState,
+      router: { location: createLocation(req.originalUrl) },
+    });
     // TODO: Improve hot reload integration
     if (process.env.NODE_ENV === 'development' && module.hot) {
       // eslint-disable-next-line global-require
-      const reloadStore = () => store.replaceReducer(require('../../client/redux/index').rootReducer);
+      const reloadStore = () =>
+        store.replaceReducer(require('../../client/redux/index').rootReducer);
       module.hot.accept('../../client/redux/createStore', reloadStore);
       module.hot.accept('../../client/redux/index', reloadStore);
     }

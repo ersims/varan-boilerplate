@@ -1,0 +1,55 @@
+@import '../../styles/mixins/fonts/open-sans';
+@import '../../styles/mixins/media/media';
+
+// Local variables
+$local--color-primary: var(--theme-color-primary);
+$local--color-primary--contrast: var(--theme-color-primary--contrast);
+$local--color-black: var(--color-black--100);
+$local--animation-duration: 200ms;
+$local--height: var(--navbar-height);
+$local--padding: $local--height / 8;
+
+.navbar {
+  background-color: $local--color-primary--contrast;
+  transition: ease-out background-color $local--animation-duration;
+  z-index: 10;
+  width: 100%;
+  position: fixed;
+  @include tablet-landscape-up {
+    background-color: transparent;
+  }
+}
+.navbarSticky {
+  @include tablet-landscape-up {
+    background-color: $local--color-primary--contrast;
+    box-shadow: 0 0 0.2em $local--color-black;
+  }
+}
+
+.navbarLogo {
+  height: $local--height - $local--padding;
+  display: block;
+  float: left;
+  margin: $local--padding / 2;
+  padding: 0;
+  background: url('../../../assets/vector/logo.svg') no-repeat center center;
+  background-size: contain;
+}
+.navbarLogoText {
+  visibility: hidden;
+}
+.navbarHamburger {
+}
+.navbarHamburgerExpanded {
+}
+.navbarHamburgerLine {
+}
+.navbarHamburgerLineExpanded {
+}
+.navbarList {
+  width: 100%;
+}
+.navbarListExpanded {
+}
+.navbarListItem {
+}

@@ -1,0 +1,50 @@
+@import '../../styles/mixins/fonts/open-sans';
+@import '../../styles/mixins/media/media';
+
+// Local variables
+$local--navbar-height: var(--navbar-height);
+$local--color-white: var(--color-white--100);
+$local--color-black: var(--color-black--100);
+$local--color-turquoise: var(--color-turquoise--100);
+
+.header {
+  font-size: 1.1em;
+  min-height: 20em;
+  overflow: hidden;
+  color: $local--color-white;
+  text-shadow: 0 0 0.2em $local--color-black;
+  padding: $local--navbar-height 1em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.headerMain {
+  @include responsive-background(
+    '../../../../assets/images/florian-olivo-1169465-unsplash.png',
+    'linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.3) 100%),',
+    'no-repeat center center / cover'
+  );
+}
+
+// Subcomponents
+.headerHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.headerTitle {
+  margin: 10vh 0 0 0;
+  font-size: 4em;
+  line-height: 1;
+}
+.headerSubtitle {
+  @include open-sans(300);
+  color: $local--color-turquoise;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+.headerDescription {
+  margin-top: 2em;
+  max-width: 500px;
+}

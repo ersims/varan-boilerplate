@@ -3,7 +3,8 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 import { TypedEpic } from '../index';
 
 // Init
-export const routerHistory = typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory();
+export const routerHistory =
+  typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory();
 
 // Types
 export const Actions = routerActions;

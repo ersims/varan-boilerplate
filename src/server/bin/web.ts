@@ -36,7 +36,9 @@ const stats =
   JSON.parse(fs.readFileSync(path.resolve(__dirname, process.env.VARAN_STATS_MANIFEST)).toString());
 const assets =
   process.env.VARAN_ASSETS_MANIFEST &&
-  JSON.parse(fs.readFileSync(path.resolve(__dirname, process.env.VARAN_ASSETS_MANIFEST)).toString());
+  JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, process.env.VARAN_ASSETS_MANIFEST)).toString(),
+  );
 
 // Serve static files and attempt to serve .gz files if found
 app.use('/service-worker.js', compression(), (req, res, next) => {

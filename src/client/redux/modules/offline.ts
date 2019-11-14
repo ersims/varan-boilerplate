@@ -44,7 +44,10 @@ export const reducers = createReducer<State, ActionType<typeof actions>>(initial
   .handleAction(getType(actions.setOffline), state => ({ ...state, state: { isOffline: true } }))
   .handleAction(getType(actions.setOnline), state => ({ ...state, state: { isOffline: false } }))
   .handleAction(getType(actions.cacheEnabled), state => ({ ...state, state: { isEnabled: true } }))
-  .handleAction(getType(actions.cacheDisabled), state => ({ ...state, state: { isEnabled: false } }))
+  .handleAction(getType(actions.cacheDisabled), state => ({
+    ...state,
+    state: { isEnabled: false },
+  }))
   .handleAction(getType(actions.cacheUpdated), state => ({ ...state, state: { isUpdated: true } }));
 
 // Epics

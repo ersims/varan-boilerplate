@@ -24,8 +24,12 @@ const modules = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const addedToGiveBetterTypeWarningsIfAReduxModuleIsMissingRequiredExports: { [key: string]: DuckModule } = modules;
-const extract = <K extends keyof DuckModule>(key: K): { [P in keyof typeof modules]: typeof modules[P][K] } =>
+const addedToGiveBetterTypeWarningsIfAReduxModuleIsMissingRequiredExports: {
+  [key: string]: DuckModule;
+} = modules;
+const extract = <K extends keyof DuckModule>(
+  key: K,
+): { [P in keyof typeof modules]: typeof modules[P][K] } =>
   mapValues(modules, v => (v as any)[key]);
 
 // Exports
@@ -34,7 +38,10 @@ export const actionCreators = { ...extract('actions') };
 export const reducers = { ...extract('reducers') };
 export const epics = { ...extract('epics') };
 const appReducer = combineReducers(reducers);
-export const rootReducer: Reducer<ReturnType<typeof appReducer>, Action<Actions>> = (state, action) => {
+export const rootReducer: Reducer<ReturnType<typeof appReducer>, Action<Actions>> = (
+  state,
+  action,
+) => {
   if (action.type === STATE_RESET) {
     // eslint-disable-next-line no-param-reassign
     state = undefined;

@@ -55,7 +55,12 @@ const Html = ({
         {noscript}
         {base}
         {manifest && isAssetObject(manifest) ? (
-          <link rel="manifest" href={manifest.src} integrity={manifest.integrity} crossOrigin="anonymous" />
+          <link
+            rel="manifest"
+            href={manifest.src}
+            integrity={manifest.integrity}
+            crossOrigin="anonymous"
+          />
         ) : (
           <link rel="manifest" href={manifest} crossOrigin="anonymous" />
         )}
@@ -64,19 +69,59 @@ const Html = ({
           const { src, integrity = undefined } = isAssetObject(asset) ? asset : { src: asset };
           if (/\.js$/.test(src))
             return (
-              <link key={src} href={src} rel="preload" as="script" integrity={integrity} crossOrigin="anonymous" />
+              <link
+                key={src}
+                href={src}
+                rel="preload"
+                as="script"
+                integrity={integrity}
+                crossOrigin="anonymous"
+              />
             );
           if (/\.css$/.test(src))
-            return <link key={src} href={src} rel="preload" as="style" integrity={integrity} crossOrigin="anonymous" />;
+            return (
+              <link
+                key={src}
+                href={src}
+                rel="preload"
+                as="style"
+                integrity={integrity}
+                crossOrigin="anonymous"
+              />
+            );
           if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(src))
-            return <link key={src} href={src} rel="preload" as="font" integrity={integrity} crossOrigin="anonymous" />;
+            return (
+              <link
+                key={src}
+                href={src}
+                rel="preload"
+                as="font"
+                integrity={integrity}
+                crossOrigin="anonymous"
+              />
+            );
           if (/(\.png|\.jpe?g|\.gif)$/.test(src))
-            return <link key={src} href={src} rel="preload" as="image" integrity={integrity} crossOrigin="anonymous" />;
+            return (
+              <link
+                key={src}
+                href={src}
+                rel="preload"
+                as="image"
+                integrity={integrity}
+                crossOrigin="anonymous"
+              />
+            );
           return null;
         })}
         {bundleCss.map(css =>
           isAssetObject(css) ? (
-            <link key={css.src} integrity={css.integrity} href={css.src} rel="stylesheet" crossOrigin="anonymous" />
+            <link
+              key={css.src}
+              integrity={css.integrity}
+              href={css.src}
+              rel="stylesheet"
+              crossOrigin="anonymous"
+            />
           ) : (
             <link key={css} href={css} rel="stylesheet" crossOrigin="anonymous" />
           ),
@@ -94,7 +139,9 @@ const Html = ({
             type="text/javascript"
             /* eslint-disable-next-line react/no-danger */
             dangerouslySetInnerHTML={{
-              __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, { isJSON: true })}`,
+              __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, {
+                isJSON: true,
+              })}`,
             }}
           />
         )}
