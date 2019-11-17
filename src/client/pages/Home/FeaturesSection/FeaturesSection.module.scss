@@ -1,0 +1,35 @@
+@import '../../../styles/mixins/fonts/open-sans';
+@import '../../../styles/mixins/media/media';
+
+// Local variables
+$local--color-primary: var(--theme-color-secondary);
+$local--gutter: var(--theme-settings-gutter);
+
+// Local mixins
+@mixin local--medium-screen {
+  @include tablet-portrait-up {
+    @content;
+  }
+}
+@mixin local--large-screen {
+  @include desktop-up {
+    @content;
+  }
+}
+
+.featuresSectionContainer {
+  background-color: $local--color-primary;
+}
+.featuresSectionGrid {
+  flex: 1;
+  display: grid;
+  align-items: start;
+  gap: $local--gutter;
+  grid-template-columns: repeat(1, 1fr);
+  @include local__medium-screen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include local__large-screen {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,17 +1,18 @@
 import React from 'react';
+import { Emoji } from '../Emoji/Emoji';
 
-export const Footer = () => {
-  return (
-    <footer className="footer">
-      <p className="footer__description">
-        Made with
-        <span className="emoji" role="img" aria-label="Heart emoji">
-          ❤
-        </span>
-      </p>
-      <p className="footer__copyright">
-        Copyright (c) 2018 -{new Date().getFullYear()}, All rights reserved
-      </p>
-    </footer>
-  );
-};
+// Styles
+import classes from './Footer.module.scss';
+
+// Exports
+export const Footer = () => (
+  <footer className={classes.footer}>
+    <p className={classes.footerDescription}>
+      Made with
+      <Emoji value="❤" label="Heart emoji" />
+    </p>
+    <p className={classes.footerCopyright}>
+      Copyright (c) 2018 -{new Date().getFullYear()}, All rights reserved
+    </p>
+  </footer>
+);

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import classes from './NavLink.module.scss';
 
 // Types
-interface Props {
+interface NavLinkProps {
   to: string;
   exact?: boolean;
   className?: string;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 // Exports
-export const NavLink = ({ children, to, exact = true, className, role }: Props) => {
+export const NavLink = ({ children, to, exact = true, className, role }: NavLinkProps) => {
   // Is this external?
   if (to.startsWith('https://') || to.startsWith('http://')) {
     return (

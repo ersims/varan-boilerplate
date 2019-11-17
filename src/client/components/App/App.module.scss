@@ -1,0 +1,56 @@
+@import '../../styles/mixins/fonts/open-sans';
+@import '../../styles/mixins/media/media';
+
+// Sass variables
+$color-white--100: #efefef;
+
+$color-black--100: #101010;
+$color-black--80: #222222;
+
+$color-azure-white: #dcedff;
+$color-azure-white--light: lighten(desaturate($color-azure-white, 2%), 2%);
+$color-azure-white--dark: darken(saturate($color-azure-white, 2%), 2%);
+
+$color-turquoise: #59c3c3;
+$color-turquoise--light: lighten(desaturate($color-turquoise, 2%), 2%);
+$color-turquoise--dark: darken(saturate($color-turquoise, 2%), 2%);
+
+$color-dark-blue: #124e78;
+$color-dark-blue--light: lighten(desaturate($color-dark-blue, 2%), 2%);
+$color-dark-blue--dark: darken(saturate($color-dark-blue, 2%), 2%);
+
+.app {
+  // --------------
+  // App variables
+  // --------------
+
+  // NavBar
+  --navbar-height: 4rem;
+
+  // Theme
+  --theme-settings-max-width: 80rem;
+  --theme-settings-gutter: 2rem;
+
+  --theme-color-primary: #{$color-turquoise};
+  --theme-color-primary--contrast: #{$color-black--80};
+  --theme-color-secondary: #{$color-azure-white};
+  --theme-color-secondary--contrast: #{$color-black--80};
+  --theme-color-tertiary: #{$color-dark-blue};
+  --theme-color-tertiary--contrast: #{$color-white--100};
+  --theme-color-tertiary--dark: #{$color-dark-blue--dark};
+
+  // -------------
+  // App defaults
+  // -------------
+  @include open-sans();
+  font-size: 14px;
+  @include tablet-landscape-up {
+    font-size: 1.1em;
+  }
+  line-height: 1.5;
+  ul,
+  li {
+    list-style-type: none;
+  }
+  background: var(--theme-color-primary--contrast);
+}

@@ -1,0 +1,87 @@
+@import '../../../styles/mixins/fonts/open-sans';
+@import '../../../styles/mixins/media/media';
+
+// Local variables
+$local--color: var(--theme-color-primary);
+$local--navbar-height: var(--navbar-height);
+$local--animation-duration: 200ms;
+$local--padding: 0.5em;
+
+@mixin local--active-state {
+  background: $local--color;
+  @include tablet-landscape-up {
+    left: 0;
+    right: 0;
+  }
+}
+
+.navLink {
+  @include open-sans(600);
+  display: inline-block;
+  padding: $local--padding;
+  color: $local--color;
+  font-size: calc(#{$local--navbar-height} / 3);
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 5px;
+  transition: linear color $local__animation-duration;
+  line-height: 1em;
+  position: relative;
+
+  // Hover and active states
+  &::before {
+    background: inherit;
+    transition-property: background;
+    transition-duration: $local--animation-duration;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    content: '';
+    vertical-align: top;
+    height: 1em;
+    width: 1.4em;
+    margin-right: 0.2em;
+    display: inline-block;
+    mask-image: url('../../../../assets/vector/icons/Icon-Arrow-Right.svg');
+    mask-size: 80%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+
+    @include tablet-landscape-up {
+      width: initial;
+      position: absolute;
+      left: 51%;
+      right: 51%;
+      bottom: 0;
+      height: 0.2em;
+      border-radius: 0.2em;
+      mask: none;
+      background: $local--color;
+      transition-property: left, right;
+    }
+  }
+  &:hover::before {
+    @include local--active-state;
+  }
+  @include tablet-landscape-up {
+    width: auto;
+  }
+}
+.navLinkExternal {
+  &::after {
+    content: '';
+    vertical-align: top;
+    height: 1em;
+    width: 1.1em;
+    margin-left: 0.2em;
+    display: inline-block;
+    background-color: $local--color;
+    mask-image: url('../../../../assets/vector/icons/Icon-Link-External.svg');
+    mask-size: 80%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+}
+.navLinkActive {
+  &::before {
+    @include local--active-state;
+  }
+}

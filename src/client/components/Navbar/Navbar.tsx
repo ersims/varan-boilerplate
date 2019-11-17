@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
-import { NavLink } from '../NavLink/NavLink';
-import { AnimatedExpandable } from '../AnimatedExpandable';
+import { Link } from '../Link/Link';
+import { NavLink } from './NavLink/NavLink';
 
 // Styles
 import classes from './Navbar.module.scss';
@@ -11,18 +11,18 @@ import classes from './Navbar.module.scss';
 // Exports
 export const Navbar = withRouter(({ location }) => {
   const [isSticky, setIsSticky] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const setSticky = () => setIsSticky(true);
   const unsetSticky = () => setIsSticky(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(prevState => !prevState);
   const handleInitialPosition = ({ currentPosition, previousPosition }: Waypoint.CallbackArgs) => {
     if (!previousPosition && currentPosition === Waypoint.above) setSticky();
   };
 
   // Close menu on navigation
-  useEffect(() => setIsOpen(false), [location]);
-  console.log(classes);
+  // useEffect(() => setIsOpen(false), [location]);
+
   return (
     <>
       <Waypoint
@@ -31,13 +31,11 @@ export const Navbar = withRouter(({ location }) => {
         onPositionChange={handleInitialPosition}
       />
       <nav className={classNames(classes.navbar, { [classes.navbarSticky]: isSticky })}>
-        <NavLink className={classes.navbarLogo} to="/" aria-label="Home" exact>
+        <Link role="menuitem" className={classes.navbarLogo} to="/" aria-label="Home">
           <h1 className={classes.navbarLogoText}>Varan</h1>
-        </NavLink>
+        </Link>
         <button
-          className={classNames(classes.navbarHamburger, {
-            [classes.navbarHamburgerExpanded]: isOpen,
-          })}
+          className={classes.navbarHamburger}
           aria-label="Menu"
           aria-expanded={isOpen}
           aria-controls="navbar-menu"
@@ -61,12 +59,24 @@ export const Navbar = withRouter(({ location }) => {
             })}
           />
         </button>
-        <AnimatedExpandable isOpen={isOpen}>
+        <div
+          className={classNames(classes.navbarListContainer, {
+            [classes.navbarListContainerExpanded]: isOpen,
+          })}
+        >
           <ul
             id="navbar-menu"
             className={classNames(classes.navbarList, { [classes.navbarListExpanded]: isOpen })}
             role="menubar"
           >
+            <li
+              className={classNames(classes.navbarListItem, classes.navbarListItemMobile)}
+              role="none"
+            >
+              <NavLink role="menuitem" to="/">
+                Home
+              </NavLink>
+            </li>
             <li className={classes.navbarListItem} role="none">
               <NavLink role="menuitem" to="/examples">
                 Examples
@@ -78,7 +88,7 @@ export const Navbar = withRouter(({ location }) => {
               </NavLink>
             </li>
           </ul>
-        </AnimatedExpandable>
+        </div>
       </nav>
     </>
   );

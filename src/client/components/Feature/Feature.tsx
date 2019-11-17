@@ -1,5 +1,8 @@
 import React, { ReactNode } from 'react';
 
+// Styles
+import classes from './Feature.module.scss';
+
 // Types
 interface FeatureProps {
   Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -8,13 +11,11 @@ interface FeatureProps {
   children: ReactNode;
 }
 
-export const Feature = ({ Icon, title, subtitle, children }: FeatureProps) => {
-  return (
-    <div className="feature">
-      {Icon && <Icon className="feature__icon" />}
-      <h2 className="feature__title">{title}</h2>
-      {subtitle && <small className="feature__subtitle">{subtitle}</small>}
-      {children}
-    </div>
-  );
-};
+export const Feature = ({ Icon, title, subtitle, children }: FeatureProps) => (
+  <div className={classes.feature}>
+    {Icon && <Icon className={classes.featureIcon} />}
+    <h2 className={classes.featureTitle}>{title}</h2>
+    {subtitle && <small className={classes.featureSubtitle}>{subtitle}</small>}
+    {children}
+  </div>
+);

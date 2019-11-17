@@ -2,17 +2,17 @@ import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Helmet } from 'react-helmet-async';
 import { Route, Switch } from 'react-router';
-import favicon from '../assets/favicon.ico';
-import { Navbar } from './components/Navbar/Navbar';
+import favicon from '../../../assets/favicon.ico';
+import { Navbar } from '../Navbar/Navbar';
+import { Footer } from '../Footer/Footer';
 
 // Styles
 import classes from './App.module.scss';
 
 // Pages
-import { Home } from './pages/Home/Home';
-import { Examples } from './pages/Examples/Examples';
-import { NotFound } from './pages/errors/NotFound/NotFound';
-import { Footer } from './components/Footer/Footer';
+import { Home } from '../../pages/Home/Home';
+import { Examples } from '../../pages/Examples/Examples';
+import { NotFound } from '../../pages/errors/NotFound/NotFound';
 
 // Exports
 export const App = hot(() => (

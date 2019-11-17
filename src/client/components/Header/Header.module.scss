@@ -3,17 +3,16 @@
 
 // Local variables
 $local--navbar-height: var(--navbar-height);
-$local--color-white: var(--color-white--100);
-$local--color-black: var(--color-black--100);
-$local--color-turquoise: var(--color-turquoise--100);
+$local--color-text: var(--theme-color-primary);
+$local--color-white: #efefef;
+$local--color-black: #101010;
 
 .header {
   font-size: 1.1em;
-  min-height: 20em;
   overflow: hidden;
   color: $local--color-white;
   text-shadow: 0 0 0.2em $local--color-black;
-  padding: $local--navbar-height 1em 1em 1em;
+  padding: calc(#{$local--navbar-height} * 4) 0 calc(#{$local--navbar-height} * 3) 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,21 +24,19 @@ $local--color-turquoise: var(--color-turquoise--100);
     'no-repeat center center / cover'
   );
 }
-
-// Subcomponents
 .headerHero {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .headerTitle {
-  margin: 10vh 0 0 0;
   font-size: 4em;
   line-height: 1;
+  margin: 0;
 }
 .headerSubtitle {
   @include open-sans(300);
-  color: $local--color-turquoise;
+  color: $local--color-text;
   font-size: 0.7em;
   text-transform: uppercase;
   letter-spacing: 0.3em;

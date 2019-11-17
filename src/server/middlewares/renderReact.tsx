@@ -6,7 +6,7 @@ import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';
 import createStore from '../../client/redux/createStore';
-import { App } from '../../client/App';
+import { App } from '../../client/components/App/App';
 import Html from '../components/Html';
 
 // Types
@@ -24,7 +24,7 @@ interface ApplicationAssets {
 }
 
 // Add hot reloading
-if (module.hot) module.hot.accept('../../client/App', () => {});
+if (module.hot) module.hot.accept('../../client/components/App/App', () => {});
 
 // Exports
 export default (

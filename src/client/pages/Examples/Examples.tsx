@@ -1,7 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/Header/Header';
-import { MainBase } from '../../components/MainBase/MainBase';
+import { Main } from '../../components/Main/Main';
+import { GetStartedSection } from './GetStartedSection/GetStartedSection';
 
 // Exports
 export const Examples = () => (
@@ -11,9 +12,9 @@ export const Examples = () => (
         Examples
       </title>
     </Helmet>
-    <Header title="examples" subtitle="show me the way" />
-    <MainBase>
-      <p>Here we go</p>
-    </MainBase>
+    <Header title="Hello World" subtitle="show me — don't tell me" />
+    <Main>
+      <GetStartedSection />
+    </Main>
   </>
 );

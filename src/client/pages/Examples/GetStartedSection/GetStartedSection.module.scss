@@ -1,0 +1,87 @@
+@import '../../../styles/mixins/fonts/open-sans';
+@import '../../../styles/mixins/media/media';
+
+// Local variables
+$local--color-primary: var(--theme-color-tertiary);
+$local--color-secondary: var(--theme-color-tertiary--dark);
+$local--color-text: var(--theme-color-tertiary--contrast);
+$local--gutter: var(--theme-settings-gutter);
+
+// Local mixins
+@mixin local--large-screen {
+  @include desktop-up {
+    @content;
+  }
+}
+
+.getStartedSectionContainer {
+  color: $local--color-text;
+  background: $local--color-primary
+    linear-gradient(-60deg, $local--color-secondary 50%, $local--color-primary 50%);
+}
+.getStartedSectionTitle {
+  @include open-sans(600);
+  font-size: 2em;
+}
+.getStartedSectionSubTitle {
+  @include open-sans();
+  font-size: 1.2em;
+}
+.getStartedSectionDescriptionGrid {
+  align-self: stretch;
+  overflow: hidden;
+  display: grid;
+  align-items: start;
+  gap: $local--gutter;
+  margin-top: 6em;
+  grid-template-columns: repeat(1, 1fr);
+  @include local--large-screen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.getStartedSectionDescription {
+  $local--description--gutter: 4em;
+  $local--description--gutter--half: $local--description--gutter / 2;
+  $local--border-width: 0.15em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: left;
+  justify-self: center;
+  border-left: $local__border-width $local--color-text solid;
+  padding: $local--description--gutter--half $local--description--gutter
+    $local--description--gutter--half $local--description--gutter;
+  max-width: 24em;
+  margin-left: 1em;
+
+  @include local__large-screen {
+    margin-left: 4em;
+  }
+
+  // Circles
+  &:before,
+  &:after {
+    $local--radius: $local--border-width * 6;
+    display: block;
+    position: relative;
+    margin-top: calc(#{$local--description--gutter--half} * -1);
+    margin-left: calc(
+      #{$local--description--gutter} * -1 - (#{$local--border-width} + #{$local--radius}) / 2
+    );
+    content: '';
+    height: $local--radius;
+    width: $local--radius;
+    border-radius: $local--radius;
+    background: $local--color-text;
+  }
+  // Bottom circle
+  &:after {
+    bottom: calc(#{$local--description--gutter--half} * -1);
+  }
+}
+.getStartedSectionIllustrationContainer {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  max-width: 40em;
+}
