@@ -44,6 +44,14 @@ declare module '*.webp' {
   const src: string;
   export default src;
 }
+declare module '*.webmanifest' {
+  const src: string;
+  export default src;
+}
+declare module '*.xml' {
+  const src: string;
+  export default src;
+}
 
 declare module '*.svg' {
   import * as React from 'react';

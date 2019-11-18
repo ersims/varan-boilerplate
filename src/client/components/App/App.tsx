@@ -8,6 +8,7 @@ import { Footer } from '../Footer/Footer';
 
 // Styles
 import classes from './App.module.scss';
+import webmanifest from '../../../assets/manifest.webmanifest';
 
 // Pages
 import { Home } from '../../pages/Home/Home';
@@ -26,6 +27,7 @@ export const App = hot(() => (
       <meta name="og:type" content="website" />
       <meta name="theme-color" content="#59C3C3" />
       <link rel="icon" href={favicon} />
+      <link rel="manifest" href={webmanifest} />
     </Helmet>
     <Navbar />
     <Switch>

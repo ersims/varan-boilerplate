@@ -29,7 +29,8 @@ function isAssetObject(asset: string | Asset): asset is Asset {
   return typeof asset === 'object';
 }
 
-const Html = ({
+// Exports
+export const Html = ({
   htmlAttributes,
   bodyAttributes,
   title,
@@ -45,16 +46,16 @@ const Html = ({
   initialState,
   manifest,
   preload,
-}: HtmlProps) => {
-  return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <html lang="en" {...htmlAttributes}>
-      <head>
-        {title}
-        {meta}
-        {noscript}
-        {base}
-        {manifest && isAssetObject(manifest) ? (
+}: HtmlProps) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <html lang="en" {...htmlAttributes}>
+    <head>
+      {title}
+      {meta}
+      {noscript}
+      {base}
+      {manifest &&
+        (isAssetObject(manifest) ? (
           <link
             rel="manifest"
             href={manifest.src}
@@ -63,111 +64,112 @@ const Html = ({
           />
         ) : (
           <link rel="manifest" href={manifest} crossOrigin="anonymous" />
-        )}
-        {link}
-        {preload.map(asset => {
-          const { src, integrity = undefined } = isAssetObject(asset) ? asset : { src: asset };
-          if (/\.js$/.test(src))
-            return (
-              <link
-                key={src}
-                href={src}
-                rel="preload"
-                as="script"
-                integrity={integrity}
-                crossOrigin="anonymous"
-              />
-            );
-          if (/\.css$/.test(src))
-            return (
-              <link
-                key={src}
-                href={src}
-                rel="preload"
-                as="style"
-                integrity={integrity}
-                crossOrigin="anonymous"
-              />
-            );
-          if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(src))
-            return (
-              <link
-                key={src}
-                href={src}
-                rel="preload"
-                as="font"
-                integrity={integrity}
-                crossOrigin="anonymous"
-              />
-            );
-          if (/(\.png|\.jpe?g|\.gif)$/.test(src))
-            return (
-              <link
-                key={src}
-                href={src}
-                rel="preload"
-                as="image"
-                integrity={integrity}
-                crossOrigin="anonymous"
-              />
-            );
-          return null;
-        })}
-        {bundleCss.map(css =>
-          isAssetObject(css) ? (
+        ))}
+      {link}
+      {preload.map(asset => {
+        const { src, integrity = undefined } = isAssetObject(asset) ? asset : { src: asset };
+        if (/\.js$/.test(src)) {
+          return (
             <link
-              key={css.src}
-              integrity={css.integrity}
-              href={css.src}
-              rel="stylesheet"
+              key={src}
+              href={src}
+              rel="preload"
+              as="script"
+              integrity={integrity}
               crossOrigin="anonymous"
             />
-          ) : (
-            <link key={css} href={css} rel="stylesheet" crossOrigin="anonymous" />
-          ),
-        )}
-        {style}
-        {script}
-      </head>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <body {...bodyAttributes}>
-        {/* eslint-disable-next-line react/no-danger */}
-        <div id="root" dangerouslySetInnerHTML={{ __html: body }} />
-        {initialState && (
-          <script
-            id="initial-state"
-            type="text/javascript"
-            /* eslint-disable-next-line react/no-danger */
-            dangerouslySetInnerHTML={{
-              __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, {
-                isJSON: true,
-              })}`,
-            }}
+          );
+        }
+        if (/\.css$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="style"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        if (/(\.woff|\.woff2|\.eot|\.ttf)$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="font"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        if (/(\.png|\.jpe?g|\.gif)$/.test(src)) {
+          return (
+            <link
+              key={src}
+              href={src}
+              rel="preload"
+              as="image"
+              integrity={integrity}
+              crossOrigin="anonymous"
+            />
+          );
+        }
+        return null;
+      })}
+      {bundleCss.map(css =>
+        isAssetObject(css) ? (
+          <link
+            key={css.src}
+            integrity={css.integrity}
+            href={css.src}
+            rel="stylesheet"
+            crossOrigin="anonymous"
           />
-        )}
-        {bundleJs.map(js =>
-          isAssetObject(js) ? (
-            <script
-              key={js.src}
-              type="text/javascript"
-              src={js.src}
-              integrity={js.integrity}
-              defer
-              crossOrigin="anonymous"
-            />
-          ) : (
-            <script key={js} type="text/javascript" src={js} defer crossOrigin="anonymous" />
-          ),
-        )}
-      </body>
-    </html>
-  );
-};
+        ) : (
+          <link key={css} href={css} rel="stylesheet" crossOrigin="anonymous" />
+        ),
+      )}
+      {style}
+      {script}
+    </head>
+    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+    <body {...bodyAttributes}>
+      {/* eslint-disable-next-line react/no-danger */}
+      <div id="root" dangerouslySetInnerHTML={{ __html: body }} />
+      {initialState && (
+        <script
+          id="initial-state"
+          type="text/javascript"
+          /* eslint-disable-next-line react/no-danger */
+          dangerouslySetInnerHTML={{
+            __html: `window.__INITIAL_REDUX_STATE__ = ${serialize(initialState, {
+              isJSON: true,
+            })}`,
+          }}
+        />
+      )}
+      {bundleJs.map(js =>
+        isAssetObject(js) ? (
+          <script
+            key={js.src}
+            type="text/javascript"
+            src={js.src}
+            integrity={js.integrity}
+            defer
+            crossOrigin="anonymous"
+          />
+        ) : (
+          <script key={js} type="text/javascript" src={js} defer crossOrigin="anonymous" />
+        ),
+      )}
+    </body>
+  </html>
+);
 Html.defaultProps = {
   htmlAttributes: {},
   bodyAttributes: {},
   body: '',
   preload: [],
 };
-
-export default Html;

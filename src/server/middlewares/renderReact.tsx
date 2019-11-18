@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { createLocation } from 'history';
 import createStore from '../../client/redux/createStore';
 import { App } from '../../client/components/App/App';
-import Html from '../components/Html';
+import { Html } from '../components/Html';
 
 // Types
 interface ApplicationStats {
@@ -26,21 +26,28 @@ interface ApplicationAssets {
 // Add hot reloading
 if (module.hot) module.hot.accept('../../client/components/App/App', () => {});
 
+// Init
+function getApplicationAsset(asset: string | ApplicationAsset) {
+  return typeof asset === 'string'
+    ? { src: asset }
+    : { src: asset.src, integrity: (!module.hot && asset.integrity) || undefined };
+}
+
 // Exports
 export default (
   stats: ApplicationStats,
   assets: ApplicationAssets,
   preload: string[] = [],
 ): RequestHandler => {
-  // Load bundles list
+  // Load assets
   const { bundleJs, bundleCss } = Object.entries(stats.assetsByChunkName).reduce<{
     bundleJs: ApplicationAsset[];
     bundleCss: ApplicationAsset[];
   }>(
     (acc, [k, v]) => {
       (Array.isArray(v) ? v : [v]).forEach(f => {
-        if (f.endsWith('.js')) acc.bundleJs.push(assets[`${k}.js`]);
-        else if (f.endsWith('.css')) acc.bundleCss.push(assets[`${k}.css`]);
+        if (f.endsWith('.js')) acc.bundleJs.push(getApplicationAsset(assets[`${k}.js`]));
+        else if (f.endsWith('.css')) acc.bundleCss.push(getApplicationAsset(assets[`${k}.css`]));
       });
       return acc;
     },
@@ -49,12 +56,6 @@ export default (
 
   // Fetch preloaded assets
   const preloadedAssets = preload.map(f => assets[f]);
-
-  // Find manifest
-  let manifest: ApplicationAsset | string | undefined = Object.keys(assets).find(k =>
-    /^manifest\.[a-f0-9]+\.json/.test(k),
-  );
-  if (manifest) manifest = assets[manifest];
 
   // Return react rendering middleware
   return function renderReact(req, res) {
@@ -66,8 +67,8 @@ export default (
     });
     // TODO: Improve hot reload integration
     if (process.env.NODE_ENV === 'development' && module.hot) {
-      // eslint-disable-next-line global-require
       const reloadStore = () =>
+        // eslint-disable-next-line global-require
         store.replaceReducer(require('../../client/redux/index').rootReducer);
       module.hot.accept('../../client/redux/createStore', reloadStore);
       module.hot.accept('../../client/redux/index', reloadStore);
@@ -103,7 +104,6 @@ export default (
         body={body}
         bundleJs={bundleJs}
         bundleCss={bundleCss}
-        manifest={manifest}
         preload={preloadedAssets}
         initialState={initialState}
       />,

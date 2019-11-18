@@ -11,7 +11,7 @@ import classes from './Navbar.module.scss';
 // Exports
 export const Navbar = withRouter(({ location }) => {
   const [isSticky, setIsSticky] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const setSticky = () => setIsSticky(true);
   const unsetSticky = () => setIsSticky(false);
@@ -21,7 +21,7 @@ export const Navbar = withRouter(({ location }) => {
   };
 
   // Close menu on navigation
-  // useEffect(() => setIsOpen(false), [location]);
+  useEffect(() => setIsOpen(false), [location]);
 
   return (
     <>
@@ -30,8 +30,11 @@ export const Navbar = withRouter(({ location }) => {
         onLeave={setSticky}
         onPositionChange={handleInitialPosition}
       />
-      <nav className={classNames(classes.navbar, { [classes.navbarSticky]: isSticky })}>
-        <Link role="menuitem" className={classes.navbarLogo} to="/" aria-label="Home">
+      <nav
+        className={classNames(classes.navbar, { [classes.navbarSticky]: isSticky })}
+        role="navigation"
+      >
+        <Link className={classes.navbarLogo} to="/" aria-label="Home">
           <h1 className={classes.navbarLogoText}>Varan</h1>
         </Link>
         <button
@@ -67,25 +70,15 @@ export const Navbar = withRouter(({ location }) => {
           <ul
             id="navbar-menu"
             className={classNames(classes.navbarList, { [classes.navbarListExpanded]: isOpen })}
-            role="menubar"
           >
-            <li
-              className={classNames(classes.navbarListItem, classes.navbarListItemMobile)}
-              role="none"
-            >
-              <NavLink role="menuitem" to="/">
-                Home
-              </NavLink>
+            <li className={classNames(classes.navbarListItem, classes.navbarListItemMobile)}>
+              <NavLink to="/">Home</NavLink>
             </li>
-            <li className={classes.navbarListItem} role="none">
-              <NavLink role="menuitem" to="/examples">
-                Examples
-              </NavLink>
+            <li className={classes.navbarListItem}>
+              <NavLink to="/examples">Examples</NavLink>
             </li>
-            <li className={classes.navbarListItem} role="none">
-              <NavLink role="menuitem" to="https://github.com/ersims/varan-boilerplate">
-                GitHub
-              </NavLink>
+            <li className={classes.navbarListItem}>
+              <NavLink to="https://github.com/ersims/varan-boilerplate">GitHub</NavLink>
             </li>
           </ul>
         </div>
