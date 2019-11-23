@@ -40,7 +40,7 @@ npm start
 
 ### Heroku
 
-Add the following npm script in your `package.json` and push code to heroku as normal using git. 
+Add the following npm script in your `package.json` and push code to heroku as normal using git.
 
 ```
 "heroku-postbuild": "npm install --only=dev && npm run build && npm prune --production"

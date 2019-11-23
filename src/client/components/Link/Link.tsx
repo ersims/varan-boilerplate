@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RRLink } from 'react-router-dom';
 import classNames from 'classnames';
+import { isUrlExternal } from '../../lib/isUrlExternal';
 
 // Styles
 import classes from './Link.module.scss';
@@ -16,7 +17,7 @@ interface LinkProps {
 // Exports
 export const Link = ({ children, to, className, role }: LinkProps) => {
   // Is this external?
-  if (to.startsWith('https://') || to.startsWith('http://')) {
+  if (isUrlExternal(to)) {
     return (
       <a
         role={role}

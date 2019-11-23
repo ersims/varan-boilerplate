@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import { isUrlExternal } from '../../../lib/isUrlExternal';
 
 // Styles
 import classes from './NavLink.module.scss';
@@ -17,7 +18,7 @@ interface NavLinkProps {
 // Exports
 export const NavLink = ({ children, to, exact = true, className, role }: NavLinkProps) => {
   // Is this external?
-  if (to.startsWith('https://') || to.startsWith('http://')) {
+  if (isUrlExternal(to)) {
     return (
       <a
         role={role}

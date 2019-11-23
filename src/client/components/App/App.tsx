@@ -1,13 +1,16 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Helmet } from 'react-helmet-async';
-import { Route, Switch, withRouter } from 'react-router';
+import { Route, Switch, useLocation } from 'react-router';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import favicon from '../../../assets/favicon.ico';
 import { Navbar } from '../Navbar/Navbar';
 import { Footer } from '../Footer/Footer';
 
 // Styles
 import classes from './App.module.scss';
+
+// Manifests
 import webmanifest from '../../../assets/manifest.webmanifest';
 
 // Pages
@@ -16,8 +19,9 @@ import { Examples } from '../../pages/Examples/Examples';
 import { NotFound } from '../../pages/errors/NotFound/NotFound';
 
 // Exports
-export const App = hot(
-  withRouter(() => (
+export const App = hot(() => {
+  const location = useLocation();
+  return (
     <div className={classes.app}>
       <Helmet titleTemplate="%s | Varan">
         <html lang="en" />
@@ -31,12 +35,26 @@ export const App = hot(
         <link rel="manifest" href={webmanifest} />
       </Helmet>
       <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/examples" component={Examples} />
-        <Route component={NotFound} />
-      </Switch>
-      <Footer />
+      <TransitionGroup>
+        <CSSTransition
+          key={location.key}
+          classNames={{
+            enterActive: classes.appPageContainerEnterActive,
+            exitActive: classes.appPageContainerExitActive,
+          }}
+          timeout={200}
+          className={classes.appPageContainer}
+        >
+          <div className={classes.appPageContainer}>
+            <Switch location={location}>
+              <Route exact path="/" component={Home} />
+              <Route path="/examples" component={Examples} />
+              <Route component={NotFound} />
+            </Switch>
+            <Footer />
+          </div>
+        </CSSTransition>
+      </TransitionGroup>
     </div>
-  )),
-);
+  );
+});

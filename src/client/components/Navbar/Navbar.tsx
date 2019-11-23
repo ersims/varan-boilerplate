@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
 import { Link } from '../Link/Link';
 import { NavLink } from './NavLink/NavLink';
@@ -9,7 +9,8 @@ import { NavLink } from './NavLink/NavLink';
 import classes from './Navbar.module.scss';
 
 // Exports
-export const Navbar = withRouter(({ location }) => {
+export const Navbar = () => {
+  const location = useLocation();
   const [isSticky, setIsSticky] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,4 +86,4 @@ export const Navbar = withRouter(({ location }) => {
       </nav>
     </>
   );
-});
+};

@@ -54,3 +54,32 @@ $color-dark-blue--dark: darken(saturate($color-dark-blue, 2%), 2%);
   }
   background: var(--theme-color-primary--contrast);
 }
+//.appPageContainer {
+////
+////  initial: null,
+////  from: { opacity: 0.8, transform: 'translate3d(0, 0, 50%)', position: 'absolute' as 'absolute' },
+////enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)', position: 'initial' as 'initial' },
+////leave: {
+////  opacity: 0.8,
+////  transform: 'translate3d(0, 0, -50%)',
+////  position: 'absolute' as 'absolute',
+////},
+////unique: true
+//}
+.appPageContainer {
+  width: 100%;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  position: initial;
+  transition: all 200ms ease-in-out;
+}
+.appPageContainerEnterActive {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  position: absolute;
+}
+.appPageContainerExitActive {
+  opacity: 0;
+  transform: translate3d(0, 0, -50%);
+  position: absolute;
+}

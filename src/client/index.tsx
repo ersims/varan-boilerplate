@@ -12,15 +12,13 @@ import 'normalize.css';
 // Render app
 const render = () =>
   hydrate(
-    <React.StrictMode>
-      <Provider store={store}>
-        <HelmetProvider>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </HelmetProvider>
-      </Provider>
-    </React.StrictMode>,
+    <Provider store={store}>
+      <HelmetProvider>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </HelmetProvider>
+    </Provider>,
     document.getElementById('root'),
   );
 render();
