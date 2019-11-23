@@ -1,10 +1,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Header } from '../../components/Header/Header';
 import { Main } from '../../components/Main/Main';
 import { FeaturesSection } from './FeaturesSection/FeaturesSection';
 import { GetStartedSection } from './GetStartedSection/GetStartedSection';
+import { TerminalHeader } from './TerminalHeader/TerminalHeader';
 
+// Exports
 export const Home = () => (
   <>
     <Helmet>
@@ -12,7 +13,12 @@ export const Home = () => (
         Home
       </title>
     </Helmet>
-    <Header title="varan" subtitle="modern webdev made simple" />
+    <TerminalHeader
+      title="varan"
+      subtitle="modern webdev made simple"
+      animation="install"
+      label="Installing varan through terminal"
+    />
     <Main>
       <FeaturesSection />
       <GetStartedSection />

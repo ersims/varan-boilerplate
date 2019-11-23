@@ -1,0 +1,13 @@
+// Local variables
+$local--navbar-height: var(--navbar-height);
+$local--gutter: var(--theme-settings-gutter);
+
+.terminalHeader {
+  flex-basis: calc(#{$local--navbar-height} * 9);
+  justify-content: flex-end;
+  padding: 0 $local--gutter;
+}
+.terminalHeaderTerminal {
+  margin-top: calc(#{$local--navbar-height} * 0.5);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.75);
+}
