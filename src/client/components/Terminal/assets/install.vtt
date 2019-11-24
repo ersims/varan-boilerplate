@@ -1,0 +1,13 @@
+WEBVTT FILE
+
+1
+00:00:01.500 --> 00:00:08.000 D:vertical A:start
+npx create-varan-app my-app
+
+2
+00:00:13.000 --> 00:00:16.500 A:start
+cd my-app
+
+3
+00:00:17.000 --> 00:00:22.000 A:end
+npx varan watch

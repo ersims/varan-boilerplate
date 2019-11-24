@@ -36,7 +36,7 @@
     "check:linting": "eslint --cache --cache-location node_modules/.cache/.eslintcache \"*.{ts,js}?(x)\" \"{src,test,types,webpack}/**/*.{ts,js}?(x)\"",
     "check:types": "tsc --noEmit",
     "check": "npm-run-all check:*",
-    "clean": "del-cli ./dist",
+    "clean": "del-cli ./.coverage ./dist",
     "start": "node dist/server/bin/web.js",
     "prestart:watch": "npm run clean",
     "start:watch": "varan watch -- --inspect",
@@ -140,6 +140,9 @@
     "projects": [
       {
         "displayName": "client",
+        "moduleNameMapper": {
+          "^.+\\.svg?$": "<rootDir>/test/__mocks__/svgMock.ts"
+        },
         "testEnvironment": "jsdom",
         "testMatch": [
           "<rootDir>/src/client/**/*.test.{ts,js}?(x)"
@@ -149,11 +152,14 @@
         ],
         "transform": {
           "^.+\\.(j|t)sx?$": "ts-jest",
-          ".+\\.(styl|css|sass|scss|less|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|ico|webmanifest|xml)$": "jest-transform-stub"
+          "^.+\\.(styl|css|sass|scss|less|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|vtt|wav|mp3|m4a|aac|oga|ico|webmanifest|xml)$": "jest-transform-stub"
         }
       },
       {
         "displayName": "server",
+        "moduleNameMapper": {
+          "^.+\\.svg?$": "<rootDir>/test/__mocks__/svgMock.ts"
+        },
         "testEnvironment": "node",
         "testMatch": [
           "<rootDir>/src/server"
@@ -163,11 +169,11 @@
         ],
         "transform": {
           "^.+\\.(j|t)sx?$": "ts-jest",
-          ".+\\.(styl|css|sass|scss|less|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|ico|webmanifest|xml)$": "jest-transform-stub"
+          "^.+\\.(styl|css|sass|scss|less|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|vtt|wav|mp3|m4a|aac|oga|ico|webmanifest|xml)$": "jest-transform-stub"
         }
       }
     ],
-    "silent": true,
+    "silent": false,
     "verbose": true
   }
 }

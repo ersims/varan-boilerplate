@@ -1,3 +1,4 @@
+# Config file for use with terminalizer
 # The configurations that used for the recording, feel free to edit them
 config:
   # Specify a command to be executed

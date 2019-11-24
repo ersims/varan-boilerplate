@@ -13,12 +13,7 @@ export const Home = () => (
         Home
       </title>
     </Helmet>
-    <TerminalHeader
-      title="varan"
-      subtitle="modern webdev made simple"
-      animation="install"
-      label="Installing varan through terminal"
-    />
+    <TerminalHeader title="varan" subtitle="modern webdev made simple" animation="install" />
     <Main>
       <FeaturesSection />
       <GetStartedSection />

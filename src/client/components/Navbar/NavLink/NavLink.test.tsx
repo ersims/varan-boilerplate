@@ -1,7 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 import { NavLink } from './NavLink';
+
+// Mocks
+jest.mock('./NavLink.module.scss', () => ({
+  navLinkActive: 'mocked-active-class',
+}));
 
 // Tests
 it('should only have noopener and noreferrer on external NavLinks', () => {
@@ -43,4 +49,30 @@ it('should accept role', () => {
 
   // Assertions
   expect(getByText('ext')).toHaveAttribute('role', 'menuitem');
+});
+it('should not be active if it is not the current url', () => {
+  const history = createMemoryHistory({ initialEntries: ['/initial'] });
+  const { getByText } = render(
+    <Router history={history}>
+      <NavLink role="menuitem" to="/path">
+        link
+      </NavLink>
+    </Router>,
+  );
+
+  // Assertions
+  expect(getByText('link')).not.toHaveClass('mocked-active-class');
+});
+it('should be active if it is the current url', () => {
+  const history = createMemoryHistory({ initialEntries: ['/path'] });
+  const { getByText } = render(
+    <Router history={history}>
+      <NavLink role="menuitem" to="/path">
+        link
+      </NavLink>
+    </Router>,
+  );
+
+  // Assertions
+  expect(getByText('link')).toHaveClass('mocked-active-class');
 });

@@ -24,6 +24,7 @@ it('should be a main', () => {
 
   // Assertions
   expect(container.firstChild).not.toBeFalsy();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   expect(container.firstChild!.nodeName).toBe('MAIN');
 });
 it('should accept className', () => {

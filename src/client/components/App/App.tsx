@@ -45,16 +45,14 @@ export const App = hot(() => {
           timeout={200}
           className={classes.appPageContainer}
         >
-          <React.StrictMode>
-            <div className={classes.appPageContainer}>
-              <Switch location={location}>
-                <Route exact path="/" component={Home} />
-                <Route path="/examples" component={Examples} />
-                <Route component={NotFound} />
-              </Switch>
-              <Footer />
-            </div>
-          </React.StrictMode>
+          <div className={classes.appPageContainer}>
+            <Switch location={location}>
+              <Route exact path="/" component={Home} />
+              <Route path="/examples" component={Examples} />
+              <Route component={NotFound} />
+            </Switch>
+            <Footer />
+          </div>
         </CSSTransition>
       </TransitionGroup>
     </div>

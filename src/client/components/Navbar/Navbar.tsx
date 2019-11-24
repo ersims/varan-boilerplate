@@ -45,7 +45,6 @@ export const Navbar = () => {
           aria-controls="navbar-menu"
           type="button"
           onClick={toggleMenu}
-          onKeyPress={e => e.key === 'Enter' && toggleMenu()}
         >
           <span
             className={classNames(classes.navbarHamburgerLine, {

@@ -14,7 +14,6 @@ export const TerminalHeader = ({
   subtitle,
   description,
   animation,
-  label,
 }: TerminalHeaderProps) => (
   <Header
     title={title}
@@ -23,7 +22,7 @@ export const TerminalHeader = ({
     containerClassName={classes.terminalHeader}
   >
     <div className={classes.terminalHeaderTerminal}>
-      <Terminal animation={animation} label={label} />
+      <Terminal animation={animation} />
     </div>
   </Header>
 );
