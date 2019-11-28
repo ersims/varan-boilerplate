@@ -1,4 +1,8 @@
-import { connectRouter, routerActions } from 'connected-react-router';
+import {
+  connectRouter,
+  CALL_HISTORY_METHOD as CHM,
+  LOCATION_CHANGE as LC,
+} from 'connected-react-router';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import { TypedEpic } from '../index';
 
@@ -7,7 +11,10 @@ export const routerHistory =
   typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory();
 
 // Types
-export const Actions = routerActions;
+export enum ActionTypes {
+  LOCATION_CHANGE = LC as any,
+  CALL_HISTORY_METHOD = CHM as any,
+}
 
 // Actions
 export const actions = {};

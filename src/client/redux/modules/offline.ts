@@ -2,7 +2,7 @@ import { ActionType, createReducer, createStandardAction, getType } from 'typesa
 import { TypedEpic } from '../index';
 
 // Types
-export enum Actions {
+export enum ActionTypes {
   OFFLINE_ENABLED = 'varan/offline/ENABLED',
   OFFLINE_DISABLED = 'varan/offline/DISABLED',
   OFFLINE_CACHE_ENABLE = 'varan/offline/CACHE_ENABLE',
@@ -12,6 +12,7 @@ export enum Actions {
   OFFLINE_CACHE_DISABLE = 'varan/offline/CACHE_DISABLE',
   OFFLINE_CACHE_DISABLED = 'varan/offline/CACHE_DISABLED',
 }
+
 interface State {
   isEnabled: boolean;
   isUpdated: boolean;
@@ -29,14 +30,14 @@ export const initialState: State = {
 
 // Actions
 export const actions = {
-  setOffline: createStandardAction(Actions.OFFLINE_ENABLED)(),
-  setOnline: createStandardAction(Actions.OFFLINE_DISABLED)(),
-  cacheEnable: createStandardAction(Actions.OFFLINE_CACHE_ENABLE)(),
-  cacheEnabled: createStandardAction(Actions.OFFLINE_CACHE_ENABLED)(),
-  cacheCheck: createStandardAction(Actions.OFFLINE_CACHE_CHECK)(),
-  cacheUpdated: createStandardAction(Actions.OFFLINE_CACHE_UPDATED)(),
-  cacheDisable: createStandardAction(Actions.OFFLINE_CACHE_DISABLE)(),
-  cacheDisabled: createStandardAction(Actions.OFFLINE_CACHE_DISABLED)(),
+  setOffline: createStandardAction(ActionTypes.OFFLINE_ENABLED)(),
+  setOnline: createStandardAction(ActionTypes.OFFLINE_DISABLED)(),
+  cacheEnable: createStandardAction(ActionTypes.OFFLINE_CACHE_ENABLE)(),
+  cacheEnabled: createStandardAction(ActionTypes.OFFLINE_CACHE_ENABLED)(),
+  cacheCheck: createStandardAction(ActionTypes.OFFLINE_CACHE_CHECK)(),
+  cacheUpdated: createStandardAction(ActionTypes.OFFLINE_CACHE_UPDATED)(),
+  cacheDisable: createStandardAction(ActionTypes.OFFLINE_CACHE_DISABLE)(),
+  cacheDisabled: createStandardAction(ActionTypes.OFFLINE_CACHE_DISABLED)(),
 };
 
 // Reducers

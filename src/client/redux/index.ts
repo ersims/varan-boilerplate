@@ -10,7 +10,7 @@ import * as services from '../services';
 
 // Types
 interface DuckModule {
-  Actions: object;
+  ActionTypes: object;
   actions: object;
   reducers: Reducer<any, any>;
   epics: Epic[];
@@ -38,20 +38,18 @@ export const actionCreators = { ...extract('actions') };
 export const reducers = { ...extract('reducers') };
 export const epics = { ...extract('epics') };
 const appReducer = combineReducers(reducers);
-export const rootReducer: Reducer<ReturnType<typeof appReducer>, Action<Actions>> = (
+export const rootReducer: Reducer<ReturnType<typeof appReducer>, Action<string>> = (
   state,
   action,
-) => {
-  if (action.type === STATE_RESET) {
-    // eslint-disable-next-line no-param-reassign
-    state = undefined;
-  }
-  return appReducer(state, action);
-};
+) => appReducer(action.type === STATE_RESET ? undefined : state, action);
 
 // Types
 export type RootState = ReturnType<typeof rootReducer>;
 export type RootAction = typeof actionCreators;
-// export type Actions = { [P in keyof typeof modules]: typeof modules[P]['Actions'] };
-export type Actions = any;
-export type TypedEpic = Epic<Action<Actions>, Action<Actions>, RootState, typeof services>;
+export type ActionTypes = { [P in keyof typeof modules]: typeof modules[P]['ActionTypes'] };
+export type TypedEpic<CustomState = RootState, CustomDependencies = typeof services> = Epic<
+  Action<ActionTypes>,
+  Action<ActionTypes>,
+  CustomState,
+  CustomDependencies
+>;

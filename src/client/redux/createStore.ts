@@ -4,7 +4,7 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { History } from 'history';
-import { Actions, epics, rootReducer, RootState, routerHistory } from './index';
+import { ActionTypes, epics, rootReducer, RootState, routerHistory } from './index';
 import * as services from '../services';
 
 // Init
@@ -30,8 +30,8 @@ const composeEnhancers = composeWithDevTools({ serialize: true });
  */
 export default (initialState = {}): { store: Store; history: History } => {
   const epicMiddleware = createEpicMiddleware<
-    Action<Actions>,
-    Action<Actions>,
+    Action<ActionTypes>,
+    Action<ActionTypes>,
     RootState,
     typeof services
   >({
