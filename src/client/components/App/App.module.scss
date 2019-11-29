@@ -1,84 +1,52 @@
 @import '../../styles/mixins/fonts/open-sans';
 @import '../../styles/mixins/media/media';
+@import '../../styles/colors';
 
-// Sass variables
-$color-white--100: #efefef;
-
-$color-black--100: #101010;
-$color-black--80: #222222;
-
-$color-azure-white: #dcedff;
-$color-azure-white--light: lighten(desaturate($color-azure-white, 2%), 2%);
-$color-azure-white--dark: darken(saturate($color-azure-white, 2%), 2%);
-
-$color-turquoise: #59c3c3;
-$color-turquoise--light: lighten(desaturate($color-turquoise, 2%), 2%);
-$color-turquoise--dark: darken(saturate($color-turquoise, 2%), 2%);
-
-$color-dark-blue: #124e78;
-$color-dark-blue--light: lighten(desaturate($color-dark-blue, 2%), 2%);
-$color-dark-blue--dark: darken(saturate($color-dark-blue, 2%), 2%);
-
-.app {
-  // --------------
-  // App variables
-  // --------------
-
-  // NavBar
+// -----------------
+// Global variables
+// -----------------
+:root {
+  // Navbar
   --navbar-height: 4rem;
 
-  // Theme
-  --theme-settings-max-width: 80rem;
-  --theme-settings-gutter: 2rem;
+  // Settings
+  --settings-max-width: 80rem;
+  --settings-gutter: 2rem;
 
-  --theme-color-primary: #{$color-turquoise};
-  --theme-color-primary--contrast: #{$color-black--80};
-  --theme-color-secondary: #{$color-azure-white};
-  --theme-color-secondary--contrast: #{$color-black--80};
-  --theme-color-tertiary: #{$color-dark-blue};
-  --theme-color-tertiary--contrast: #{$color-white--100};
-  --theme-color-tertiary--dark: #{$color-dark-blue--dark};
+  // Colors
+  --color-text: #{$color-turquoise};
+  --color-link: #{$color-turquoise--dark};
+  --color-background: #{$color-black--80};
+}
 
-  // -------------
-  // App defaults
-  // -------------
+.app {
   @include open-sans();
   font-size: 14px;
-  @include tablet-landscape-up {
-    font-size: 1.1em;
-  }
   line-height: 1.5;
+  background: var(--color-background);
   ul,
   li {
     list-style-type: none;
   }
-  background: var(--theme-color-primary--contrast);
+
+  // Responsiveness
+  @include tablet-landscape-up {
+    font-size: 1.1em;
+  }
 }
-//.appPageContainer {
-////
-////  initial: null,
-////  from: { opacity: 0.8, transform: 'translate3d(0, 0, 50%)', position: 'absolute' as 'absolute' },
-////enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)', position: 'initial' as 'initial' },
-////leave: {
-////  opacity: 0.8,
-////  transform: 'translate3d(0, 0, -50%)',
-////  position: 'absolute' as 'absolute',
-////},
-////unique: true
-//}
-.appPageContainer {
+.appPageContent {
   width: 100%;
   opacity: 1;
   transform: translate3d(0, 0, 0);
   position: initial;
   transition: all 200ms ease-in-out;
 }
-.appPageContainerEnterActive {
+.appPageContentEnterActive {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   position: absolute;
 }
-.appPageContainerExitActive {
+.appPageContentExitActive {
   opacity: 0;
   transform: translate3d(0, 0, -50%);
   position: absolute;

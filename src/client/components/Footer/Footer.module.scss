@@ -1,16 +1,16 @@
-// Local variables
-$local--color-text: var(--theme-color-primary);
-$local--color-background: var(--theme-color-primary--contrast);
-
 .footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: $local--color-text;
-  background-color: $local--color-background;
+  color: var(--color-text);
+  background-color: var(--color-background);
   padding: 1.4em;
 }
 .footerDescription {
+  // Overrides
+  --color-background: var(--color-text);
+
+  // Style
   margin: 0;
   &:after {
     content: '';
@@ -20,7 +20,7 @@ $local--color-background: var(--theme-color-primary--contrast);
     width: 150%;
     display: block;
     background-size: contain;
-    background: $local--color-text;
+    background: var(--color-background);
     opacity: 0.5;
   }
 }

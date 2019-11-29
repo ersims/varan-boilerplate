@@ -7,13 +7,13 @@ import classes from './Section.module.scss';
 // Types
 interface SectionProps {
   children?: ReactNode;
-  containerClassName?: string;
   className?: string;
+  contentClassName?: string;
 }
 
 // Exports
-export const Section = ({ children, containerClassName, className }: SectionProps) => (
-  <section className={classNames(classes.sectionContainer, containerClassName)}>
-    <div className={classNames(classes.section, className)}>{children}</div>
+export const Section = ({ children, className, contentClassName }: SectionProps) => (
+  <section className={classNames(classes.section, className)}>
+    <div className={classNames(classes.sectionContent, contentClassName)}>{children}</div>
   </section>
 );

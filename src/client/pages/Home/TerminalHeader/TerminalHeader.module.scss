@@ -1,13 +1,16 @@
-// Local variables
-$local--navbar-height: var(--navbar-height);
-$local--gutter: var(--theme-settings-gutter);
-
 .terminalHeader {
-  flex-basis: calc(#{$local--navbar-height} * 9);
+  // ----------
+  // Overrides
+  // ----------
+
+  // ------
+  // Style
+  // ------
+  flex-basis: calc(var(--navbar-height) * 9);
   justify-content: flex-end;
-  padding: 0 $local--gutter;
+  padding: 0 var(--settings-gutter);
 }
 .terminalHeaderTerminal {
-  margin-top: calc(#{$local--navbar-height} * 0.5);
+  margin-top: calc(var(--navbar-height) * 0.5);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.75);
 }

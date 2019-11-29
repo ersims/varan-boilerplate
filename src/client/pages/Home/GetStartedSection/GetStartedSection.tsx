@@ -9,7 +9,7 @@ import classes from './GetStartedSection.module.scss';
 
 // Exports
 export const GetStartedSection = () => (
-  <Section containerClassName={classes.getStartedSectionContainer}>
+  <Section className={classes.getStartedSection}>
     <h2 className={classes.getStartedSectionTitle}>
       <Emoji value="🚀" label="Rocket emoji" />
       Success

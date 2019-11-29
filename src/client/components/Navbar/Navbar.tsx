@@ -63,13 +63,15 @@ export const Navbar = () => {
           />
         </button>
         <div
-          className={classNames(classes.navbarListContainer, {
-            [classes.navbarListContainerExpanded]: isOpen,
+          className={classNames(classes.navbarList, {
+            [classes.navbarListExpanded]: isOpen,
           })}
         >
           <ul
             id="navbar-menu"
-            className={classNames(classes.navbarList, { [classes.navbarListExpanded]: isOpen })}
+            className={classNames(classes.navbarListContent, {
+              [classes.navbarListContentExpanded]: isOpen,
+            })}
           >
             <li className={classNames(classes.navbarListItem, classes.navbarListItemMobile)}>
               <NavLink to="/">Home</NavLink>

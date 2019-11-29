@@ -12,7 +12,7 @@ import classes from './FeaturesSection.module.scss';
 
 // Exports
 export const FeaturesSection = () => (
-  <Section containerClassName={classes.featuresSectionContainer}>
+  <Section className={classes.featuresSection}>
     <div className={classes.featuresSectionGrid}>
       <Feature Icon={IconSpeedometer} title="Performance" subtitle="Lighthouse score = 100">
         <p>

@@ -1,0 +1,21 @@
+// -------------------
+// Application colors
+// -------------------
+$color-azure-white: #dcedff;
+$color-azure-white--light: lighten(desaturate($color-azure-white, 2%), 2%);
+$color-azure-white--dark: darken(saturate($color-azure-white, 2%), 2%);
+
+$color-turquoise: #59c3c3;
+$color-turquoise--light: lighten(desaturate($color-turquoise, 2%), 2%);
+$color-turquoise--dark: darken(saturate($color-turquoise, 2%), 2%);
+
+$color-dark-blue: #124e78;
+$color-dark-blue--light: lighten(desaturate($color-dark-blue, 2%), 2%);
+$color-dark-blue--dark: darken(saturate($color-dark-blue, 2%), 2%);
+
+// ----------------
+// Standard colors
+// ----------------
+$color-white--100: #efefef;
+$color-black--100: #101010;
+$color-black--80: #222222;

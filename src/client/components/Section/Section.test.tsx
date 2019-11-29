@@ -25,14 +25,14 @@ it('should be a section', () => {
   expect(container.firstChild?.nodeName).toBe('SECTION');
 });
 it('should accept className', () => {
-  const { getByText } = render(<Section className="my-class">content</Section>);
+  const { getByText } = render(<Section contentClassName="my-class">content</Section>);
 
   // Assertions
   expect(getByText('content')).toHaveClass('my-class');
   expect(getByText('content').closest('section')).not.toHaveClass('my-class');
 });
 it('should accept containerClassName', () => {
-  const { getByText } = render(<Section containerClassName="my-container-class">content</Section>);
+  const { getByText } = render(<Section className="my-container-class">content</Section>);
 
   // Assertions
   expect(getByText('content')).not.toHaveClass('my-container-class');

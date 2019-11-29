@@ -1,11 +1,10 @@
 @import '../../../styles/mixins/fonts/open-sans';
 @import '../../../styles/mixins/media/media';
+@import '../../../styles/colors';
 
-// Local variables
-$local--color-primary: var(--theme-color-secondary);
-$local--gutter: var(--theme-settings-gutter);
-
+// -------------
 // Local mixins
+// -------------
 @mixin local--medium-screen {
   @include tablet-portrait-up {
     @content;
@@ -17,15 +16,27 @@ $local--gutter: var(--theme-settings-gutter);
   }
 }
 
-.featuresSectionContainer {
-  background-color: $local--color-primary;
+.featuresSection {
+  // ----------
+  // Overrides
+  // ----------
+  --color-background: #{$color-azure-white};
+
+  // ------
+  // Style
+  // ------
+  background-color: var(--color-background);
 }
 .featuresSectionGrid {
   flex: 1;
   display: grid;
   align-items: start;
-  gap: $local--gutter;
+  gap: var(--settings-gutter);
   grid-template-columns: repeat(1, 1fr);
+
+  // ---------------
+  // Responsiveness
+  // ---------------
   @include local__medium-screen {
     grid-template-columns: repeat(2, 1fr);
   }

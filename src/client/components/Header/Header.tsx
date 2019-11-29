@@ -9,20 +9,14 @@ export interface HeaderProps {
   title: string;
   subtitle?: string;
   description?: string;
-  containerClassName?: string;
+  className?: string;
   children?: ReactNode;
 }
 
 // Exports
-export const Header = ({
-  title,
-  subtitle,
-  description,
-  containerClassName,
-  children,
-}: HeaderProps) => (
+export const Header = ({ title, subtitle, description, className, children }: HeaderProps) => (
   <header className={classNames(classes.header)}>
-    <div className={classNames(classes.headerHero, containerClassName)}>
+    <div className={classNames(classes.headerHero, className)}>
       <h1 className={classes.headerTitle}>{title}</h1>
       {subtitle && <small className={classes.headerSubtitle}>{subtitle}</small>}
       {description && <p className={classes.description}>{description}</p>}

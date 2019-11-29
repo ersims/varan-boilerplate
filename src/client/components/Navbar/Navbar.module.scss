@@ -1,16 +1,17 @@
 @import '../../styles/mixins/fonts/open-sans';
 @import '../../styles/mixins/media/media';
+@import '../../styles/colors';
 
+// ----------------
 // Local variables
-$local--color-text: var(--theme-color-primary);
-$local--color-background: var(--theme-color-primary--contrast);
-$local--height: var(--navbar-height);
+// ----------------
 $local--animation-duration: 200ms;
-$local--color-black: #000;
 $local--padding: 1em;
 $local--hamburger--line-height: 4px;
 
+// -------------
 // Local mixins
+// -------------
 @mixin local--large-screen {
   @include tablet-landscape-up {
     @content;
@@ -18,10 +19,17 @@ $local--hamburger--line-height: 4px;
 }
 
 .navbar {
+  // ----------
+  // Overrides
+  // ----------
+
+  // ------
+  // Style
+  // ------
   background-color: transparent;
   transition: ease-out background-color $local--animation-duration;
   width: 100%;
-  height: $local--height;
+  height: var(--navbar-height);
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -30,12 +38,12 @@ $local--hamburger--line-height: 4px;
   z-index: 10;
 }
 .navbarSticky {
-  background-color: $local--color-background;
-  box-shadow: 0 0 0.2em $local--color-black;
+  background-color: var(--color-background);
+  box-shadow: 0 0 0.2em $color-black--100;
 }
 .navbarLogo {
-  height: $local--height;
-  width: calc(#{$local--height} * (64 / 44));
+  height: var(--navbar-height);
+  width: calc(var(--navbar-height) * (64 / 44));
   background: url('../../../assets/vector/logo.svg') no-repeat center center;
   background-size: contain;
   display: flex;
@@ -48,8 +56,8 @@ $local--hamburger--line-height: 4px;
   position: fixed;
   z-index: 10;
   right: $local--padding;
-  height: $local--height;
-  width: $local--height;
+  height: var(--navbar-height);
+  width: var(--navbar-height);
   padding: $local--padding / 2;
   display: flex;
   justify-content: space-around;
@@ -65,7 +73,7 @@ $local--hamburger--line-height: 4px;
 .navbarHamburgerLine {
   height: $local--hamburger--line-height;
   border-radius: $local--hamburger--line-height;
-  background-color: $local--color-text;
+  background-color: var(--color-text);
   transition: background-color $local--animation-duration ease-in-out;
   display: block;
 
@@ -81,7 +89,7 @@ $local--hamburger--line-height: 4px;
   }
 }
 .navbarHamburgerLineExpanded {
-  $local--hamburger-line-rotation-offset: calc((#{$local--height} - #{$local--padding}) * 1 / 3);
+  $local--hamburger-line-rotation-offset: calc((var(--navbar-height) - #{$local--padding}) * 1 / 3);
   &:first-child {
     transform: translate3d(0, $local--hamburger-line-rotation-offset, 0) rotate(45deg);
   }
@@ -93,7 +101,7 @@ $local--hamburger--line-height: 4px;
       rotate(-45deg);
   }
 }
-.navbarListContainer {
+.navbarList {
   position: fixed;
   top: 0;
   left: 0;
@@ -101,8 +109,8 @@ $local--hamburger--line-height: 4px;
   width: 100vw;
   margin: 0 0 0 100vw;
   overflow: hidden;
-  padding: calc(#{$local--height} * 2) 0 0 0;
-  background-color: $local--color-background;
+  padding: calc(var(--navbar-height) * 2) 0 0 0;
+  background-color: var(--color-background);
   transform: translateX(0);
   transition: transform $local--animation-duration ease-in-out;
   @include local--large-screen {
@@ -114,13 +122,13 @@ $local--hamburger--line-height: 4px;
     width: initial;
   }
 }
-.navbarListContainerExpanded {
+.navbarListExpanded {
   transform: translateX(-100%);
   @include local--large-screen {
     transform: none;
   }
 }
-.navbarList {
+.navbarListContent {
   margin: 0;
   padding: 0;
   text-align: center;
@@ -129,7 +137,7 @@ $local--hamburger--line-height: 4px;
     flex: 1;
   }
 }
-.navbarListExpanded {
+.navbarListContentExpanded {
 }
 .navbarListItem {
   font-size: 2em;

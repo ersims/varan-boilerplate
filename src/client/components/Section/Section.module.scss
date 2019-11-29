@@ -1,8 +1,4 @@
-// Local variables
-$local--max-width: var(--theme-settings-max-width);
-$local--gutter: var(--theme-settings-gutter);
-
-.sectionContainer {
+.section {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -10,7 +6,7 @@ $local--gutter: var(--theme-settings-gutter);
   text-align: center;
   overflow: hidden;
 }
-.section {
-  max-width: $local--max-width;
-  margin: $local--gutter;
+.sectionContent {
+  max-width: var(--settings-max-width);
+  margin: var(--settings-gutter);
 }

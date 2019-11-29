@@ -1,23 +1,30 @@
 @import '../../../styles/mixins/fonts/open-sans';
 @import '../../../styles/mixins/media/media';
+@import '../../../styles/colors';
 
-// Local variables
-$local--color-primary: var(--theme-color-tertiary);
-$local--color-secondary: var(--theme-color-tertiary--dark);
-$local--color-text: var(--theme-color-tertiary--contrast);
-$local--gutter: var(--theme-settings-gutter);
-
+// -------------
 // Local mixins
+// -------------
 @mixin local--large-screen {
   @include desktop-up {
     @content;
   }
 }
 
-.getStartedSectionContainer {
-  color: $local--color-text;
-  background: $local--color-primary
-    linear-gradient(-60deg, $local--color-secondary 50%, $local--color-primary 50%);
+.getStartedSection {
+  // ----------
+  // Overrides
+  // ----------
+  --color-text: #{$color-white--100};
+  --color-background: #{$color-dark-blue};
+  --color-background--dark: #{$color-dark-blue--dark};
+
+  // ------
+  // Style
+  // ------
+  color: var(--color-text);
+  background: var(--color-background)
+    linear-gradient(-60deg, var(--color-background--dark) 50%, var(--color-background) 50%);
 }
 .getStartedSectionTitle {
   @include open-sans(600);
@@ -32,7 +39,7 @@ $local--gutter: var(--theme-settings-gutter);
   overflow: hidden;
   display: grid;
   align-items: start;
-  gap: $local--gutter;
+  gap: var(--settings-gutter);
   margin-top: 6em;
   grid-template-columns: repeat(1, 1fr);
   @include local--large-screen {
@@ -48,7 +55,7 @@ $local--gutter: var(--theme-settings-gutter);
   flex: 1;
   text-align: left;
   justify-self: center;
-  border-left: $local__border-width $local--color-text solid;
+  border-left: $local__border-width var(--color-text) solid;
   padding: $local--description--gutter--half $local--description--gutter
     $local--description--gutter--half $local--description--gutter;
   max-width: 24em;
@@ -72,7 +79,7 @@ $local--gutter: var(--theme-settings-gutter);
     height: $local--radius;
     width: $local--radius;
     border-radius: $local--radius;
-    background: $local--color-text;
+    background: var(--color-text);
   }
   // Bottom circle
   &:after {

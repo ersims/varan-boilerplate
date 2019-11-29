@@ -12,7 +12,7 @@ jest.mock('react-waypoint', () => ({
 }));
 jest.mock('./Navbar.module.scss', () => ({
   navbarSticky: 'mocked-sticky-menu',
-  navbarListContainerExpanded: 'mocked-expanded-hamburger-menu',
+  navbarListExpanded: 'mocked-expanded-hamburger-menu',
 }));
 
 // Tests

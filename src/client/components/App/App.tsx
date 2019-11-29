@@ -39,13 +39,13 @@ export const App = hot(() => {
         <CSSTransition
           key={location.key}
           classNames={{
-            enterActive: classes.appPageContainerEnterActive,
-            exitActive: classes.appPageContainerExitActive,
+            enterActive: classes.appPageContentEnterActive,
+            exitActive: classes.appPageContentExitActive,
           }}
           timeout={200}
-          className={classes.appPageContainer}
+          className={classes.appPageContent}
         >
-          <div className={classes.appPageContainer}>
+          <div className={classes.appPageContent}>
             <Switch location={location}>
               <Route exact path="/" component={Home} />
               <Route path="/examples" component={Examples} />

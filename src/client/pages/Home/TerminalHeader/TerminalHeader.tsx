@@ -19,7 +19,7 @@ export const TerminalHeader = ({
     title={title}
     subtitle={subtitle}
     description={description}
-    containerClassName={classes.terminalHeader}
+    className={classes.terminalHeader}
   >
     <div className={classes.terminalHeaderTerminal}>
       <Terminal animation={animation} />
