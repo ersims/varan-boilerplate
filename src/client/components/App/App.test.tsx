@@ -6,6 +6,9 @@ import { createMemoryHistory } from 'history';
 import { App } from './App';
 
 // Mocks
+jest.mock('../Navbar/Navbar', () => ({
+  Navbar: () => 'NavbarMock',
+}));
 jest.mock('../../pages/Home/Home', () => ({
   Home: () => 'HomeMock',
 }));

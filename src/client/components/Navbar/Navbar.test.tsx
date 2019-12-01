@@ -3,6 +3,7 @@ import { render, fireEvent, act } from '@testing-library/react';
 import { Router, MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Waypoint } from 'react-waypoint';
+import * as redux from 'react-redux';
 import { Navbar } from './Navbar';
 
 // Mocks
@@ -12,10 +13,17 @@ jest.mock('react-waypoint', () => ({
 }));
 jest.mock('./Navbar.module.scss', () => ({
   navbarSticky: 'mocked-sticky-menu',
+  navbarOffline: 'mocked-offline-menu',
   navbarListExpanded: 'mocked-expanded-hamburger-menu',
 }));
+const isOfflineMock = jest.spyOn(redux, 'useSelector').mockReturnValue(false);
 
 // Tests
+beforeEach(() => {
+  jest.clearAllMocks();
+  Waypoint.above = 'above';
+  Waypoint.below = 'below';
+});
 it('should be nav', () => {
   const { container } = render(<Navbar />, { wrapper: MemoryRouter });
 
@@ -30,8 +38,18 @@ describe('stickyness', () => {
     // Assertions
     expect(container.querySelector('.mocked-sticky-menu')).not.toBeInTheDocument();
   });
+  it('should not be sticky if navbar is fully visible in viewport', () => {
+    WaypointMock.mockImplementation(({ onPositionChange }) => {
+      onPositionChange({ currentPosition: Waypoint.below });
+      return 'mocked-waypoint';
+    });
+    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
+
+    // Assertions
+    expect(container.querySelector('.mocked-sticky-menu')).not.toBeInTheDocument();
+  });
   it('should be sticky if navbar is not fully visible in viewport', () => {
-    WaypointMock.mockImplementationOnce(({ onPositionChange }) => {
+    WaypointMock.mockImplementation(({ onPositionChange }) => {
       onPositionChange({ currentPosition: Waypoint.above });
       return 'mocked-waypoint';
     });
@@ -42,7 +60,7 @@ describe('stickyness', () => {
   });
   it('should become sticky if navbar is no longer fully visible in viewport', () => {
     let onLeaveRef: Function;
-    WaypointMock.mockImplementationOnce(({ onLeave }) => {
+    WaypointMock.mockImplementation(({ onLeave }) => {
       onLeaveRef = onLeave;
       return 'mocked-waypoint';
     });
@@ -60,9 +78,9 @@ describe('stickyness', () => {
   });
   it('should become unsticky if navbar becomes fully visible in viewport', () => {
     let onEnterRef: Function;
-    WaypointMock.mockImplementationOnce(({ onEnter, onPositionChange }) => {
+    WaypointMock.mockImplementation(({ onEnter, onPositionChange }) => {
       onEnterRef = onEnter;
-      onPositionChange({ currentPosition: Waypoint.above });
+      onPositionChange({ currentPosition: Waypoint.above, previousPosition: Waypoint.below });
       return 'mocked-waypoint';
     });
 
@@ -76,6 +94,23 @@ describe('stickyness', () => {
 
     // Assertions
     expect(container.querySelector('.mocked-sticky-menu')).not.toBeInTheDocument();
+  });
+});
+describe('offline status', () => {
+  it('should not be on when application is online', () => {
+    isOfflineMock.mockReturnValue(false);
+    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
+
+    // Assertions
+    expect(container.querySelector('.mocked-offline-menu')).not.toBeInTheDocument();
+  });
+  it('should be on when application is offline', () => {
+    isOfflineMock.mockReturnValue(true);
+    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
+
+    // Assertions
+    expect(container.querySelector('.mocked-offline-menu')).toBeInTheDocument();
+    expect(container.querySelector('.mocked-offline-menu')).toBeVisible();
   });
 });
 describe('hamburger', () => {

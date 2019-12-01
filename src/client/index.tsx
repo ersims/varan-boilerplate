@@ -3,7 +3,7 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { HelmetProvider } from 'react-helmet-async';
-import { history, store } from './redux/store';
+import { store, history } from './redux/store';
 import { App } from './components/App/App';
 
 // Global Styles

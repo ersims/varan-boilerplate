@@ -36,10 +36,29 @@ $local--hamburger--line-height: 4px;
   align-items: center;
   padding: $local--padding;
   z-index: 10;
+
+  // Statusbar
+  &:before {
+    content: '';
+    width: 100%;
+    height: calc(var(--navbar-height) / 4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(0deg, rgba(240, 0, 0, 0), rgba(240, 0, 0, 0.3));
+    opacity: 0;
+    transition: ease-out opacity $local--animation-duration;
+  }
 }
 .navbarSticky {
   background-color: var(--color-background);
   box-shadow: 0 0 0.2em $color-black--100;
+}
+.navbarOffline {
+  &:before {
+    opacity: 1;
+  }
 }
 .navbarLogo {
   height: var(--navbar-height);

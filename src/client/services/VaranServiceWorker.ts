@@ -8,7 +8,8 @@ export enum VaranServiceWorkerEvents {
 }
 
 // See https://serviceworke.rs/live-flowchart_demo.html for more information on service workers
-class VaranServiceWorker extends EventEmitter {
+// Exports
+export class VaranServiceWorker extends EventEmitter {
   public swUrl: string;
 
   /**
@@ -99,6 +100,3 @@ class VaranServiceWorker extends EventEmitter {
     return this;
   }
 }
-
-// Exports
-export default VaranServiceWorker;

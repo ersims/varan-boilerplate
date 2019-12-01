@@ -1,26 +1,15 @@
-import {
-  connectRouter,
-  CALL_HISTORY_METHOD as CHM,
-  LOCATION_CHANGE as LC,
-} from 'connected-react-router';
-import { createBrowserHistory, createMemoryHistory } from 'history';
-import { TypedEpic } from '../index';
+import { connectRouter } from 'connected-react-router';
+import { routerHistory } from '../../lib/routerHistory';
 
-// Init
-export const routerHistory =
-  typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory();
+/**
+ * State
+ */
+export const initialState = {
+  action: undefined,
+  location: { query: {} },
+};
 
-// Types
-export enum ActionTypes {
-  LOCATION_CHANGE = LC as any,
-  CALL_HISTORY_METHOD = CHM as any,
-}
-
-// Actions
-export const actions = {};
-
-// Reducers
+/**
+ * Reducers
+ */
 export const reducers = connectRouter(routerHistory);
-
-// Epics
-export const epics: TypedEpic[] = [];

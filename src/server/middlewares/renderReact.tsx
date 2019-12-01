@@ -5,7 +5,7 @@ import { HelmetProvider, FilledContext } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { createLocation } from 'history';
-import createStore from '../../client/redux/createStore';
+import { createStore } from '../../client/redux/createStore';
 import { App } from '../../client/components/App/App';
 import { Html } from '../components/Html';
 
@@ -60,19 +60,11 @@ export default (
   // Return react rendering middleware
   return function renderReact(req, res) {
     // Prepare
-    const initialState = { offline: { isOffline: false } };
+    const initialState = { application: { isOffline: false } };
     const { store } = createStore({
       ...initialState,
       router: { location: createLocation(req.originalUrl) },
     });
-    // TODO: Improve hot reload integration
-    if (process.env.NODE_ENV === 'development' && module.hot) {
-      const reloadStore = () =>
-        // eslint-disable-next-line global-require
-        store.replaceReducer(require('../../client/redux/index').rootReducer);
-      module.hot.accept('../../client/redux/createStore', reloadStore);
-      module.hot.accept('../../client/redux/index', reloadStore);
-    }
 
     // Render
     const helmetContext = {};

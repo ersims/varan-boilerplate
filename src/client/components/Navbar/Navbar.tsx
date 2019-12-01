@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
+import { useSelector } from 'react-redux';
 import { Link } from '../Link/Link';
 import { NavLink } from './NavLink/NavLink';
+import { isApplicationOfflineSelector } from '../../redux/modules/application';
+import { RootState } from '../../redux';
 
 // Styles
 import classes from './Navbar.module.scss';
@@ -13,6 +16,7 @@ export const Navbar = () => {
   const location = useLocation();
   const [isSticky, setIsSticky] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const isApplicationOffline = useSelector<RootState, boolean>(isApplicationOfflineSelector);
 
   const setSticky = () => setIsSticky(true);
   const unsetSticky = () => setIsSticky(false);
@@ -32,7 +36,10 @@ export const Navbar = () => {
         onPositionChange={handleInitialPosition}
       />
       <nav
-        className={classNames(classes.navbar, { [classes.navbarSticky]: isSticky })}
+        className={classNames(classes.navbar, {
+          [classes.navbarSticky]: isSticky,
+          [classes.navbarOffline]: isApplicationOffline,
+        })}
         role="navigation"
       >
         <Link className={classes.navbarLogo} to="/" aria-label="Home">
