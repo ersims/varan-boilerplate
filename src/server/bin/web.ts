@@ -14,7 +14,11 @@ import renderReact from '../middlewares/renderReact';
 /* eslint-enable import/first */
 
 // Hot reloading
-if (module.hot) module.hot.accept('../middlewares/renderReact', () => {});
+if (module.hot) {
+  module.hot.accept('../middlewares/renderReact', () => {
+    /* empty */
+  });
+}
 
 // Enable preloading of files that is highly likely to be used e.g fonts (will map to the webpack hashed file name)
 const PRELOAD_FILES = [

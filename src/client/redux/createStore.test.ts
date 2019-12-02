@@ -70,27 +70,29 @@ describe('middlewares', () => {
     });
     it('should collapse non-error actions', () => {
       const loggerSpy = jest.spyOn(reduxLogger, 'createLogger');
-      createStore();
+      const { store } = createStore();
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const collapseFn = loggerSpy.mock.calls[0][0]!.collapsed as reduxLogger.LoggerPredicate;
 
       // Assertions
       expect(collapseFn).not.toBeUndefined();
-      expect(collapseFn(() => {}, { payload: true })).toBe(true);
+      expect(collapseFn(store.getState, { payload: true })).toBe(true);
     });
     it('should not collapse error actions', () => {
       const loggerSpy = jest.spyOn(reduxLogger, 'createLogger');
-      createStore();
+      const { store } = createStore();
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const collapseFn = loggerSpy.mock.calls[0][0]!.collapsed as reduxLogger.LoggerPredicate;
 
       // Assertions
       expect(collapseFn).not.toBeUndefined();
-      expect(collapseFn(() => {}, { error: true })).toBe(false);
-      expect(collapseFn(() => {}, { payload: new Error() })).toBe(false);
-      expect(collapseFn(() => {}, { payload: true }, { error: () => {} })).toBe(false);
+      expect(collapseFn(store.getState, { error: true })).toBe(false);
+      expect(collapseFn(store.getState, { payload: new Error() })).toBe(false);
+      expect(collapseFn(store.getState, { payload: true }, { error: () => new Error() })).toBe(
+        false,
+      );
     });
   });
   describe('immutableStateInvariantMiddlewarer', () => {

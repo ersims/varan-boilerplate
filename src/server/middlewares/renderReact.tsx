@@ -24,7 +24,11 @@ interface ApplicationAssets {
 }
 
 // Add hot reloading
-if (module.hot) module.hot.accept('../../client/components/App/App', () => {});
+if (module.hot) {
+  module.hot.accept('../../client/components/App/App', () => {
+    /* empty */
+  });
+}
 
 // Init
 function getApplicationAsset(asset: string | ApplicationAsset) {
