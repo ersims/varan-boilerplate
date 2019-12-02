@@ -1,34 +1,24 @@
-import { Action, applyMiddleware, createStore as reduxCreateStore, Middleware, Store } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
-import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { createEpicMiddleware } from 'redux-observable';
+import { Action, applyMiddleware, createStore as reduxCreateStore, Middleware, Store } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { createLogger } from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 import { History } from 'history';
-import { ActionTypes, epics, rootReducer, RootState, routerHistory } from './index';
+import { rootEpic, rootReducer, ActionTypes, RootState } from './index';
 import * as services from '../services';
-
-// Init
-const rootEpic = combineEpics(...Object.values(epics).reduce((acc, cur) => acc.concat(cur), []));
-const loggerMiddleware =
-  typeof window !== 'undefined' &&
-  createLogger({
-    collapsed: (getState, action, logEntry) =>
-      (!logEntry || !logEntry.error) &&
-      !action.error &&
-      !action.isError &&
-      !(action.payload instanceof Error),
-    predicate: () => process.env.NODE_ENV !== 'production',
-  });
-const composeEnhancers = composeWithDevTools({ serialize: true });
+import { routerHistory } from '../lib/routerHistory';
+import { applicationOfflineState } from './dispatchers/applicationOfflineState';
 
 // Exports
 /**
  * Create redux store with initial state
  *
- * @param {{}} initialState
+ * @param {{}} preloadedState
  * @returns {{ store: Store, history: History }}
  */
-export default (initialState = {}): { store: Store; history: History } => {
+export const createStore = (preloadedState = {}): { store: Store; history: History } => {
+  const composeEnhancers = composeWithDevTools({ serialize: true });
   const epicMiddleware = createEpicMiddleware<
     Action<ActionTypes>,
     Action<ActionTypes>,
@@ -37,14 +27,55 @@ export default (initialState = {}): { store: Store; history: History } => {
   >({
     dependencies: services,
   });
+
+  // Create middlewares
   const enhancer = composeEnhancers(
     applyMiddleware(
-      ...([routerMiddleware(routerHistory), epicMiddleware, loggerMiddleware].filter(
-        Boolean,
-      ) as Middleware[]),
+      ...([
+        // connected-react-router
+        routerMiddleware(routerHistory),
+
+        // redux-observables
+        epicMiddleware,
+
+        /*
+         * Development only middlewares
+         */
+        // Check for mutation in reducers
+        process.env.NODE_ENV !== 'production' && immutableStateInvariantMiddleware(),
+
+        // Logging
+        process.env.NODE_ENV !== 'production' &&
+          createLogger({
+            collapsed: (getState, action, logEntry) =>
+              (!logEntry || !logEntry.error) &&
+              !action.error &&
+              !action.isError &&
+              !(action.payload instanceof Error),
+            predicate: () => process.env.NODE_ENV !== 'production',
+          }),
+      ].filter(Boolean) as Middleware[]),
     ),
   );
-  const store = reduxCreateStore(rootReducer, initialState, enhancer);
+
+  // Create store
+  const store = reduxCreateStore(rootReducer, preloadedState, enhancer);
+
+  // Enable hot reloading
+  if (process.env.NODE_ENV === 'development' && module.hot) {
+    module.hot.accept('./index', () => {
+      // eslint-disable-next-line global-require
+      store.replaceReducer(require('./index').rootReducer);
+    });
+  }
+
+  // Run epics
   epicMiddleware.run(rootEpic);
+
+  // Subscribe dispatchers if we are in browser mode
+  if (typeof window !== 'undefined') {
+    applicationOfflineState(store);
+  }
+
   return { store, history: routerHistory };
 };
