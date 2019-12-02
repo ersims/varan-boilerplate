@@ -1,0 +1,12 @@
+.section {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+.sectionContent {
+  max-width: var(--settings-max-width);
+  margin: var(--settings-gutter);
+}

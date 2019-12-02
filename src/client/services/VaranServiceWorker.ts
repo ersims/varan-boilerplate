@@ -1,4 +1,3 @@
-// Dependencies
 import { EventEmitter } from 'events';
 
 // Types
@@ -9,7 +8,8 @@ export enum VaranServiceWorkerEvents {
 }
 
 // See https://serviceworke.rs/live-flowchart_demo.html for more information on service workers
-class VaranServiceWorker extends EventEmitter {
+// Exports
+export class VaranServiceWorker extends EventEmitter {
   public swUrl: string;
 
   /**
@@ -30,7 +30,9 @@ class VaranServiceWorker extends EventEmitter {
   public async register(): Promise<this> {
     if ('serviceWorker' in navigator) {
       const publicUrl = new URL(window.location.toString());
-      const isLocalhost = [/^localhost$/i, /^\[::1]$/, /^127./].some(v => v.test(window.location.hostname));
+      const isLocalhost = [/^localhost$/i, /^\[::1]$/, /^127./].some(v =>
+        v.test(window.location.hostname),
+      );
 
       // Make sure service worker is app-specific for localhost
       if (isLocalhost) {
@@ -38,7 +40,10 @@ class VaranServiceWorker extends EventEmitter {
           const response = await fetch(this.swUrl);
 
           // Invalid service worker?
-          if (response.status === 404 || (response.headers.get('content-type') || '').indexOf('javascript') === -1) {
+          if (
+            response.status === 404 ||
+            (response.headers.get('content-type') || '').indexOf('javascript') === -1
+          ) {
             // Unregister service worker and reload
             await this.unregister();
             window.location.reload();
@@ -95,6 +100,3 @@ class VaranServiceWorker extends EventEmitter {
     return this;
   }
 }
-
-// Exports
-export default VaranServiceWorker;

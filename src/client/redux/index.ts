@@ -1,46 +1,47 @@
-// Dependencies
-import { combineReducers } from 'redux';
-import { StateType } from 'typesafe-actions';
-import { History } from 'history';
+import { Action, combineReducers } from 'redux';
+import { combineEpics, Epic } from 'redux-observable';
+import mapValues from 'lodash/mapValues';
+import pickBy from 'lodash/pickBy';
+import * as services from '../services';
+import * as router from './modules/router';
+import * as application from './modules/application';
 
-// Modules
-import application, { actions as applicationActions, epics as applicationEpics } from './modules/application';
-import offline, { actions as offlineActions, epics as offlineEpics } from './modules/offline';
-import router, { actions as routerActions, epics as routerEpics } from './modules/router';
+// Register modules
+const modules = {
+  application,
+  router,
+};
 
 // Exports
-// TODO: Fixme
-// eslint-disable-next-line
-export const actionCreators = Object.assign(
-  {},
-  {
-    applicationActions,
-    offlineActions,
-    routerActions,
+export const rootReducer = combineReducers(
+  mapValues(
+    pickBy(modules, (v: any) => !!v.reducers),
+    (v: any) => v.reducers,
+  ) as {
+    [Q in {
+      [P in keyof typeof modules]: typeof modules[P] extends { reducers: any } ? P : never;
+    }[keyof typeof modules]]: typeof modules[Q]['reducers'];
   },
 );
-export const reducers = (history: History) =>
-  // TODO: Fixme
-  // eslint-disable-next-line
-  Object.assign(
-    {},
-    {
-      application,
-      offline,
-      router: router(history),
-    },
-  );
-export const rootReducer = (history: History) => combineReducers(reducers(history));
-// TODO: Fixme
-// eslint-disable-next-line
-export const epics = Object.assign(
-  {},
-  {
-    applicationEpics,
-    offlineEpics,
-    routerEpics,
-  },
+export const rootEpic = combineEpics(
+  ...Object.values(
+    mapValues(
+      pickBy(modules, (v: any) => !!v.epics),
+      (v: any) => v.epics,
+    ),
+  ).reduce<TypedEpic[]>((acc, cur) => acc.concat(Object.values(cur)), []),
 );
 
 // Types
-export type RootState = StateType<ReturnType<typeof rootReducer>>;
+export type RootState = ReturnType<typeof rootReducer>;
+export type TypedEpic<CustomState = RootState, CustomDependencies = typeof services> = Epic<
+  Action<ActionTypes>,
+  Action<ActionTypes>,
+  CustomState,
+  CustomDependencies
+>;
+export type ActionTypes = {
+  [Q in {
+    [P in keyof typeof modules]: typeof modules[P] extends { ActionTypes: any } ? P : never;
+  }[keyof typeof modules]]: typeof modules[Q]['ActionTypes'];
+};

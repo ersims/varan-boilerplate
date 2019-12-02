@@ -7,12 +7,14 @@ x-restore-cache: &restore-cache
 x-version-check: &version-check
   run: npm -v && node -v
 x-install-deps: &install-dependencies
-  run: npm install
+  run: npm ci
 x-save-cache: &save-cache
   save_cache:
     paths:
       - node_modules
     key: v1-dependencies-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package.json" }}
+x-build: &build
+  run: npm run build
 x-run-tests: &run-tests
   run: npm test
 x-coverage: &coverage
@@ -22,19 +24,6 @@ x-coverage: &coverage
 
 version: 2
 jobs:
-  test-node8:
-    docker:
-      - image: circleci/node:8
-    working_directory: ~/repo
-    steps:
-      - *checkout
-      - *restore-cache
-      - *version-check
-      - *install-dependencies
-      - *save-cache
-      - *run-tests
-      - *coverage
-
   test-node10:
     docker:
       - image: circleci/node:10
@@ -45,6 +34,7 @@ jobs:
       - *version-check
       - *install-dependencies
       - *save-cache
+      - *build
       - *run-tests
       - *coverage
 
@@ -58,6 +48,21 @@ jobs:
       - *version-check
       - *install-dependencies
       - *save-cache
+      - *build
+      - *run-tests
+      - *coverage
+
+  test-node13:
+    docker:
+      - image: circleci/node:13
+    working_directory: ~/repo
+    steps:
+      - *checkout
+      - *restore-cache
+      - *version-check
+      - *install-dependencies
+      - *save-cache
+      - *build
       - *run-tests
       - *coverage
 
@@ -65,6 +70,6 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-node8
       - test-node10
       - test-node12
+      - test-node13

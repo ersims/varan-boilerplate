@@ -1,0 +1,94 @@
+@import '../../../styles/mixins/fonts/open-sans';
+@import '../../../styles/mixins/media/media';
+
+// ----------------
+// Local variables
+// ----------------
+$local--animation-duration: 200ms;
+$local--padding: 0.5em;
+
+// -------------
+// Local mixins
+// -------------
+@mixin local--active-state {
+  background: var(--color-link);
+  @include tablet-landscape-up {
+    left: 0;
+    right: 0;
+  }
+}
+
+.navLink {
+  @include open-sans(600);
+  display: inline-block;
+  padding: $local--padding;
+  color: var(--color-text);
+  font-size: calc(var(--navbar-height) / 3);
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 5px;
+  transition: linear color $local__animation-duration;
+  line-height: 1em;
+  position: relative;
+
+  // Hover and active states
+  &::before {
+    background: inherit;
+    transition-property: background;
+    transition-duration: $local--animation-duration;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    content: '';
+    vertical-align: top;
+    height: 1em;
+    width: 1.4em;
+    margin-right: 0.2em;
+    display: inline-block;
+    mask-image: url('../../../../assets/vector/icons/Icon-Arrow-Right.svg');
+    mask-size: 80%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+
+    // Responsiveness
+    @include tablet-landscape-up {
+      width: initial;
+      position: absolute;
+      left: 51%;
+      right: 51%;
+      bottom: 0;
+      height: 0.2em;
+      border-radius: 0.2em;
+      mask: none;
+      transition-property: left, right;
+    }
+  }
+  &:hover::before {
+    @include local--active-state;
+  }
+  @include tablet-landscape-up {
+    width: auto;
+  }
+}
+.navLinkExternal {
+  // Override
+  --color-background: var(--color-text);
+
+  // Style
+  &::after {
+    content: '';
+    vertical-align: top;
+    height: 1em;
+    width: 1.1em;
+    margin-left: 0.2em;
+    display: inline-block;
+    background-color: var(--color-background);
+    mask-image: url('../../../../assets/vector/icons/Icon-Link-External.svg');
+    mask-size: 80%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+}
+.navLinkActive {
+  &::before {
+    @include local--active-state;
+  }
+}

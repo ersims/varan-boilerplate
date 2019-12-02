@@ -1,38 +1,27 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
-import { compose } from 'recompose';
 import { ConnectedRouter } from 'connected-react-router';
-import { withRouter } from 'react-router';
-import { history, store } from './redux/store';
-import { App } from './components/App';
-import withApplicationState from './components/enhancers/withApplicationState';
-import withOffline from './components/enhancers/withOffline';
+import { HelmetProvider } from 'react-helmet-async';
+import { store, history } from './redux/store';
+import { App } from './components/App/App';
 
-// Styles
-import './styles/index.scss';
+// Global Styles
+import 'normalize.css';
 
-// Init
-// TODO: Fixme
-const EnhancedApp = withRouter<any, any>(
-  compose(
-    withOffline(),
-    withApplicationState(),
-  )(App),
-);
-
-// Render app and perform necessary housekeeping
-const render = () => {
-  ReactDOM.hydrate(
+// Render app
+const render = () =>
+  hydrate(
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <EnhancedApp />
-      </ConnectedRouter>
+      <HelmetProvider>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </HelmetProvider>
     </Provider>,
     document.getElementById('root'),
   );
-};
 render();
 
 // Enable hot reloading
-if (module.hot) module.hot.accept('./components/App', render);
+if (module.hot) module.hot.accept('./components/App/App', render);

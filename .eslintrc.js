@@ -16,7 +16,7 @@ module.exports = {
 
     // Test environment
     {
-      files: ['test/**'],
+      files: ['test/**', '**/*.test.*'],
       env: {
         jest: true,
       },
@@ -32,7 +32,7 @@ module.exports = {
 
     // Dev dependencies
     {
-      files: ['test/**', 'types/**', 'webpack/**'],
+      files: ['test/**', '**/*.test.*', 'types/**', 'webpack/**'],
       rules: {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       },

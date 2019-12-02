@@ -1,0 +1,33 @@
+name: Build and Test
+on: [push]
+jobs:
+  test:
+    name: Node v${{ matrix.node_version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: [10, 12, 13]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: npm ci
+        run: npm ci
+
+      - name: npm -v
+        run: npm -v
+
+      - name: node -v
+        run: node -v
+
+      - name: npm run build
+        run: npm run build
+
+      - name: npm test
+        run: npm test
