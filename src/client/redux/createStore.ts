@@ -48,11 +48,7 @@ export const createStore = (preloadedState = {}): { store: Store; history: Histo
         process.env.NODE_ENV !== 'production' &&
           createLogger({
             collapsed: (getState, action, logEntry) =>
-              (!logEntry || !logEntry.error) &&
-              !action.error &&
-              !action.isError &&
-              !(action.payload instanceof Error),
-            predicate: () => process.env.NODE_ENV !== 'production',
+              (!logEntry || !logEntry.error) && !action.error && !(action.payload instanceof Error),
           }),
       ].filter(Boolean) as Middleware[]),
     ),
