@@ -14,7 +14,7 @@ jest.mock('react-waypoint', () => ({
 jest.mock('./Navbar.module.scss', () => ({
   navbarSticky: 'mocked-sticky-menu',
   navbarOffline: 'mocked-offline-menu',
-  navbarListExpanded: 'mocked-expanded-hamburger-menu',
+  navbarContentExpanded: 'mocked-expanded-hamburger-menu',
 }));
 const isOfflineMock = jest.spyOn(redux, 'useSelector').mockReturnValue(false);
 

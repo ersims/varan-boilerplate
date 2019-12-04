@@ -1,5 +1,7 @@
 @import '../../../styles/mixins/fonts/open-sans';
-@import '../../../styles/mixins/media/media';
+@import '../../../styles/mixins/media/screen';
+@import '../../../styles/mixins/media/preferences';
+@import '../../../styles/mixins/styles/focus';
 
 // ----------------
 // Local variables
@@ -19,24 +21,33 @@ $local--padding: 0.5em;
 }
 
 .navLink {
+  // ----------
+  // Overrides
+  // ----------
+  --color-link: var(--color-text);
+
+  // ------
+  // Style
+  // ------
   @include open-sans(600);
+  @include accessible-focus();
   display: inline-block;
   padding: $local--padding;
-  color: var(--color-text);
+  color: var(--color-link);
   font-size: calc(var(--navbar-height) / 3);
   text-transform: uppercase;
   text-decoration: none;
   letter-spacing: 5px;
-  transition: linear color $local__animation-duration;
   line-height: 1em;
   position: relative;
+  @include use-motion {
+    transition: linear color $local__animation-duration,
+      linear box-shadow $local__animation-duration;
+  }
 
   // Hover and active states
   &::before {
     background: inherit;
-    transition-property: background;
-    transition-duration: $local--animation-duration;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
     content: '';
     vertical-align: top;
     height: 1em;
@@ -47,6 +58,11 @@ $local--padding: 0.5em;
     mask-size: 80%;
     mask-repeat: no-repeat;
     mask-position: center;
+    transition-property: background;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    @include use-motion {
+      transition-duration: $local--animation-duration;
+    }
 
     // Responsiveness
     @include tablet-landscape-up {
@@ -66,11 +82,17 @@ $local--padding: 0.5em;
   }
   @include tablet-landscape-up {
     width: auto;
+    @include has-focus {
+      box-shadow: none;
+      &:before {
+        @include local--active-state;
+      }
+    }
   }
 }
 .navLinkExternal {
   // Override
-  --color-background: var(--color-text);
+  --color-background: var(--color-link);
 
   // Style
   &::after {

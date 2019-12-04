@@ -3,7 +3,9 @@ import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
 import { useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import { Link } from '../Link/Link';
+import { NavHamburger } from './NavHamburger/NavHamburger';
 import { NavLink } from './NavLink/NavLink';
 import { isApplicationOfflineSelector } from '../../redux/modules/application';
 import { RootState } from '../../redux';
@@ -18,6 +20,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isApplicationOffline = useSelector<RootState, boolean>(isApplicationOfflineSelector);
 
+  const navbarContentId = 'navbar-list';
   const setSticky = () => setIsSticky(true);
   const unsetSticky = () => setIsSticky(false);
   const toggleMenu = () => setIsOpen(prevState => !prevState);
@@ -45,52 +48,47 @@ export const Navbar = () => {
         <Link className={classes.navbarLogo} to="/" aria-label="Home">
           <h1 className={classes.navbarLogoText}>Varan</h1>
         </Link>
-        <button
+        <NavHamburger
+          isOpen={isOpen}
+          onToggle={toggleMenu}
+          ariaControls={navbarContentId}
           className={classes.navbarHamburger}
-          aria-label="Menu"
-          aria-expanded={isOpen}
-          aria-controls="navbar-menu"
-          type="button"
-          onClick={toggleMenu}
+        />
+        <CSSTransition
+          // Use reverse animation (enter = Menu is hidden and exit = Menu is visible) to hide menu
+          // using css - this allows media queries to control whether elements are visible for
+          // accessibility reasons (e.g. tabbing and screen readers)
+          appear
+          in={!isOpen}
+          exit={false}
+          classNames={{
+            enterDone: classes.navbarContentHidden,
+          }}
+          timeout={200}
         >
-          <span
-            className={classNames(classes.navbarHamburgerLine, {
-              [classes.navbarHamburgerLineExpanded]: isOpen,
-            })}
-          />
-          <span
-            className={classNames(classes.navbarHamburgerLine, {
-              [classes.navbarHamburgerLineExpanded]: isOpen,
-            })}
-          />
-          <span
-            className={classNames(classes.navbarHamburgerLine, {
-              [classes.navbarHamburgerLineExpanded]: isOpen,
-            })}
-          />
-        </button>
-        <div
-          className={classNames(classes.navbarList, {
-            [classes.navbarListExpanded]: isOpen,
-          })}
-        >
-          <ul
-            id="navbar-menu"
-            className={classNames(classes.navbarListContent, {
-              [classes.navbarListContentExpanded]: isOpen,
+          <div
+            className={classNames(classes.navbarContent, {
+              [classes.navbarContentExpanded]: isOpen,
             })}
           >
-            <li className={classNames(classes.navbarListItem, classes.navbarListItemMobile)}>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li className={classes.navbarListItem}>
-              <NavLink to="/examples">Examples</NavLink>
-            </li>
-            <li className={classes.navbarListItem}>
-              <NavLink to="https://github.com/ersims/varan-boilerplate">GitHub</NavLink>
-            </li>
-          </ul>
-        </div>
+            <ul
+              id={navbarContentId}
+              className={classNames(classes.navbarList, {
+                [classes.navbarListContentExpanded]: isOpen,
+              })}
+            >
+              <li className={classNames(classes.navbarListItem, classes.navbarListItemMobile)}>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li className={classes.navbarListItem}>
+                <NavLink to="/examples">Examples</NavLink>
+              </li>
+              <li className={classes.navbarListItem}>
+                <NavLink to="https://github.com/ersims/varan-boilerplate">GitHub</NavLink>
+              </li>
+            </ul>
+          </div>
+        </CSSTransition>
       </nav>
     </>
   );

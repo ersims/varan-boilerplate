@@ -1,3 +1,6 @@
+// Polyfills
+import 'focus-visible';
+
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,6 +11,7 @@ import { App } from './components/App/App';
 
 // Global Styles
 import 'normalize.css';
+import './styles/global.scss';
 
 // Render app
 const render = () =>

@@ -1,0 +1,26 @@
+// ------
+// Focus
+// ------
+
+// Detect when an element has keyboard focus using focus-visible js polyfill where browser support is lacking
+@mixin has-focus {
+  &:focus-visible,
+  &[data-focus-visible-added] {
+    @content;
+  }
+}
+
+// Use a better focus state
+@mixin accessible-focus($color: var(--color-link)) {
+  transform: translate3d(0, 0, 0);
+
+  // Remove default focus
+  &:focus {
+    outline: none;
+  }
+
+  // Add focus styles
+  @include has-focus {
+    box-shadow: 0 0 0 0.3em $color;
+  }
+}

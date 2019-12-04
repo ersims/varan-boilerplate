@@ -1,8 +1,8 @@
 @import '../../settings';
 
-// ------------------
-// Screen size mixins
-// ------------------
+// ------------
+// Screen size
+// ------------
 @mixin phone-only {
   @media (max-width: unquote($breakpoint-phone-down + 'px')) {
     @content;

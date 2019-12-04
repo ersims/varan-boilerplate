@@ -1,0 +1,10 @@
+// ------------
+// Preferences
+// ------------
+
+// Reduce the amount of motion?
+@mixin use-motion {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
