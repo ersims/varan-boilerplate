@@ -22,6 +22,7 @@ export interface HtmlProps {
   initialState?: object;
   manifest?: string | Asset;
   preload: (string | Asset)[];
+  baseUrl: string;
 }
 
 // Helpers
@@ -46,10 +47,12 @@ export const Html = ({
   initialState,
   manifest,
   preload,
+  baseUrl,
 }: HtmlProps) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <html lang="en" {...htmlAttributes}>
     <head>
+      {baseUrl && <base href={baseUrl} />}
       {title}
       {meta}
       {noscript}
@@ -172,4 +175,5 @@ Html.defaultProps = {
   bodyAttributes: {},
   body: '',
   preload: [],
+  baseUrl: '/',
 };
