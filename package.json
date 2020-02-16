@@ -74,7 +74,7 @@
     "redux-observable": "^1.0.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.5.2",
-    "serialize-javascript": "^2.1.0",
+    "serialize-javascript": "^3.0.0",
     "source-map-support": "^0.5.10",
     "typesafe-actions": "^5.1.0"
   },
