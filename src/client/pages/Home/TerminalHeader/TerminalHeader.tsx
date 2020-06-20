@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Header, HeaderProps } from '../../../components/Header/Header';
 import { Terminal, TerminalProps } from '../../../components/Terminal/Terminal';
 
@@ -9,12 +9,12 @@ import classes from './TerminalHeader.module.scss';
 type TerminalHeaderProps = HeaderProps & TerminalProps;
 
 // Exports
-export const TerminalHeader = ({
+export const TerminalHeader: FunctionComponent<TerminalHeaderProps> = ({
   title,
   subtitle,
   description,
   animation,
-}: TerminalHeaderProps) => (
+}) => (
   <Header
     title={title}
     subtitle={subtitle}

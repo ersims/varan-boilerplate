@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, wait } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Home } from './Home';
 
 // Tests
-it('should have correct page title', async done => {
+it('should have correct page title', async () => {
   render(
     <HelmetProvider>
       <Home />
@@ -12,8 +12,5 @@ it('should have correct page title', async done => {
   );
 
   // Assertions
-  await wait(() => expect(document.title).toEqual('Home'));
-
-  // Done
-  done();
+  await waitFor(() => expect(document.title).toEqual('Home'));
 });

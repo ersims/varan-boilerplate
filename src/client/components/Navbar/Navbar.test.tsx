@@ -3,7 +3,6 @@ import { render, fireEvent, act } from '@testing-library/react';
 import { Router, MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Waypoint } from 'react-waypoint';
-import * as redux from 'react-redux';
 import { Navbar } from './Navbar';
 
 // Mocks
@@ -16,7 +15,6 @@ jest.mock('./Navbar.module.scss', () => ({
   navbarOffline: 'mocked-offline-menu',
   navbarContentExpanded: 'mocked-expanded-hamburger-menu',
 }));
-const isOfflineMock = jest.spyOn(redux, 'useSelector').mockReturnValue(false);
 
 // Tests
 beforeEach(() => {
@@ -59,7 +57,7 @@ describe('stickyness', () => {
     expect(container.querySelector('.mocked-sticky-menu')).toBeInTheDocument();
   });
   it('should become sticky if navbar is no longer fully visible in viewport', () => {
-    let onLeaveRef: Function;
+    let onLeaveRef: () => void;
     WaypointMock.mockImplementation(({ onLeave }) => {
       onLeaveRef = onLeave;
       return 'mocked-waypoint';
@@ -77,7 +75,7 @@ describe('stickyness', () => {
     expect(container.querySelector('.mocked-sticky-menu')).toBeInTheDocument();
   });
   it('should become unsticky if navbar becomes fully visible in viewport', () => {
-    let onEnterRef: Function;
+    let onEnterRef: () => void;
     WaypointMock.mockImplementation(({ onEnter, onPositionChange }) => {
       onEnterRef = onEnter;
       onPositionChange({ currentPosition: Waypoint.above, previousPosition: Waypoint.below });
@@ -94,23 +92,6 @@ describe('stickyness', () => {
 
     // Assertions
     expect(container.querySelector('.mocked-sticky-menu')).not.toBeInTheDocument();
-  });
-});
-describe('offline status', () => {
-  it('should not be on when application is online', () => {
-    isOfflineMock.mockReturnValue(false);
-    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
-
-    // Assertions
-    expect(container.querySelector('.mocked-offline-menu')).not.toBeInTheDocument();
-  });
-  it('should be on when application is offline', () => {
-    isOfflineMock.mockReturnValue(true);
-    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
-
-    // Assertions
-    expect(container.querySelector('.mocked-offline-menu')).toBeInTheDocument();
-    expect(container.querySelector('.mocked-offline-menu')).toBeVisible();
   });
 });
 describe('hamburger', () => {

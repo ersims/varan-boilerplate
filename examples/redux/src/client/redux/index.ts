@@ -2,7 +2,7 @@ import { Action, combineReducers } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
 import mapValues from 'lodash/mapValues';
 import pickBy from 'lodash/pickBy';
-import * as services from '../services';
+import * as services from '../../../../../src/client/services';
 import * as router from './modules/router';
 import * as application from './modules/application';
 

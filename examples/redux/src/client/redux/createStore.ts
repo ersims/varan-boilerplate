@@ -6,7 +6,7 @@ import { createLogger } from 'redux-logger';
 import immutableStateInvariantMiddleware from 'redux-immutable-state-invariant';
 import { History } from 'history';
 import { rootEpic, rootReducer, ActionTypes, RootState } from './index';
-import * as services from '../services';
+import * as services from '../../../../../src/client/services';
 import { routerHistory } from '../lib/routerHistory';
 import { applicationOfflineState } from './dispatchers/applicationOfflineState';
 

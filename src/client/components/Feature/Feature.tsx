@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 
 // Styles
 import classes from './Feature.module.scss';
@@ -11,7 +11,7 @@ interface FeatureProps {
   children: ReactNode;
 }
 
-export const Feature = ({ Icon, title, subtitle, children }: FeatureProps) => (
+export const Feature: FunctionComponent<FeatureProps> = ({ Icon, title, subtitle, children }) => (
   <div className={classes.feature}>
     {Icon && <Icon className={classes.featureIcon} />}
     <h2 className={classes.featureTitle}>{title}</h2>

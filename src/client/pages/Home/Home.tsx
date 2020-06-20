@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Main } from '../../components/Main/Main';
 import { FeaturesSection } from './FeaturesSection/FeaturesSection';
@@ -6,7 +6,7 @@ import { GetStartedSection } from './GetStartedSection/GetStartedSection';
 import { TerminalHeader } from './TerminalHeader/TerminalHeader';
 
 // Exports
-export const Home = () => (
+export const Home: FunctionComponent = () => (
   <>
     <Helmet>
       <title itemProp="name" lang="en">

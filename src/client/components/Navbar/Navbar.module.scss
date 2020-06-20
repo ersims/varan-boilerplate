@@ -61,11 +61,6 @@ $local--hamburger--line-height: 4px;
   background-color: var(--color-background);
   box-shadow: 0 0 0.2em $color-black--100;
 }
-.navbarOffline {
-  &:before {
-    opacity: 1;
-  }
-}
 .navbarLogo {
   @include accessible-focus();
   height: var(--navbar-height);

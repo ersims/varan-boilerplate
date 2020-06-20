@@ -3,8 +3,10 @@ import 'focus-visible';
 
 import React from 'react';
 import { hydrate } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import { HelmetProvider } from 'react-helmet-async';
+import { store, history } from '../../examples/redux/src/redux/store';
 import { App } from './components/App/App';
 
 // Global Styles
@@ -14,11 +16,13 @@ import './styles/global.scss';
 // Render app
 const render = () =>
   hydrate(
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>,
+    <Provider store={store}>
+      <HelmetProvider>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </HelmetProvider>
+    </Provider>,
     document.getElementById('root'),
   );
 render();

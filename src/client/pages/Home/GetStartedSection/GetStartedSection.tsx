@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Section } from '../../../components/Section/Section';
 import { ReactComponent as SuccessIllustration } from '../../../../assets/vector/illustrations/undraw_start_building_vqhd.svg';
 import { Link } from '../../../components/Link/Link';
@@ -8,7 +8,7 @@ import { Emoji } from '../../../components/Emoji/Emoji';
 import classes from './GetStartedSection.module.scss';
 
 // Exports
-export const GetStartedSection = () => (
+export const GetStartedSection: FunctionComponent = () => (
   <Section className={classes.getStartedSection}>
     <h2 className={classes.getStartedSectionTitle}>
       <Emoji value="🚀" label="Rocket emoji" />

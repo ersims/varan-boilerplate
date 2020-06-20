@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Emoji } from '../Emoji/Emoji';
 
 // Styles
 import classes from './Footer.module.scss';
 
 // Exports
-export const Footer = () => (
+export const Footer: FunctionComponent = () => (
   <footer className={classes.footer}>
     <p className={classes.footerDescription}>
       Made with

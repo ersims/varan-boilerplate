@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 
 // Styles
@@ -14,7 +14,13 @@ export interface HeaderProps {
 }
 
 // Exports
-export const Header = ({ title, subtitle, description, className, children }: HeaderProps) => (
+export const Header: FunctionComponent<HeaderProps> = ({
+  title,
+  subtitle,
+  description,
+  className,
+  children,
+}) => (
   <header className={classNames(classes.header)}>
     <div className={classNames(classes.headerHero, className)}>
       <h1 className={classes.headerTitle}>{title}</h1>

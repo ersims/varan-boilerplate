@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 
 // Styles
@@ -12,7 +12,11 @@ interface SectionProps {
 }
 
 // Exports
-export const Section = ({ children, className, contentClassName }: SectionProps) => (
+export const Section: FunctionComponent<SectionProps> = ({
+  children,
+  className,
+  contentClassName,
+}) => (
   <section className={classNames(classes.section, className)}>
     <div className={classNames(classes.sectionContent, contentClassName)}>{children}</div>
   </section>

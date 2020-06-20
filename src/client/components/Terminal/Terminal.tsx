@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 
 // Animations
@@ -26,7 +26,7 @@ export interface TerminalProps {
 }
 
 // Exports
-export const Terminal = ({ animation }: TerminalProps) => (
+export const Terminal: FunctionComponent<TerminalProps> = ({ animation }) => (
   <div className={classes.terminal}>
     <div className={classes.terminalTopBar}>
       <span

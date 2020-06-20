@@ -48,7 +48,7 @@ describe('middlewares', () => {
   describe('redux-logger', () => {
     it('should be added in development mode', () => {
       process.env.NODE_ENV = 'development';
-      const mockLogger: redux.Middleware = () => next => action => next(action);
+      const mockLogger: redux.Middleware = () => (next) => (action) => next(action);
       const loggerSpy = jest.spyOn(reduxLogger, 'createLogger').mockReturnValue(mockLogger);
       const reduxSpy = jest.spyOn(redux, 'applyMiddleware');
       createStore();
@@ -59,7 +59,7 @@ describe('middlewares', () => {
     });
     it('should not be added in production mode', () => {
       process.env.NODE_ENV = 'production';
-      const mockLogger: redux.Middleware = () => next => action => next(action);
+      const mockLogger: redux.Middleware = () => (next) => (action) => next(action);
       const loggerSpy = jest.spyOn(reduxLogger, 'createLogger').mockReturnValue(mockLogger);
       const reduxSpy = jest.spyOn(redux, 'applyMiddleware');
       createStore();
@@ -98,7 +98,7 @@ describe('middlewares', () => {
   describe('immutableStateInvariantMiddlewarer', () => {
     it('should be added in development mode', () => {
       process.env.NODE_ENV = 'development';
-      const mockImmutableMiddleware: redux.Middleware = () => next => action => next(action);
+      const mockImmutableMiddleware: redux.Middleware = () => (next) => (action) => next(action);
       const immutableSpy = jest
         .spyOn(immutableMiddleware, 'default')
         .mockReturnValue(mockImmutableMiddleware);
@@ -111,7 +111,7 @@ describe('middlewares', () => {
     });
     it('should not be added in production mode', () => {
       process.env.NODE_ENV = 'production';
-      const mockImmutableMiddleware: redux.Middleware = () => next => action => next(action);
+      const mockImmutableMiddleware: redux.Middleware = () => (next) => (action) => next(action);
       const immutableSpy = jest
         .spyOn(immutableMiddleware, 'default')
         .mockReturnValue(mockImmutableMiddleware);

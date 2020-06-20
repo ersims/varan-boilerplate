@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { isUrlExternal } from '../../../lib/isUrlExternal';
@@ -16,7 +16,13 @@ interface NavLinkProps {
 }
 
 // Exports
-export const NavLink = ({ children, to, exact = true, className, role }: NavLinkProps) => {
+export const NavLink: FunctionComponent<NavLinkProps> = ({
+  children,
+  to,
+  exact = true,
+  className,
+  role,
+}) => {
   // Is this external?
   if (isUrlExternal(to)) {
     return (

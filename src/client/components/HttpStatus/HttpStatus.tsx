@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Route } from 'react-router';
 
 // Types
 interface HttpStatusProps {
   code: number;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 // Exports
-export const HttpStatus = ({ children, code }: HttpStatusProps) => (
+export const HttpStatus: FunctionComponent<HttpStatusProps> = ({ children, code }) => (
   <Route
     render={({ staticContext }) => {
       if (staticContext && code) staticContext.statusCode = code;

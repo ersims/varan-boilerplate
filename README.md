@@ -14,6 +14,8 @@ Note that these badges are set up for the [source boilerplate master branch](htt
 
 ## Usage
 
+Take a look in the `examples/` directory for common use cases and extensions to the boilerplate (e.g. how to add [redux](https://github.com/reduxjs/redux)).
+
 ### Development
 
 Start a development server with hot reloading

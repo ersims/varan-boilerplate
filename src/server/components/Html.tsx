@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FunctionComponent, HTMLAttributes } from 'react';
 import serialize from 'serialize-javascript';
 
 // Interface
@@ -14,15 +15,15 @@ export interface HtmlProps {
   script: React.ReactNode;
   noscript: React.ReactNode;
   base: React.ReactNode;
-  htmlAttributes: object;
-  bodyAttributes: object;
+  htmlAttributes?: HTMLAttributes<HTMLHtmlElement>;
+  bodyAttributes?: HTMLAttributes<HTMLBodyElement>;
   bundleJs: (string | Asset)[];
   bundleCss: (string | Asset)[];
-  body: string;
-  initialState?: object;
+  body?: string;
+  initialState?: Record<string, unknown>;
   manifest?: string | Asset;
-  preload: (string | Asset)[];
-  baseUrl: string;
+  preload?: (string | Asset)[];
+  baseUrl?: string;
 }
 
 // Helpers
@@ -31,9 +32,9 @@ function isAssetObject(asset: string | Asset): asset is Asset {
 }
 
 // Exports
-export const Html = ({
-  htmlAttributes,
-  bodyAttributes,
+export const Html: FunctionComponent<HtmlProps> = ({
+  htmlAttributes = {},
+  bodyAttributes = {},
   title,
   meta,
   link,
@@ -41,14 +42,14 @@ export const Html = ({
   script,
   noscript,
   base,
-  body,
+  body = '',
   bundleJs,
   bundleCss,
   initialState,
   manifest,
-  preload,
-  baseUrl,
-}: HtmlProps) => (
+  preload = [],
+  baseUrl = '/',
+}) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <html lang="en" {...htmlAttributes}>
     <head>
@@ -69,7 +70,7 @@ export const Html = ({
           <link rel="manifest" href={manifest} crossOrigin="anonymous" />
         ))}
       {link}
-      {preload.map(asset => {
+      {preload.map((asset) => {
         const { src, integrity = undefined } = isAssetObject(asset) ? asset : { src: asset };
         if (/\.js$/.test(src)) {
           return (
@@ -121,7 +122,7 @@ export const Html = ({
         }
         return null;
       })}
-      {bundleCss.map(css =>
+      {bundleCss.map((css) =>
         isAssetObject(css) ? (
           <link
             key={css.src}
@@ -153,7 +154,7 @@ export const Html = ({
           }}
         />
       )}
-      {bundleJs.map(js =>
+      {bundleJs.map((js) =>
         isAssetObject(js) ? (
           <script
             key={js.src}
@@ -170,10 +171,3 @@ export const Html = ({
     </body>
   </html>
 );
-Html.defaultProps = {
-  htmlAttributes: {},
-  bodyAttributes: {},
-  body: '',
-  preload: [],
-  baseUrl: '/',
-};

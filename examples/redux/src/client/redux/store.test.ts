@@ -8,7 +8,7 @@ beforeEach(() => {
   jest.restoreAllMocks();
   jest.resetModules();
 });
-it('should use createStore', async done => {
+it('should use createStore', async (done) => {
   expect.assertions(3);
 
   // Imports
@@ -23,7 +23,7 @@ it('should use createStore', async done => {
   // Done
   done();
 });
-it('should return the same store from multiple imports', async done => {
+it('should return the same store from multiple imports', async (done) => {
   expect.assertions(4);
 
   // Imports
@@ -41,7 +41,7 @@ it('should return the same store from multiple imports', async done => {
   // Done
   done();
 });
-it('should use __INITIAL_REDUX_STATE__ for initial state when creating store', async done => {
+it('should use __INITIAL_REDUX_STATE__ for initial state when creating store', async (done) => {
   expect.assertions(2);
 
   // Mock initial state

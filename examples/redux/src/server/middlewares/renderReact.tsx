@@ -3,6 +3,9 @@ import { RequestHandler } from 'express';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { HelmetProvider, FilledContext } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { createLocation } from 'history';
+import { createStore } from '../../../examples/redux/src/client/redux/createStore';
 import { App } from '../../client/components/App/App';
 import { Html } from '../components/Html';
 
@@ -60,6 +63,13 @@ export default (
 
   // Return react rendering middleware
   return function renderReact(req, res) {
+    // Prepare
+    const initialState = { application: { isOffline: false } };
+    const { store } = createStore({
+      ...initialState,
+      router: { location: createLocation(req.originalUrl) },
+    });
+
     // Render
     const helmetContext = {};
     const routerContext: {
@@ -67,11 +77,13 @@ export default (
       statusCode?: number;
     } = {};
     const body = renderToString(
-      <HelmetProvider context={helmetContext}>
-        <StaticRouter location={req.url} context={routerContext}>
-          <App />
-        </StaticRouter>
-      </HelmetProvider>,
+      <Provider store={store}>
+        <HelmetProvider context={helmetContext}>
+          <StaticRouter location={req.url} context={routerContext}>
+            <App />
+          </StaticRouter>
+        </HelmetProvider>
+      </Provider>,
     );
     const { helmet } = helmetContext as FilledContext;
     const html = `<!DOCTYPE html>${renderToStaticMarkup(
@@ -89,6 +101,7 @@ export default (
         bundleJs={bundleJs}
         bundleCss={bundleCss}
         preload={preloadedAssets}
+        initialState={initialState}
       />,
     )}`;
 

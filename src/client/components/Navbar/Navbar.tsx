@@ -1,29 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
-import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { Link } from '../Link/Link';
 import { NavHamburger } from './NavHamburger/NavHamburger';
 import { NavLink } from './NavLink/NavLink';
-import { isApplicationOfflineSelector } from '../../redux/modules/application';
-import { RootState } from '../../redux';
 
 // Styles
 import classes from './Navbar.module.scss';
 
 // Exports
-export const Navbar = () => {
+export const Navbar: FunctionComponent = () => {
   const location = useLocation();
   const [isSticky, setIsSticky] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const isApplicationOffline = useSelector<RootState, boolean>(isApplicationOfflineSelector);
 
   const navbarContentId = 'navbar-list';
   const setSticky = () => setIsSticky(true);
   const unsetSticky = () => setIsSticky(false);
-  const toggleMenu = () => setIsOpen(prevState => !prevState);
+  const toggleMenu = () => setIsOpen((prevState) => !prevState);
   const handleInitialPosition = ({ currentPosition, previousPosition }: Waypoint.CallbackArgs) => {
     if (!previousPosition && currentPosition === Waypoint.above) setSticky();
   };
@@ -41,7 +37,6 @@ export const Navbar = () => {
       <nav
         className={classNames(classes.navbar, {
           [classes.navbarSticky]: isSticky,
-          [classes.navbarOffline]: isApplicationOffline,
         })}
         role="navigation"
       >

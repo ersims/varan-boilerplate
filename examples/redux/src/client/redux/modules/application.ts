@@ -33,8 +33,8 @@ export const actionCreators = {
 export const reducers = createReducer<ApplicationState, ActionType<typeof actionCreators>>(
   initialState,
 )
-  .handleAction(actionCreators.setOffline, state => ({ ...state, isOffline: true }))
-  .handleAction(actionCreators.setOnline, state => ({ ...state, isOffline: false }));
+  .handleAction(actionCreators.setOffline, (state) => ({ ...state, isOffline: true }))
+  .handleAction(actionCreators.setOnline, (state) => ({ ...state, isOffline: false }));
 
 /**
  * Epics
@@ -50,5 +50,5 @@ export const isApplicationOfflineSelector = createSelector<
   boolean
 >(
   ({ application: { isOffline } }) => isOffline,
-  isOffline => isOffline,
+  (isOffline) => isOffline,
 );

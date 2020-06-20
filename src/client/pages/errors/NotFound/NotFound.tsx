@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { HttpStatus } from '../../../components/HttpStatus/HttpStatus';
 import { Main } from '../../../components/Main/Main';
 import { Header } from '../../../components/Header/Header';
 
 // Exports
-export const NotFound = () => (
+export const NotFound: FunctionComponent = () => (
   <>
     <Helmet>
       <title itemProp="name" lang="en">

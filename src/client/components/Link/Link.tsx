@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link as RRLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { isUrlExternal } from '../../lib/isUrlExternal';
@@ -12,12 +12,21 @@ interface LinkProps {
   className?: string;
   role?: string;
   children: React.ReactNode;
+  openInNewTab?: boolean;
+  isExternal?: boolean;
 }
 
 // Exports
-export const Link = ({ children, to, className, role }: LinkProps) => {
+export const Link: FunctionComponent<LinkProps> = ({
+  children,
+  to,
+  className,
+  role,
+  isExternal,
+  openInNewTab,
+}) => {
   // Is this external?
-  if (isUrlExternal(to)) {
+  if ((typeof isExternal === 'boolean' && isExternal) || isUrlExternal(to)) {
     return (
       <a
         role={role}
@@ -30,7 +39,12 @@ export const Link = ({ children, to, className, role }: LinkProps) => {
     );
   }
   return (
-    <RRLink role={role} className={classNames(className, classes.link)} to={to}>
+    <RRLink
+      role={role}
+      className={classNames(className, classes.link)}
+      to={to}
+      target={openInNewTab ? '_blank' : undefined}
+    >
       {children}
     </RRLink>
   );

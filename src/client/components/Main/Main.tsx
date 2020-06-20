@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 
 // Styles
@@ -11,7 +11,7 @@ interface MainProps {
 }
 
 // Exports
-export const Main = ({ children, className }: MainProps) => (
+export const Main: FunctionComponent<MainProps> = ({ children, className }) => (
   <main className={classNames(classes.main, className)} role="main">
     {children}
   </main>

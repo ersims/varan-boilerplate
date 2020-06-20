@@ -13,9 +13,18 @@ it('should positively identify // urls as external', () => {
 it('should positively identify myapp:// urls as external', () => {
   expect(isUrlExternal('myapp://some-id')).toBe(true);
 });
+it('should positively identify mailto: urls as external', () => {
+  expect(isUrlExternal('mailto:something')).toBe(true);
+});
+it('should positively identify tel: urls as external', () => {
+  expect(isUrlExternal('tel:something')).toBe(true);
+});
 it('should identify relative paths as internal', () => {
   expect(isUrlExternal('some-page/some-sub-page')).toBe(false);
 });
 it('should identify absolute paths as internal', () => {
   expect(isUrlExternal('/some-page/some-sub-page')).toBe(false);
+});
+it('should identify objects as internal', () => {
+  expect(isUrlExternal({ to: '/someurl' })).toBe(false);
 });

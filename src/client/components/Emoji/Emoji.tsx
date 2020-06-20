@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 // Styles
 import classes from './Emoji.module.scss';
@@ -10,7 +10,7 @@ interface EmojiProps {
 }
 
 // Exports
-export const Emoji = ({ value, label }: EmojiProps) => (
+export const Emoji: FunctionComponent<EmojiProps> = ({ value, label }) => (
   <span className={classes.emoji} role="img" aria-label={label}>
     {value}
   </span>

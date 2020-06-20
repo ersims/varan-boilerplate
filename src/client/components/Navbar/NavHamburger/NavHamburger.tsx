@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 
 // Styles
@@ -13,7 +13,12 @@ interface NavHamburgerProps {
 }
 
 // Exports
-export const NavHamburger = ({ isOpen, onToggle, ariaControls, className }: NavHamburgerProps) => (
+export const NavHamburger: FunctionComponent<NavHamburgerProps> = ({
+  isOpen,
+  onToggle,
+  ariaControls,
+  className,
+}) => (
   <button
     className={classNames(classes.navHamburger, className)}
     aria-label="Menu"

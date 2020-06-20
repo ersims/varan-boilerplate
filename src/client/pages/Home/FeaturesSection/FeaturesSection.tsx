@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Section } from '../../../components/Section/Section';
 import { Feature } from '../../../components/Feature/Feature';
 import { Emoji } from '../../../components/Emoji/Emoji';
@@ -11,7 +11,7 @@ import { ReactComponent as IconFlightTakeoff } from '../../../../assets/vector/i
 import classes from './FeaturesSection.module.scss';
 
 // Exports
-export const FeaturesSection = () => (
+export const FeaturesSection: FunctionComponent = () => (
   <Section className={classes.featuresSection}>
     <div className={classes.featuresSectionGrid}>
       <Feature Icon={IconSpeedometer} title="Performance" subtitle="Lighthouse score = 100">

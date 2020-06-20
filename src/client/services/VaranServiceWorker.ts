@@ -30,7 +30,7 @@ export class VaranServiceWorker extends EventEmitter {
   public async register(): Promise<this> {
     if ('serviceWorker' in navigator) {
       const publicUrl = new URL(window.location.toString());
-      const isLocalhost = [/^localhost$/i, /^\[::1]$/, /^127./].some(v =>
+      const isLocalhost = [/^localhost$/i, /^\[::1]$/, /^127./].some((v) =>
         v.test(window.location.hostname),
       );
 
