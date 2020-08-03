@@ -59,6 +59,8 @@ module.exports = {
     'airbnb',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
+    'plugin:testing-library/recommended',
+    'plugin:testing-library/react',
     'prettier',
     'prettier/react',
     'prettier/@typescript-eslint',
