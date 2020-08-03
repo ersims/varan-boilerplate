@@ -2,17 +2,17 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { MemoryRouter } from 'react-router';
-import { NotFound } from './NotFound';
+import { GenericError } from './GenericError';
 
 // Tests
 it('should have correct page title', async () => {
   render(
     <HelmetProvider>
-      <NotFound />
+      <GenericError />
     </HelmetProvider>,
     { wrapper: MemoryRouter },
   );
 
   // Assertions
-  await waitFor(() => expect(document.title).toEqual('Not Found'));
+  await waitFor(() => expect(document.title).toEqual('An error occurred'));
 });
