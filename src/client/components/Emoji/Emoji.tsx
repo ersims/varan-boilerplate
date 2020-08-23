@@ -1,17 +1,15 @@
-import React, { FunctionComponent } from 'react';
-
-// Styles
-import classes from './Emoji.module.scss';
+import { HTMLAttributes, ReactNode } from "react";
+import styled from "styled-components";
 
 // Types
-interface EmojiProps {
-  value: string;
-  label: string;
+interface EmojiProps extends HTMLAttributes<HTMLSpanElement> {
+  children: ReactNode;
+  'aria-label': string;
 }
 
 // Exports
-export const Emoji: FunctionComponent<EmojiProps> = ({ value, label }) => (
-  <span className={classes.emoji} role="img" aria-label={label}>
-    {value}
-  </span>
-);
+export const Emoji = styled.span.attrs((props: EmojiProps) => ({ role: 'img', ...props }))`
+  font-size: 1.1em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+`;
